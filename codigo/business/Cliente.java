@@ -4,11 +4,11 @@ Cliente {
     private Lista<Serie> listaParaVer;
     private Lista<Serie> listaJaVistas;
 
-    public Cliente (nomeDeUsuario, senha, listaParaVer, listaJaVistas){
+    public Cliente (String nomeDeUsuario String senha, Lista<Serie> listaParaVer, Lista<Serie> listaJaVistas){
         this.nomeDeUsuario = nomeDeUsuario;
         this.senha = senha;
-        this.listaParaVer = listaParaVer
-        this.listaJaVistas = listaJaVistas;
+        this.listaParaVer = new Lista<Serie>();
+        this.listaJaVistas = new Lista<Serie>();
     }
 
     // Verifica se já não existe na lista e adiciona a série

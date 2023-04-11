@@ -7,7 +7,7 @@ public class Cliente {
     private Lista<Serie> listaParaVer;
     private Lista<Serie> listaJaVistas;
 
-    public Cliente (String nomeDeUsuario, String senha, Lista listaParaVer, Lista listaJaVistas){
+    public Cliente (String nomeDeUsuario, String senha){
         this.nomeDeUsuario = nomeDeUsuario;
         this.senha = senha;
         this.listaParaVer = new Lista<Serie>();

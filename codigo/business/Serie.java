@@ -22,7 +22,9 @@ public class Serie{
         
     }
 
-
+    public String getNome(){
+        return this.nome;
+    }
 
 
 }

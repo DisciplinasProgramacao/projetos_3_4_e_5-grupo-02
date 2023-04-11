@@ -11,21 +11,29 @@ Cliente {
         this.listaJaVistas = listaJaVistas;
     }
 
+    // Verifica se já não existe na lista e adiciona a série
     public void adicionarNaLista(Serie serie){
-        if (PlataformaStreamimg.getSeries().contains(serie))
-            this.listaParaVer.add(serie);
+        Series[] series = new Series[listaParaVer.size()];
+        series = listaParaVer.allElements(series)
+
+        for (int i = 0; i < series.length; i++){
+            if (series[i].getNome().equals(nomeSerie)) {
+                return null;
+            } else {
+                this.listaParaVer.add(serie);
+            }
+        }
     };
 
     public void retirarDaLista(String nomeSerie){
         Series[] series = new Series[listaParaVer.size()];
         series = listaParaVer.allElements(series)
 
-        for (Serie serie : series){
-            if (serie.getNome().equals(nomeSerie))
-                listaParaVer.remove(nomeSerie)
+        for (int i = 0; i < series.length; i++){
+            if (series[i].getNome().equals(nomeSerie))
+                listaParaVer.remove(i)
         }
     };
-
 
     public Lista<Serie> void filtrarPorGenero(String genero);
     public Lista<Serie> void filtrarPorIdioma(String idioma);

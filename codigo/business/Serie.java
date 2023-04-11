@@ -1,4 +1,7 @@
 package business;
+
+import java.util.Arrays;
+
 public class Serie{
 
     private static final String[] GENEROS = new String[]{"Comédia","Ação","Terror"}; 
@@ -8,14 +11,15 @@ public class Serie{
     private int quantidadeEpisodios;
     private int audiencia;
 
-    public Serie(String nome, String genero, String idioma, int quantidadeEpisodios, int audiencia){
+    public Serie(String nome, String genero, String idioma, int quantidadeEpisodios){
 
         this.nome = nome;
         this.genero = genero;
         this.idioma = idioma;
-        this.quantidadeEpisodios = quantidadeEpisodios;
-        this.audiencia = audiencia;
-        
+        this.quantidadeEpisodios = 0;
+        this.audiencia = 0;
+
+
     }
 
     public void registrarAudiencia(){
@@ -26,5 +30,8 @@ public class Serie{
         return this.nome;
     }
 
+    public void setQuantidadeEpisodios(){
+
+    }
 
 }

@@ -19,7 +19,7 @@ public class Serie{
     }
 
     public void registrarAudiencia(){
-        
+        this.audiencia++;
     }
 
     public String getNome(){

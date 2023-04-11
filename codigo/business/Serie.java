@@ -1,7 +1,7 @@
-package codigo.business;
+package business;
 public class Serie{
 
-    private static final String GENEROS;
+    private static final String[] GENEROS = new String[]{"Comédia","Ação","Terror"}; 
     private String nome;
     private String genero;
     private String idioma;
@@ -15,7 +15,7 @@ public class Serie{
         this.idioma = idioma;
         this.quantidadeEpisodios = quantidadeEpisodios;
         this.audiencia = audiencia;
-
+        
     }
 
     public void registrarAudiencia(){

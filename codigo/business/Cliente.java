@@ -1,10 +1,13 @@
-Cliente {
+package business;
+
+
+public class Cliente {
     private String nomeDeUsuario;
     private String senha;
     private Lista<Serie> listaParaVer;
     private Lista<Serie> listaJaVistas;
 
-    public Cliente (String nomeDeUsuario String senha, Lista<Serie> listaParaVer, Lista<Serie> listaJaVistas){
+    public Cliente (String nomeDeUsuario, String senha){
         this.nomeDeUsuario = nomeDeUsuario;
         this.senha = senha;
         this.listaParaVer = new Lista<Serie>();
@@ -12,32 +15,32 @@ Cliente {
     }
 
     // Verifica se já não existe na lista e adiciona a série
-    public void adicionarNaLista(Serie serie){
-        Series[] series = new Series[listaParaVer.size()];
-        series = listaParaVer.allElements(series)
+    public void adicionarNaLista(Serie nomeSerie){
+        Serie[] series = new Serie[listaParaVer.size()];
+        series = listaParaVer.allElements(series);
 
         for (int i = 0; i < series.length; i++){
             if (series[i].getNome().equals(nomeSerie)) {
-                return null;
+                break;
             } else {
-                this.listaParaVer.add(serie);
+                this.listaParaVer.add(nomeSerie);
             }
         }
     };
 
     public void retirarDaLista(String nomeSerie){
-        Series[] series = new Series[listaParaVer.size()];
-        series = listaParaVer.allElements(series)
+        Serie[] series = new Serie[listaParaVer.size()];
+        series = listaParaVer.allElements(series);
 
         for (int i = 0; i < series.length; i++){
             if (series[i].getNome().equals(nomeSerie))
-                listaParaVer.remove(i)
+                listaParaVer.remove(i);
         }
     };
 
-    public Lista<Serie> void filtrarPorGenero(String genero);
-    public Lista<Serie> void filtrarPorIdioma(String idioma);
-    public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios);
-    public void registrarAudiencia(Serie serie);
+    // public Lista<Serie> filtrarPorGenero(String genero);
+    // public Lista<Serie> filtrarPorIdioma(String idioma);
+    // public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios);
+    // public void registrarAudiencia(Serie serie);
 
 }

@@ -21,6 +21,19 @@ public class Serie {
 
     // GETTERS E SETTERS
 
+    public void setQuantidadeEpisodios(int quantidadeEpisodios){
+        if(quantidadeEpisodios > 0){
+            this.quantidadeEpisodios = quantidadeEpisodios;
+        }
+    }
+
+    public void setNome(String nome){
+        if(nome.length() > 5){
+            this.nome = nome;
+        }
+    }
+
+    
     public String getNome(){
         return this.nome;
     }

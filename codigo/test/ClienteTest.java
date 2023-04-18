@@ -17,8 +17,10 @@ public class ClienteTest {
 
     @BeforeEach
     public void setUp(){
-        Serie s = new Serie();
+        Serie s = new Serie("Serie test", "Terror", "pt-br",20);
         Cliente c = new Cliente("xX_TesterCraft_Xx", "teste123");
+
+        c.adicionarNaLista(s);
 
     }
     

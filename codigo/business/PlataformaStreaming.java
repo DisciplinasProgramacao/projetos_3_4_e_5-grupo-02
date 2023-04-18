@@ -27,8 +27,8 @@ public class PlataformaStreaming {
 
         while (filereader.hasNextLine()){
             String[] dados = filereader.nextLine().split(";");
-
-            Serie novaSerie = new Serie(dados[1], "Ação", "Inglês", 100);   // ?? DÚVIDA
+            
+            Serie novaSerie = new Serie(dados[1], Serie.GENEROS[0], "Inglês", 100);   // ?? DÚVIDA
 
             this.series.put(Integer.valueOf(dados[0]), novaSerie);
         }

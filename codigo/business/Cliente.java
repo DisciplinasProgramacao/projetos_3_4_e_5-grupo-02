@@ -133,7 +133,7 @@ public class Cliente {
          }
          return filtrada;
      };
-
+     
     /**
      * Contabiliza audiência de uma série
      * @param serie série selecionada

@@ -17,11 +17,13 @@ public class ClienteTest {
 
     @BeforeEach
     public void setUp(){
-        Serie s = new Serie("Serie test", "Terror", "pt-br",20);
+        Serie s = new Serie("Breaking Bad", "Drama", "Portuguese", 25);
         Cliente c = new Cliente("xX_TesterCraft_Xx", "teste123");
-
-        c.adicionarNaLista(s);
-
+    }
+    
+    @Test
+    public void test() {
+    	
     }
     
 

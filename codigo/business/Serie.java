@@ -1,11 +1,9 @@
 package business;
 
-import java.util.Arrays;
-
-public class Serie{
+public class Serie {
 
     // ATRIBUTOS
-    private static final String[] GENEROS = new String[]{"Comédia","Ação","Terror"}; 
+    private static final String[] GENEROS = new String[]{"Comédia", "Ação", "Terror"};
     private String nome;
     private String genero;
     private String idioma;
@@ -39,5 +37,11 @@ public class Serie{
     public void registrarAudiencia(){
         this.audiencia++;
     }
+
+    @Override
+    public String toString(){
+        return ("Nome: " + this.nome + "\nGênero: " + this.genero + "\nIdioma: " + this.idioma + "\nQtd de eps.: " + this.quantidadeEpisodios);
+    }
+
 
 }

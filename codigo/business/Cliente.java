@@ -141,4 +141,8 @@ public class Cliente {
      public void registrarAudiencia(Serie serie){
          serie.registrarAudiencia();
      };
+     
+     public String getSenha() {
+    	 return this.senha;
+     }
 }

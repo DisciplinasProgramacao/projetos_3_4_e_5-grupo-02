@@ -29,7 +29,7 @@ public class PlataformaStreaming {
 			String[] temp = filereader.nextLine().split(" ");
 
 			String[] dados = temp[3].split(";");
-
+			
 			Cliente novoCliente = new Cliente(dados[0], dados[2]);
 
 			this.clientes.put(dados[1], novoCliente);
@@ -57,7 +57,19 @@ public class PlataformaStreaming {
 	}
 
 	public Cliente login(String nomeUsuario, String senha) {
-		return null;
+		Cliente cliente = clientes.get(nomeUsuario);
+		
+		if (cliente == null) {
+			return null;
+		}
+		
+		if (cliente.getSenha() != senha) {
+			return null;
+		}
+		
+		this.clienteAtual = cliente;
+		
+		return cliente;
 	}
 
 	public void adicionarCliente(Cliente cliente) {

@@ -18,7 +18,7 @@ public class PlataformaStreaming {
 		this.series = new HashMap<Integer, Serie>();
 		this.clientes = new HashMap<String, Cliente>();
 	}
-	
+
 	public void carregarClientes() throws FileNotFoundException {
 		File file = new File("docs/database/Espectadores.csv");
 		Scanner filereader = new Scanner(file);
@@ -27,7 +27,7 @@ public class PlataformaStreaming {
 
 		while (filereader.hasNextLine()) {
 			String[] temp = filereader.nextLine().split(" ");
-			
+
 			String[] dados = temp[3].split(";");
 
 			Cliente novoCliente = new Cliente(dados[0], dados[2]);
@@ -57,11 +57,11 @@ public class PlataformaStreaming {
 	}
 
 	public Cliente login(String nomeUsuario, String senha) {
-
+		return null;
 	}
 
 	public void adicionarCliente(Cliente cliente) {
-    }
+	}
 
 	public Lista<Serie> filtrarPorGenero(String genero) {
 		return clienteAtual != null ? clienteAtual.filtrarPorGenero(genero) : null;

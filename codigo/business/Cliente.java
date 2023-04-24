@@ -142,6 +142,10 @@ public class Cliente {
          serie.registrarAudiencia();
      };
      
+     public String getNomeUsuario() {
+    	 return this.nomeDeUsuario;
+     }
+     
      public String getSenha() {
     	 return this.senha;
      }

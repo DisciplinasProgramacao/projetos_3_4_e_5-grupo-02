@@ -30,8 +30,10 @@ public class PlataformaStreaming {
 
 			String[] dados = temp[3].split(";");
 			
+			// dados[0] = nomeUsuario, dados[2] = senha
 			Cliente novoCliente = new Cliente(dados[0], dados[2]);
 
+			// dados[1] = id
 			this.clientes.put(dados[1], novoCliente);
 		}
 
@@ -57,22 +59,19 @@ public class PlataformaStreaming {
 	}
 
 	public Cliente login(String nomeUsuario, String senha) {
-		Cliente cliente = clientes.get(nomeUsuario);
-		
-		if (cliente == null) {
-			return null;
+		for (Cliente cliente : this.clientes.values())
+		{
+			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha)
+			{
+				adicionarCliente(cliente);
+				return cliente;
+			}
 		}
-		
-		if (cliente.getSenha() != senha) {
-			return null;
-		}
-		
-		this.clienteAtual = cliente;
-		
-		return cliente;
+		return null;
 	}
 
 	public void adicionarCliente(Cliente cliente) {
+		this.clienteAtual = cliente;
 	}
 
 	public Lista<Serie> filtrarPorGenero(String genero) {

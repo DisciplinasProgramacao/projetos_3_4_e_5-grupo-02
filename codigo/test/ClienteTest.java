@@ -41,7 +41,7 @@ public class ClienteTest {
 
         c.adicionarNaLista(s); // Adiciona a série na lista de series do cliente
 
-        l = c.filtrarPorQtdEpisodios(25); // A lista de séries recebe a serie filtrada pelo genero
+        l = c.filtrarPorQtdEpisodios(25); // A lista de séries recebe a serie filtrada por qtd de episodios
 
         Serie vetorSeries[] = new Serie[10]; // Cria um vetor de séries
         l.allElements(vetorSeries); // Adiciona no vetorSeries todas as séries contidas na lista 'l'
@@ -55,7 +55,7 @@ public class ClienteTest {
 
         c.adicionarNaLista(s); // Adiciona a série na lista de series do cliente
 
-        l = c.filtrarPorIdioma("Portuguese"); // A lista de séries recebe a serie filtrada pelo genero
+        l = c.filtrarPorIdioma("Portuguese"); // A lista de séries recebe a serie filtrada pelo idioma
 
         Serie vetorSeries[] = new Serie[10]; // Cria um vetor de séries
         l.allElements(vetorSeries); // Adiciona no vetorSeries todas as séries contidas na lista 'l'

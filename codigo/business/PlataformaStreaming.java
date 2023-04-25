@@ -28,15 +28,44 @@ public class PlataformaStreaming {
 		{
 			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha)
 			{
-				adicionarCliente(cliente);
+				this.clienteAtual = cliente;
 				return cliente;
 			}
 		}
 		return null;
 	}
 	
-	// Francine C R Connor
+	
+	public void registrarAudiencia(Serie serie) {
+		if (clienteAtual != null)
+			clienteAtual.registrarAudiencia(serie);
+	}
+	
+	public void adicionarCliente(Cliente cliente) {
+		
+	}
+	
+	public void carregarAudiencia() throws FileNotFoundException {
+		File file = new File("docs/database/Audiencia.csv");
+		Scanner filereader = new Scanner(file);
 
+		while (filereader.hasNextLine()){
+			String[] dados = filereader.nextLine().split(";");
+
+			if (clientes.containsKey(dados[0]) && series.containsKey(dados[2])){
+
+				if (dados[1].equals("F")){
+					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2]));	// Adiciona série à lista
+				} else if (dados[1].equals("A")) {
+					series.get(dados[2]).registrarAudiencia();	// Registra +1 ponto de audiência na série
+				}
+
+			};
+		}
+
+		filereader.close();
+	}
+	
 	public void carregarClientes() throws FileNotFoundException {
 		File file = new File("docs/database/Espectadores.csv");
 		Scanner filereader = new Scanner(file);
@@ -48,17 +77,12 @@ public class PlataformaStreaming {
 
 			Cliente novoCliente = new Cliente(split[0], split[2]);
 
-			// dados[1] = id
 			this.clientes.put(split[1], novoCliente);
 		}
 
 		this.clientes.forEach((key, value) -> System.out.println("\n" + this.clientes.get(key).getNomeUsuario() + " | " + this.clientes.get(key).getSenha()));
 		
 		filereader.close();
-	}
-
-	public void adicionarCliente(Cliente cliente) {
-		this.clienteAtual = cliente;
 	}
 
 	public void carregarSeries() throws FileNotFoundException {
@@ -139,29 +163,4 @@ public class PlataformaStreaming {
 		return clienteAtual != null ? clienteAtual.filtrarPorQtdEpisodios(quantEpisodios) : null;
 	}
 
-	public void carregarAudiencia() throws FileNotFoundException {
-		File file = new File("docs/database/Audiencia.csv");
-		Scanner filereader = new Scanner(file);
-
-		while (filereader.hasNextLine()){
-			String[] dados = filereader.nextLine().split(";");
-
-			if (clientes.containsKey(dados[0]) && series.containsKey(dados[2])){
-
-				if (dados[1].equals("F")){
-					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2]));	// Adiciona série à lista
-				} else if (dados[1].equals("A")) {
-					series.get(dados[2]).registrarAudiencia();	// Registra +1 ponto de audiência na série
-				}
-
-			};
-		}
-
-		filereader.close();
-	}
-
-	public void registrarAudiencia(Serie serie) {
-		if (clienteAtual != null)
-			clienteAtual.registrarAudiencia(serie);
-	}
 }

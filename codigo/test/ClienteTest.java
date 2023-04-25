@@ -24,13 +24,14 @@ public class ClienteTest {
     public void setUp() {
     s  = new Serie("Breaking Bad", "Drama", "Portuguese", new Date(), 25);
     c  = new Cliente("xX_TesterCraft_Xx", "teste123");
+
+    c.adicionarNaLista(s); // Adiciona a série na lista de series do cliente
+
     }
 
     @Test
     public void filtrarPorGeneroTest() {
         Lista<Serie> l = new Lista<>();
-
-        c.adicionarNaLista(s); // Adiciona a série na lista de series do cliente
 
         l = c.filtrarPorGenero("Drama"); // A lista de séries recebe a serie filtrada pelo genero
 
@@ -44,8 +45,6 @@ public class ClienteTest {
     public void filtrarPorEpisodiosTest() {
         Lista<Serie> l = new Lista<>();
 
-        c.adicionarNaLista(s); // Adiciona a série na lista de series do cliente
-
         l = c.filtrarPorQtdEpisodios(25); // A lista de séries recebe a serie filtrada por qtd de episodios
 
         Serie vetorSeries[] = new Serie[10]; // Cria um vetor de séries
@@ -57,8 +56,6 @@ public class ClienteTest {
     @Test
     public void filtrarPorIdiomaTest() {
         Lista<Serie> l = new Lista<>();
-
-        c.adicionarNaLista(s); // Adiciona a série na lista de series do cliente
 
         l = c.filtrarPorIdioma("Portuguese"); // A lista de séries recebe a serie filtrada pelo idioma
 

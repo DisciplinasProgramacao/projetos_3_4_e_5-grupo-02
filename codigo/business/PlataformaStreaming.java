@@ -24,48 +24,17 @@ public class PlataformaStreaming {
 	}
 
 	public Cliente login(String nomeUsuario, String senha) {
-		for (Cliente cliente : this.clientes.values())
-		{
-			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha)
-			{
-				this.clienteAtual = cliente;
+		for (Cliente cliente : this.clientes.values()) {
+			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha) {
+				adicionarCliente(cliente);
 				return cliente;
 			}
 		}
 		return null;
 	}
 	
-	
-	public void registrarAudiencia(Serie serie) {
-		if (clienteAtual != null)
-			clienteAtual.registrarAudiencia(serie);
-	}
-	
-	public void adicionarCliente(Cliente cliente) {
-		
-	}
-	
-	public void carregarAudiencia() throws FileNotFoundException {
-		File file = new File("docs/database/Audiencia.csv");
-		Scanner filereader = new Scanner(file);
+	// Francine C R Connor
 
-		while (filereader.hasNextLine()){
-			String[] dados = filereader.nextLine().split(";");
-
-			if (clientes.containsKey(dados[0]) && series.containsKey(dados[2])){
-
-				if (dados[1].equals("F")){
-					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2]));	// Adiciona série à lista
-				} else if (dados[1].equals("A")) {
-					series.get(dados[2]).registrarAudiencia();	// Registra +1 ponto de audiência na série
-				}
-
-			};
-		}
-
-		filereader.close();
-	}
-	
 	public void carregarClientes() throws FileNotFoundException {
 		File file = new File("docs/database/Espectadores.csv");
 		Scanner filereader = new Scanner(file);
@@ -77,6 +46,7 @@ public class PlataformaStreaming {
 
 			Cliente novoCliente = new Cliente(split[0], split[2]);
 
+			// dados[1] = id
 			this.clientes.put(split[1], novoCliente);
 		}
 
@@ -84,6 +54,13 @@ public class PlataformaStreaming {
 		
 		filereader.close();
 	}
+
+	public void adicionarCliente(Cliente cliente) {
+		this.clienteAtual = cliente;
+	}
+
+	int countWhile = 0;
+	int countPrint = 0;
 
 	public void carregarSeries() throws FileNotFoundException {
 		File file = new File("docs/database/Series.csv");
@@ -108,12 +85,13 @@ public class PlataformaStreaming {
 
 			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios.Em seguida, insere-se a nova série no hashmap
 			Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
-			this.series.put(Integer.valueOf(dados[0]), novaSerie);
+
+			Serie antiga = this.series.put(Integer.valueOf(dados[0]), novaSerie);
 		}
 
 		// Imprimir lista
 		this.series.forEach((key, value) -> System.out.println("\n" + this.series.get(key)));
-		// DÚVIDA: ESTÁ PRINTANDO APENAS 111 SÉRIES
+
 
 		filereader.close();
 	}
@@ -146,7 +124,7 @@ public class PlataformaStreaming {
 		}
 
 		// Imprimir lista
-			this.filmes.forEach((key, value) -> System.out.println("\n" + this.filmes.get(key)));
+		this.filmes.forEach((key, value) -> System.out.println("\n" + this.filmes.get(key)));
 
 		filereader.close();
 	}
@@ -163,4 +141,29 @@ public class PlataformaStreaming {
 		return clienteAtual != null ? clienteAtual.filtrarPorQtdEpisodios(quantEpisodios) : null;
 	}
 
+	public void carregarAudiencia() throws FileNotFoundException {
+		File file = new File("docs/database/Audiencia.csv");
+		Scanner filereader = new Scanner(file);
+
+		while (filereader.hasNextLine()){
+			String[] dados = filereader.nextLine().split(";");
+
+			if (clientes.containsKey(dados[0]) && series.containsKey(dados[2])){
+
+				if (dados[1].equals("F")){
+					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2]));    // Adiciona série à lista
+				} else if (dados[1].equals("A")) {
+					series.get(dados[2]).registrarAudiencia();    // Registra +1 ponto de audiência na série
+				}
+
+			};
+		}
+
+		filereader.close();
+	}
+
+	public void registrarAudiencia(Serie serie) {
+		if (clienteAtual != null)
+			clienteAtual.registrarAudiencia(serie);
+	}
 }

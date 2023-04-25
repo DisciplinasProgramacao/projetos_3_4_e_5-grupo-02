@@ -10,6 +10,7 @@ public class App {
     public static void main(String[] args) throws FileNotFoundException {
         PlataformaStreaming plataforma = new PlataformaStreaming("Flin TeX", new Cliente("Lott", "Lott123"));
 
-       plataforma.carregarSeries();
+        plataforma.carregarSeries();
+        plataforma.carregarFilmes();
     }
 }

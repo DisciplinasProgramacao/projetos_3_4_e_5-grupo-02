@@ -3,6 +3,7 @@ package business;
 import java.util.Date;
 
 public class Filme extends Midia {
+
     // ATRIBUTOS
     private int duracao;
 
@@ -24,6 +25,6 @@ public class Filme extends Midia {
     // MÉTODOS
     @Override
     public String toString(){
-        return (super.toString() + "\nDuração:" + this.duracao);
+        return (super.toString() + "\nDuração: " + this.duracao + " segundos");
     }   
 }

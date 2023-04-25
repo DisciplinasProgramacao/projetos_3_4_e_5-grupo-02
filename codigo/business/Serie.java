@@ -27,7 +27,7 @@ public class Serie extends Midia {
     // MÉTODOS
     @Override
     public String toString(){
-        return (super.toString() + "\nQtd de eps.:" + this.quantidadeEpisodios);
+        return (super.toString() + "\nQtd de eps.: " + this.quantidadeEpisodios);
     }   
 
 }

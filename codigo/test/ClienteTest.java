@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
+
 public class ClienteTest {
 
     @Test
@@ -20,7 +22,7 @@ public class ClienteTest {
 
     @BeforeEach
     public void setUp() {
-    s  = new Serie("Breaking Bad", "Drama", "Portuguese", 25);
+    s  = new Serie("Breaking Bad", "Drama", "Portuguese", new Date(), 25);
     c  = new Cliente("xX_TesterCraft_Xx", "teste123");
     }
 

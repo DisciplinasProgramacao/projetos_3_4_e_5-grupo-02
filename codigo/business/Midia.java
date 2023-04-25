@@ -3,6 +3,7 @@ package business;
 import java.util.Date;
 
 public abstract class Midia {
+
     // ATRIBUTOS
     public static final String[] GENEROS = new String[]{"Comédia", "Ação", "Terror", "Drama", "Romance", "Aventura", "Animação", "Suspense"};
     public static final String[] IDIOMAS = new String[]{"Portugês", "Inglês", "Esperanto", "Romeno"};

@@ -24,10 +24,8 @@ public class PlataformaStreaming {
 	}
 
 	public Cliente login(String nomeUsuario, String senha) {
-		for (Cliente cliente : this.clientes.values())
-		{
-			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha)
-			{
+		for (Cliente cliente : this.clientes.values()) {
+			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha) {
 				adicionarCliente(cliente);
 				return cliente;
 			}
@@ -50,7 +48,9 @@ public class PlataformaStreaming {
 			Cliente novoCliente = new Cliente(dados[0], dados[2]);
 
 			// dados[1] = id
+
 			this.clientes.put(dados[1], novoCliente);
+
 		}
 
 		this.clientes.forEach((key, value) -> System.out.println("\n" + this.clientes.get(key)));
@@ -59,6 +59,9 @@ public class PlataformaStreaming {
 	public void adicionarCliente(Cliente cliente) {
 		this.clienteAtual = cliente;
 	}
+
+	int countWhile = 0;
+	int countPrint = 0;
 
 	public void carregarSeries() throws FileNotFoundException {
 		File file = new File("docs/database/Series.csv");
@@ -83,12 +86,13 @@ public class PlataformaStreaming {
 
 			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios.Em seguida, insere-se a nova série no hashmap
 			Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
-			this.series.put(Integer.valueOf(dados[0]), novaSerie);
+
+			Serie antiga = this.series.put(Integer.valueOf(dados[0]), novaSerie);
 		}
 
 		// Imprimir lista
 		this.series.forEach((key, value) -> System.out.println("\n" + this.series.get(key)));
-		// DÚVIDA: ESTÁ PRINTANDO APENAS 111 SÉRIES
+
 
 		filereader.close();
 	}
@@ -121,7 +125,7 @@ public class PlataformaStreaming {
 		}
 
 		// Imprimir lista
-			this.filmes.forEach((key, value) -> System.out.println("\n" + this.filmes.get(key)));
+		this.filmes.forEach((key, value) -> System.out.println("\n" + this.filmes.get(key)));
 
 		filereader.close();
 	}
@@ -148,9 +152,9 @@ public class PlataformaStreaming {
 			if (clientes.containsKey(dados[0]) && series.containsKey(dados[2])){
 
 				if (dados[1].equals("F")){
-					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2]));	// Adiciona série à lista
+					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2]));    // Adiciona série à lista
 				} else if (dados[1].equals("A")) {
-					series.get(dados[2]).registrarAudiencia();	// Registra +1 ponto de audiência na série
+					series.get(dados[2]).registrarAudiencia();    // Registra +1 ponto de audiência na série
 				}
 
 			};

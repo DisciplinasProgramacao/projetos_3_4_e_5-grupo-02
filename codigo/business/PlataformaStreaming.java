@@ -59,9 +59,6 @@ public class PlataformaStreaming {
 		this.clienteAtual = cliente;
 	}
 
-	int countWhile = 0;
-	int countPrint = 0;
-
 	public void carregarSeries() throws FileNotFoundException {
 		File file = new File("docs/database/Series.csv");
 		Scanner filereader = new Scanner(file);

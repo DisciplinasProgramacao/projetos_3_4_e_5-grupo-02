@@ -8,7 +8,7 @@ public class Filme extends Midia {
     private int duracao;
 
      // CONSTRUTORES
-     public Filme(String nome, String genero, String idioma, Date lancamento, int duracao){
+    public Filme(String nome, String genero, String idioma, Date lancamento, int duracao){
         super(nome, genero, idioma, lancamento);
         this.duracao = duracao;
     }

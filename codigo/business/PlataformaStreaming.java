@@ -2,7 +2,6 @@ package business;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +23,18 @@ public class PlataformaStreaming {
 		this.clientes = new HashMap<String, Cliente>();
 	}
 
+	public Cliente login(String nomeUsuario, String senha) {
+		for (Cliente cliente : this.clientes.values())
+		{
+			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha)
+			{
+				adicionarCliente(cliente);
+				return cliente;
+			}
+		}
+		return null;
+	}
+
 	public void carregarClientes() throws FileNotFoundException {
 		File file = new File("docs/database/Espectadores.csv");
 		Scanner filereader = new Scanner(file);
@@ -34,7 +45,7 @@ public class PlataformaStreaming {
 			String[] temp = filereader.nextLine().split(" ");
 
 			String[] dados = temp[3].split(";");
-			
+
 			// dados[0] = nomeUsuario, dados[2] = senha
 			Cliente novoCliente = new Cliente(dados[0], dados[2]);
 
@@ -43,6 +54,10 @@ public class PlataformaStreaming {
 		}
 
 		this.clientes.forEach((key, value) -> System.out.println("\n" + this.clientes.get(key)));
+	}
+
+	public void adicionarCliente(Cliente cliente) {
+		this.clienteAtual = cliente;
 	}
 
 	public void carregarSeries() throws FileNotFoundException {
@@ -74,9 +89,11 @@ public class PlataformaStreaming {
 		// Imprimir lista
 		this.series.forEach((key, value) -> System.out.println("\n" + this.series.get(key)));
 		// DÚVIDA: ESTÁ PRINTANDO APENAS 111 SÉRIES
+
+		filereader.close();
 	}
 
-	public void carregarFilmes() throws FileNotFoundException{
+	public void carregarFilmes() throws FileNotFoundException {
 		File file = new File("docs/database/Filmes.csv");
 		Scanner filereader = new Scanner(file);
 
@@ -101,26 +118,12 @@ public class PlataformaStreaming {
 			Filme novoFilme = new Filme(dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
 			this.filmes.put(Integer.valueOf(dados[0]), novoFilme);
 
+		}
 
-			// Imprimir lista
+		// Imprimir lista
 			this.filmes.forEach((key, value) -> System.out.println("\n" + this.filmes.get(key)));
-		}
-	}
 
-	public Cliente login(String nomeUsuario, String senha) {
-		for (Cliente cliente : this.clientes.values())
-		{
-			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha)
-			{
-				adicionarCliente(cliente);
-				return cliente;
-			}
-		}
-		return null;
-	}
-
-	public void adicionarCliente(Cliente cliente) {
-		this.clienteAtual = cliente;
+		filereader.close();
 	}
 
 	public Lista<Serie> filtrarPorGenero(String genero) {
@@ -133,6 +136,27 @@ public class PlataformaStreaming {
 
 	public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios) {
 		return clienteAtual != null ? clienteAtual.filtrarPorQtdEpisodios(quantEpisodios) : null;
+	}
+
+	public void carregarAudiencia() throws FileNotFoundException {
+		File file = new File("docs/database/Audiencia.csv");
+		Scanner filereader = new Scanner(file);
+
+		while (filereader.hasNextLine()){
+			String[] dados = filereader.nextLine().split(";");
+
+			if (clientes.containsKey(dados[0]) && series.containsKey(dados[2])){
+
+				if (dados[1].equals("F")){
+					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2]));	// Adiciona série à lista
+				} else if (dados[1].equals("A")) {
+					series.get(dados[2]).registrarAudiencia();	// Registra +1 ponto de audiência na série
+				}
+
+			};
+		}
+
+		filereader.close();
 	}
 
 	public void registrarAudiencia(Serie serie) {

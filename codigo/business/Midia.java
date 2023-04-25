@@ -6,14 +6,13 @@ public abstract class Midia {
 
     // ATRIBUTOS
     public static final String[] GENEROS = new String[]{"Comédia", "Ação", "Terror", "Drama", "Romance", "Aventura", "Animação", "Suspense"};
-    public static final String[] IDIOMAS = new String[]{"Portugês", "Inglês", "Esperanto", "Romeno"};
+    public static final String[] IDIOMAS = new String[]{"Português", "Inglês", "Esperanto", "Romeno"};
     private int id;
     private String nome;
     private String genero;
     private String idioma;
     private Date lancamento;
     private int audiencia;
-
 
     // CONSTRUTORES
     public Midia(String nome, String genero, String idioma, Date lancamento){

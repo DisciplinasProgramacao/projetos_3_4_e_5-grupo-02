@@ -30,6 +30,8 @@ public class ClienteTest {
 
     c.adicionarNaLista(s); // Adiciona a série na lista de series do cliente
 
+    int x = Integer.parseInt("1");
+
     }
 
     @Test
@@ -38,8 +40,22 @@ public class ClienteTest {
         c.adicionarNaLista(s1);
         l = c.filtrarPorGenero("Drama"); // A lista de séries recebe a serie filtrada pelo genero
 
+
         assertEquals(1, l.size());
     }
+
+    // @Test
+    // public void filtrarPorIdiomaTest() {
+    //     Serie s1  = new Serie("Breaking Good", "Suspense", "Portuguese", new Date(), 25);
+    //     c.adicionarNaLista(s1);
+    //     l = c.filtrarPorGenero("Portuguese"); // A lista de séries recebe a serie filtrada pelo genero
+
+    //     Serie vetorSeries[] = new Serie[1]; // Cria um vetor de series
+
+    //     l.allElements(vetorSeries); // Adiciona no vetor de series todas as séries da lista filtradas por idioma
+
+        
+    // }
 
     
 

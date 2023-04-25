@@ -26,14 +26,12 @@ public class PlataformaStreaming {
 	public Cliente login(String nomeUsuario, String senha) {
 		for (Cliente cliente : this.clientes.values()) {
 			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha) {
-				adicionarCliente(cliente);
+				this.clienteAtual = cliente;
 				return cliente;
 			}
 		}
 		return null;
 	}
-	
-	// Francine C R Connor
 
 	public void carregarClientes() throws FileNotFoundException {
 		File file = new File("docs/database/Espectadores.csv");
@@ -56,12 +54,14 @@ public class PlataformaStreaming {
 	}
 
 	public void adicionarCliente(Cliente cliente) {
-		this.clienteAtual = cliente;
+
 	}
 
-	int countWhile = 0;
-	int countPrint = 0;
-
+	public void registrarAudiencia(Serie serie) {
+		if (clienteAtual != null)
+			clienteAtual.registrarAudiencia(serie);
+	}
+	
 	public void carregarSeries() throws FileNotFoundException {
 		File file = new File("docs/database/Series.csv");
 		Scanner filereader = new Scanner(file);
@@ -129,18 +129,6 @@ public class PlataformaStreaming {
 		filereader.close();
 	}
 
-	public Lista<Serie> filtrarPorGenero(String genero) {
-		return clienteAtual != null ? clienteAtual.filtrarPorGenero(genero) : null;
-	}
-
-	public Lista<Serie> filtrarPorIdioma(String idioma) {
-		return clienteAtual != null ? clienteAtual.filtrarPorIdioma(idioma) : null;
-	}
-
-	public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios) {
-		return clienteAtual != null ? clienteAtual.filtrarPorQtdEpisodios(quantEpisodios) : null;
-	}
-
 	public void carregarAudiencia() throws FileNotFoundException {
 		File file = new File("docs/database/Audiencia.csv");
 		Scanner filereader = new Scanner(file);
@@ -161,9 +149,17 @@ public class PlataformaStreaming {
 
 		filereader.close();
 	}
-
-	public void registrarAudiencia(Serie serie) {
-		if (clienteAtual != null)
-			clienteAtual.registrarAudiencia(serie);
+	
+	public Lista<Serie> filtrarPorGenero(String genero) {
+		return clienteAtual != null ? clienteAtual.filtrarPorGenero(genero) : null;
 	}
+
+	public Lista<Serie> filtrarPorIdioma(String idioma) {
+		return clienteAtual != null ? clienteAtual.filtrarPorIdioma(idioma) : null;
+	}
+
+	public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios) {
+		return clienteAtual != null ? clienteAtual.filtrarPorQtdEpisodios(quantEpisodios) : null;
+	}
+
 }

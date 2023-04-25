@@ -155,4 +155,8 @@ public class Cliente {
         return "Usuário: " + nomeDeUsuario +
                 "\nSenha: " + senha;
     }
+
+    public int tamanhoListaParaVer(){
+        return listaParaVer.size();
+    }
 }

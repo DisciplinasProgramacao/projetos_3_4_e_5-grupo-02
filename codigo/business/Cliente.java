@@ -149,4 +149,10 @@ public class Cliente {
      public String getSenha() {
     	 return this.senha;
      }
+
+    @Override
+    public String toString() {
+        return "Usuário: " + nomeDeUsuario +
+                "\nSenha: " + senha;
+    }
 }

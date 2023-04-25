@@ -34,6 +34,8 @@ public class PlataformaStreaming {
 		}
 		return null;
 	}
+	
+	// Francine C R Connor
 
 	public void carregarClientes() throws FileNotFoundException {
 		File file = new File("docs/database/Espectadores.csv");
@@ -42,18 +44,17 @@ public class PlataformaStreaming {
 		filereader.nextLine(); // Artifício para ignorar primeira linha do csv
 
 		while (filereader.hasNextLine()) {
-			String[] temp = filereader.nextLine().split(" ");
+			String[] split = filereader.nextLine().split(";");
 
-			String[] dados = temp[3].split(";");
-
-			// dados[0] = nomeUsuario, dados[2] = senha
-			Cliente novoCliente = new Cliente(dados[0], dados[2]);
+			Cliente novoCliente = new Cliente(split[0], split[2]);
 
 			// dados[1] = id
-			this.clientes.put(dados[1], novoCliente);
+			this.clientes.put(split[1], novoCliente);
 		}
 
-		this.clientes.forEach((key, value) -> System.out.println("\n" + this.clientes.get(key)));
+		this.clientes.forEach((key, value) -> System.out.println("\n" + this.clientes.get(key).getNomeUsuario() + " | " + this.clientes.get(key).getSenha()));
+		
+		filereader.close();
 	}
 
 	public void adicionarCliente(Cliente cliente) {

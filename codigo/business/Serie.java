@@ -1,25 +1,20 @@
 package business;
 
-public class Serie {
+public class Serie extends Midia {
 
     // ATRIBUTOS
-    public static final String[] GENEROS = new String[]{"Comédia", "Ação", "Terror", "Drama","Romance","Aventura","Animação","Suspense"};
-    private String nome;
-    private String genero;
-    private String idioma;
     private int quantidadeEpisodios;
-    private int audiencia;
 
     // CONSTRUTORES
     public Serie(String nome, String genero, String idioma, int quantidadeEpisodios){
-        this.nome = nome;
-        this.genero = genero;
-        this.idioma = idioma;
+        super(nome, genero, idioma);
         this.quantidadeEpisodios = quantidadeEpisodios;
-        this.audiencia = 0;
     }
 
     // GETTERS E SETTERS
+    public int getQuantidadeEpisodios() {
+        return this.quantidadeEpisodios;
+    }
 
     public void setQuantidadeEpisodios(int quantidadeEpisodios){
         if(quantidadeEpisodios > 0){
@@ -27,35 +22,11 @@ public class Serie {
         }
     }
 
-    public void setNome(String nome){
-        if(nome.length() > 0){
-            this.nome = nome;
-        }
-    }
-
-
-    public String getNome(){
-        return this.nome;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public int getQuantidadeEpisodios() {
-        return quantidadeEpisodios;
-    }
-
     // MÉTODOS
-    public void registrarAudiencia(){
-        this.audiencia++;
-    }
-
     @Override
     public String toString(){
-        return ("Nome: " + this.nome + "\nGênero: " + this.genero + "\nIdioma: " + this.idioma + "\nQtd de eps.: " + this.quantidadeEpisodios);
+        return (super.toString() + this.quantidadeEpisodios);
     }   
-
 
 }
 

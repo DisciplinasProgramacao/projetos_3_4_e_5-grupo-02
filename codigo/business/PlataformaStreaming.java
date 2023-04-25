@@ -32,8 +32,6 @@ public class PlataformaStreaming {
 		}
 		return null;
 	}
-	
-	// Francine C R Connor
 
 	public void carregarClientes() throws FileNotFoundException {
 		File file = new File("docs/database/Espectadores.csv");

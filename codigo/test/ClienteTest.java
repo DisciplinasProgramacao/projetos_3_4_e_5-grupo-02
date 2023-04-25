@@ -20,7 +20,6 @@ public class ClienteTest {
     Serie s;
     Cliente c;
     Lista<Serie> l;
-    Serie vetorSeries[];
 
     @BeforeEach
     public void setUp() {

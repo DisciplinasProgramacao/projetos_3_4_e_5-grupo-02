@@ -15,10 +15,13 @@ public class ClienteTest {
         assertTrue(1 + 1 == 2);
     }
 
+    Serie s;
+    Cliente c;
+
     @BeforeEach
     public void setUp() {
-        Serie s = new Serie("Breaking Bad", "Drama", "Portuguese", 25);
-        Cliente c = new Cliente("xX_TesterCraft_Xx", "teste123");
+    s  = new Serie("Breaking Bad", "Drama", "Portuguese", 25);
+    c  = new Cliente("xX_TesterCraft_Xx", "teste123");
     }
 
     @Test

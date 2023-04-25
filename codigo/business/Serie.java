@@ -1,13 +1,15 @@
 package business;
 
+import java.util.Date;
+
 public class Serie extends Midia {
 
     // ATRIBUTOS
     private int quantidadeEpisodios;
 
     // CONSTRUTORES
-    public Serie(String nome, String genero, String idioma, int quantidadeEpisodios){
-        super(nome, genero, idioma);
+    public Serie(String nome, String genero, String idioma, Date lancamento, int quantidadeEpisodios){
+        super(nome, genero, idioma, lancamento);
         this.quantidadeEpisodios = quantidadeEpisodios;
     }
 
@@ -25,7 +27,7 @@ public class Serie extends Midia {
     // MÉTODOS
     @Override
     public String toString(){
-        return (super.toString() + this.quantidadeEpisodios);
+        return (super.toString() + "\nQtd de eps.:" + this.quantidadeEpisodios);
     }   
 
 }

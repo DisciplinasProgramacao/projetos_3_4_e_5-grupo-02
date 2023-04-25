@@ -2,6 +2,9 @@ package business;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -44,12 +47,25 @@ public class PlataformaStreaming {
 		File file = new File("docs/database/Series.csv");
 		Scanner filereader = new Scanner(file);
 
-		filereader.nextLine(); // Artifício para ignorar primeira linha do csv
+		filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
 
 		while (filereader.hasNextLine()) {
 			String[] dados = filereader.nextLine().split(";");
 
-			Serie novaSerie = new Serie(dados[1], "Ação", "Inglês", 100); // ?? DÚVIDA
+			// Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas, como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
+			String novoGenero = Midia.GENEROS[(int) (Math.random() * (Midia.GENEROS.length + 1))];
+			String novoIdioma = Midia.IDIOMAS[(int) (Math.random() * (Midia.IDIOMAS.length + 1))];
+
+			// Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string não apresente formato válido, é lançada uma exceção
+			Date novaData = null;
+			try {
+				novaData = new SimpleDateFormat("dd/MM/yyyy").parse(dados[2]);
+			} catch (Exception e) {
+				System.out.println("Erro: Formato inválido na leitura da data de lançamento de série");
+			}
+
+			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios
+			Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
 
 			this.series.put(Integer.valueOf(dados[0]), novaSerie);
 		}
@@ -57,6 +73,14 @@ public class PlataformaStreaming {
 		// Imprimir lista
 		this.series.forEach((key, value) -> System.out.println("\n" + this.series.get(key)));
 	}
+
+//	public void carregarFilmes() throws FileNotFoundException{
+//		File file = new File("docs/database/Filmes.csv");
+//		Scanner filereader = new Scanner(file);
+//
+//		filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
+//
+//	}
 
 	public Cliente login(String nomeUsuario, String senha) {
 		for (Cliente cliente : this.clientes.values())

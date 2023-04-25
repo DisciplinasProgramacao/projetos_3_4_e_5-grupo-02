@@ -31,18 +31,16 @@ public class ClienteTest {
 
     c.adicionarNaLista(s); // Adiciona a série na lista de series do cliente
 
-    Serie vetorSeries[] = new Serie[10]; // Cria um vetor de séries
-    l.allElements(vetorSeries); // Adiciona no vetorSeries todas as séries contidas na lista 'l'
-
-
-
-
     }
 
     @Test
     public void filtrarPorGeneroTest() {
 
         l = c.filtrarPorGenero("Drama"); // A lista de séries recebe a serie filtrada pelo genero
+
+        
+        Serie vetorSeries[] = new Serie[10]; // Cria um vetor de séries
+        l.allElements(vetorSeries); // Adiciona no vetorSeries todas as séries contidas na lista 'l'
 
         assertEquals("Breaking Bad", vetorSeries[0]);
     }
@@ -52,6 +50,10 @@ public class ClienteTest {
 
         l = c.filtrarPorQtdEpisodios(25); // A lista de séries recebe a serie filtrada por qtd de episodios
 
+        
+        Serie vetorSeries[] = new Serie[10]; // Cria um vetor de séries
+        l.allElements(vetorSeries); // Adiciona no vetorSeries todas as séries contidas na lista 'l'
+
         assertEquals("Breaking Bad", vetorSeries[0]);
     }
 
@@ -59,6 +61,10 @@ public class ClienteTest {
     public void filtrarPorIdiomaTest() {
 
         l = c.filtrarPorIdioma("Portuguese"); // A lista de séries recebe a serie filtrada pelo idioma
+
+        
+        Serie vetorSeries[] = new Serie[10]; // Cria um vetor de séries
+        l.allElements(vetorSeries); // Adiciona no vetorSeries todas as séries contidas na lista 'l'
 
         assertEquals("Breaking Bad", vetorSeries[0]);
     }

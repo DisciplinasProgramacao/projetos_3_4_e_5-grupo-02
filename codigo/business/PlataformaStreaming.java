@@ -140,8 +140,7 @@ public class PlataformaStreaming {
 				if (dados[1].equals("F")){
 					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2]));    // Adiciona série à lista
 				} else if (dados[1].equals("A")) {
-					// Classe cliente deve registrar audiencia
-					series.get(dados[2]).registrarAudiencia();    // Registra +1 ponto de audiência na série
+					clientes.get(dados[0]).registrarAudiencia(series.get(dados[2]));	// Registra +1 ponto de audiência na série
 				}
 			}
 		}

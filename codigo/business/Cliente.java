@@ -15,27 +15,36 @@ public class Cliente {
         this.listaJaVistas = new Lista<Serie>();
     }
 
+    // GETTERS E SETTERS
+    public String getNomeUsuario() {
+        return this.nomeDeUsuario;
+    }
+
+    public String getSenha() {
+        return this.senha;
+    }
+
     // MÉTODOS
 
     /**
      * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada
-     * já exista na lista,
-     * a operação não é realizada.
+     * já exista na lista, a operação não é realizada.
      * 
      * @param nomeSerie Nome da série a ser adicionada
      */
     public void adicionarNaLista(Serie nomeSerie) {
-        Serie[] series = new Serie[listaParaVer.size()];
-        series = listaParaVer.allElements(series);
+        Serie[] listaJaVistasArray = new Serie[listaParaVer.size()];
+        listaJaVistasArray = this.listaParaVer.allElements(listaJaVistasArray);
 
-        for (int i = 0; i < series.length; i++) {
-            if (series[i].getNome().equals(nomeSerie)) {
-                break;
-            } else {
-                this.listaParaVer.add(nomeSerie);
+        for (Serie serieDaLista : listaJaVistasArray){
+            if (serieDaLista.equals(nomeSerie)) {
+                return;
             }
         }
-    };
+
+        this.listaParaVer.add(nomeSerie);
+    }
+
 
     /**
      * Retira uma série da lista de séries para ver, contanto que a série
@@ -51,7 +60,7 @@ public class Cliente {
             if (series[i].getNome().equals(nomeSerie))
                 listaParaVer.remove(i);
         }
-    };
+    }
 
     /**
      * Filtra, entre as listas de séries para ver e de séries já vistas, aquelas que
@@ -144,21 +153,22 @@ public class Cliente {
     };
 
     /**
-     * Contabiliza audiência de uma série
-     * 
+     * Contabiliza audiência de uma série. Caso a série selecionada já esteja presente na lista
+     * de séries para ver, a operação não é realizada.
+     *
      * @param serie série selecionada
      */
      public void registrarAudiencia(Serie serie){
-         // TODO adicionar if para testar se série já teve audiência registrada
-         serie.registrarAudiencia();
-     };
-     
-     public String getNomeUsuario() {
-    	 return this.nomeDeUsuario;
-     }
-     
-     public String getSenha() {
-    	 return this.senha;
+         Serie[] buscaJaVistas = new Serie[listaJaVistas.size()];
+         buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
+
+         for (Serie buscada : buscaJaVistas){
+             if (buscada.equals(serie)){
+                 return;
+             }
+
+             serie.registrarAudiencia();
+         }
      }
 
     @Override
@@ -169,5 +179,14 @@ public class Cliente {
 
     public int tamanhoListaParaVer() {
         return this.listaParaVer.size();
+    }
+
+    public void imprimirListaParaVer() {
+        Serie[] listaImprimir = new Serie[listaParaVer.size()];
+        listaImprimir = listaParaVer.allElements(listaImprimir);
+
+        for (Serie serie : listaImprimir){
+            System.out.println(serie);
+        }
     }
 }

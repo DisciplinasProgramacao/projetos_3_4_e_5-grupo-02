@@ -1,13 +1,9 @@
 package test;
 
 import business.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.Date;
 
 public class ClienteTest {

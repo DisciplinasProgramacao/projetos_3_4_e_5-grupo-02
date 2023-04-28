@@ -11,6 +11,6 @@ public class App {
         plataforma.carregarSeries();
         plataforma.carregarFilmes();
         plataforma.carregarClientes();
-//        plataforma.carregarAudiencia(); // erro em função de carregarClientes()
+        plataforma.carregarAudiencia();
     }
 }

@@ -139,6 +139,7 @@ public class Cliente {
      * @param serie série selecionada
      */
      public void registrarAudiencia(Serie serie){
+         // TODO adicionar if para testar se série já teve audiência registrada
          serie.registrarAudiencia();
      };
      

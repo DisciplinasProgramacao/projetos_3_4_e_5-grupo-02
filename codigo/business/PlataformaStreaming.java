@@ -92,7 +92,6 @@ public class PlataformaStreaming {
 		// Imprimir lista
 		this.series.forEach((key, value) -> System.out.println("\n" + this.series.get(key)));
 
-
 		filereader.close();
 	}
 
@@ -120,7 +119,6 @@ public class PlataformaStreaming {
 			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero, idioma, data de lançamento e duracao (dados[3]) em segundos. Em seguida, insere-se o novo filme no hashmap
 			Filme novoFilme = new Filme(dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
 			this.filmes.put(Integer.valueOf(dados[0]), novoFilme);
-
 		}
 
 		// Imprimir lista
@@ -141,10 +139,10 @@ public class PlataformaStreaming {
 				if (dados[1].equals("F")){
 					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2]));    // Adiciona série à lista
 				} else if (dados[1].equals("A")) {
+					// Classe cliente deve registrar audiencia
 					series.get(dados[2]).registrarAudiencia();    // Registra +1 ponto de audiência na série
 				}
-
-			};
+			}
 		}
 
 		filereader.close();

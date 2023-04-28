@@ -48,7 +48,8 @@ public class PlataformaStreaming {
 			this.clientes.put(split[1], novoCliente);
 		}
 
-		this.clientes.forEach((key, value) -> System.out.println("\n" + this.clientes.get(key)));
+		this.clientes.forEach((key, value) -> System.out.println(
+				this.clientes.get(key) + "\nID: " + key + " \n"));
 		
 		filereader.close();
 	}

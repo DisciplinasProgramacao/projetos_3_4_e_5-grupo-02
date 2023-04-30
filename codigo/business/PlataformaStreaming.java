@@ -2,6 +2,8 @@ package business;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,12 +11,14 @@ import java.util.Scanner;
 
 public class PlataformaStreaming {
 
+	// ATRIBUTOS
 	private String nome;
 	private Cliente clienteAtual;
 	private HashMap<Integer, Serie> series;
 	private HashMap<Integer, Filme> filmes;
 	private HashMap<String, Cliente> clientes;
 
+	// CONSTRUTORES
 	public PlataformaStreaming(String nome, Cliente clienteAtual) {
 		this.nome = nome;
 		this.clienteAtual = clienteAtual;
@@ -23,6 +27,12 @@ public class PlataformaStreaming {
 		this.clientes = new HashMap<String, Cliente>();
 	}
 
+	// GETTERS E SETTERS
+	public HashMap<String, Cliente> getClientes() {
+		return clientes;
+	}
+
+	// MÉTODOS
 	public Cliente login(String nomeUsuario, String senha) {
 		for (Cliente cliente : this.clientes.values()) {
 			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha) {
@@ -42,7 +52,7 @@ public class PlataformaStreaming {
 		while (filereader.hasNextLine()) {
 			String[] split = filereader.nextLine().split(";");
 
-			Cliente novoCliente = new Cliente(split[0], split[2]);
+			Cliente novoCliente = new Cliente(split[0], split[1], split[2]);
 
 			// dados[1] = id
 			this.clientes.put(split[1], novoCliente);
@@ -54,8 +64,47 @@ public class PlataformaStreaming {
 		filereader.close();
 	}
 
-	public void adicionarCliente(Cliente cliente) {
+	/**
+	 * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado já esteja previamente
+	 * presente na lista, a operação não é executada
+	 *
+	 * @param novoCliente cliente a ser adicionado
+	 */
+	public void adicionarCliente(Cliente novoCliente) {
+		if (! this.clientes.containsKey(novoCliente.getId()) )
+			this.clientes.put(novoCliente.getId(), novoCliente);
+	}
 
+	/**
+	 * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv, sobrepondo o arquivo já existente
+	 * de nome Espectadores.csv
+	 * O salvamento deve ser realizado após execução do programa a fim de registrar em arquivo todas as mudanças
+	 * realizadas nos dados em memória
+	 */
+	public void salvarClientes() {
+		String csvFilename = "docs/database/Espectadores.csv";
+
+		try (FileWriter writer = new FileWriter(csvFilename)) {
+			writer.append("nomeDeUsuario; id; senha\n");
+
+			this.clientes.forEach((key, value) -> {
+				try {
+					writer.append(value.getNomeUsuario())
+						.append(";")
+						.append(value.getId())
+						.append(";")
+						.append(value.getSenha())
+						.append("\n");
+				} catch (IOException e) {
+					System.out.println("Erro: não foi escrever no arquivo para salvar dados do cliente.");
+				}
+			});
+
+			System.out.println("Clientes salvos com sucesso!");
+
+		} catch (IOException e) {
+			System.out.println("Erro: não foi possível gerar arquivo para salvar dados do cliente.");
+		}
 	}
 
 	public void registrarAudiencia(Serie serie) {
@@ -138,9 +187,9 @@ public class PlataformaStreaming {
 			if (clientes.containsKey(dados[0]) && series.containsKey(dados[2])){
 
 				if (dados[1].equals("F")){
-					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2]));    // Adiciona série à lista
+					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2])); // Adiciona série à lista
 				} else if (dados[1].equals("A")) {
-					clientes.get(dados[0]).registrarAudiencia(series.get(dados[2]));	// Registra +1 ponto de audiência na série
+					clientes.get(dados[0]).registrarAudiencia(series.get(dados[2])); // Registra +1 ponto de audiência na série
 				}
 			}
 		}
@@ -159,5 +208,4 @@ public class PlataformaStreaming {
 	public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios) {
 		return clienteAtual != null ? clienteAtual.filtrarPorQtdEpisodios(quantEpisodios) : null;
 	}
-
 }

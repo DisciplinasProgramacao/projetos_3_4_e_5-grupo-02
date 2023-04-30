@@ -1,12 +1,8 @@
 package app;
 
 import business.Cliente;
-import business.Serie;
-import business.Filme;
 import business.PlataformaStreaming;
-
 import java.io.FileNotFoundException;
-import java.util.Date;
 
 public class App {
     public static void main(String[] args) throws FileNotFoundException {

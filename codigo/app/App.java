@@ -2,6 +2,9 @@ package app;
 
 import business.Cliente;
 import business.PlataformaStreaming;
+import business.exceptions.ClienteJaExisteException;
+import business.exceptions.ClienteNullException;
+
 import java.io.FileNotFoundException;
 
 public class App {
@@ -14,7 +17,12 @@ public class App {
         plataforma.carregarAudiencia();
 
         Cliente c = new Cliente("jorgin", "jorg12", "da12");
-        plataforma.adicionarCliente(c);
+        
+        try {
+			plataforma.adicionarCliente(c);
+		} catch (ClienteNullException | ClienteJaExisteException e) {
+			e.printStackTrace();
+		}
 
         plataforma.salvarClientes();
     }

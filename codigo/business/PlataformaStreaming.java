@@ -9,6 +9,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import business.exceptions.ClienteJaExisteException;
+import business.exceptions.ClienteNullException;
+import business.exceptions.FilmeJaExisteException;
+import business.exceptions.FilmeNullException;
+import business.exceptions.LoginInvalidoException;
+import business.exceptions.SerieJaExisteException;
+import business.exceptions.SerieNullException;
+
 public class PlataformaStreaming {
 
 	// ATRIBUTOS
@@ -33,14 +41,14 @@ public class PlataformaStreaming {
 	}
 
 	// MÉTODOS
-	public Cliente login(String nomeUsuario, String senha) {
+	public Cliente login(String nomeUsuario, String senha) throws LoginInvalidoException {
 		for (Cliente cliente : this.clientes.values()) {
 			if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha) {
 				this.clienteAtual = cliente;
 				return cliente;
 			}
 		}
-		return null;
+		throw new LoginInvalidoException(nomeUsuario, senha);
 	}
 
 	public void carregarClientes() throws FileNotFoundException {
@@ -55,7 +63,12 @@ public class PlataformaStreaming {
 			Cliente novoCliente = new Cliente(split[0], split[1], split[2]);
 
 			// dados[1] = id
-			this.clientes.put(split[1], novoCliente);
+			try {
+				adicionarCliente(novoCliente);
+			} catch (ClienteNullException | ClienteJaExisteException e) {
+				e.printStackTrace();
+			}
+//			this.clientes.put(split[1], novoCliente);
 		}
 
 		this.clientes.forEach((key, value) -> System.out.println(
@@ -70,9 +83,40 @@ public class PlataformaStreaming {
 	 *
 	 * @param novoCliente cliente a ser adicionado
 	 */
-	public void adicionarCliente(Cliente novoCliente) {
-		if (! this.clientes.containsKey(novoCliente.getId()) )
-			this.clientes.put(novoCliente.getId(), novoCliente);
+	public void adicionarCliente(Cliente novoCliente) throws ClienteNullException, ClienteJaExisteException {
+		if (novoCliente == null) {
+			throw new ClienteNullException();
+		}
+		
+		if (this.clientes.containsKey(novoCliente.getId())) {
+			throw new ClienteJaExisteException();
+		}
+			
+		this.clientes.put(novoCliente.getId(), novoCliente);
+	}
+	
+	public void adicionarFilme(Integer id, Filme novoFilme) throws FilmeNullException, FilmeJaExisteException {
+		if (novoFilme == null) {
+			throw new FilmeNullException();
+		}
+		
+		if (this.filmes.containsKey(id)) {
+			throw new FilmeJaExisteException();
+		}
+		
+		this.filmes.put(id, novoFilme);
+	}
+	
+	public void adicionarSerie(Integer id, Serie novaSerie) throws SerieNullException, SerieJaExisteException {
+		if (novaSerie == null) {
+			throw new SerieNullException();
+		}
+		
+		if (this.series.containsKey(id)) {
+			throw new SerieJaExisteException();
+		}
+		
+		this.series.put(id, novaSerie);
 	}
 
 	/**
@@ -107,9 +151,12 @@ public class PlataformaStreaming {
 		}
 	}
 
-	public void registrarAudiencia(Serie serie) {
-		if (clienteAtual != null)
-			clienteAtual.registrarAudiencia(serie);
+	public void registrarAudiencia(Serie serie) throws ClienteNullException {
+		if (clienteAtual == null) {
+			throw new ClienteNullException();
+		}
+		
+		clienteAtual.registrarAudiencia(serie);
 	}
 	
 	public void carregarSeries() throws FileNotFoundException {
@@ -136,7 +183,11 @@ public class PlataformaStreaming {
 			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios.Em seguida, insere-se a nova série no hashmap
 			Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
 
-			Serie antiga = this.series.put(Integer.valueOf(dados[0]), novaSerie);
+			try {
+				adicionarSerie(Integer.valueOf(dados[0]), novaSerie);
+			} catch (NumberFormatException | SerieNullException | SerieJaExisteException e) {
+				e.printStackTrace();
+			}
 		}
 
 		// Imprimir lista
@@ -168,7 +219,12 @@ public class PlataformaStreaming {
 
 			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero, idioma, data de lançamento e duracao (dados[3]) em segundos. Em seguida, insere-se o novo filme no hashmap
 			Filme novoFilme = new Filme(dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
-			this.filmes.put(Integer.valueOf(dados[0]), novoFilme);
+
+			try {
+				adicionarFilme(Integer.valueOf(dados[0]), novoFilme);
+			} catch (NumberFormatException | FilmeNullException | FilmeJaExisteException e) {
+				e.printStackTrace();
+			}
 		}
 
 		// Imprimir lista
@@ -184,12 +240,12 @@ public class PlataformaStreaming {
 		while (filereader.hasNextLine()){
 			String[] dados = filereader.nextLine().split(";");
 
-			if (clientes.containsKey(dados[0]) && series.containsKey(dados[2])){
+			if (clientes.containsKey(dados[0]) && series.containsKey(Integer.valueOf(dados[2]))){
 
 				if (dados[1].equals("F")){
-					clientes.get(dados[0]).adicionarNaLista(series.get(dados[2])); // Adiciona série à lista
+					clientes.get(dados[0]).adicionarNaLista(series.get(Integer.valueOf(dados[2]))); // Adiciona série à lista
 				} else if (dados[1].equals("A")) {
-					clientes.get(dados[0]).registrarAudiencia(series.get(dados[2])); // Registra +1 ponto de audiência na série
+					clientes.get(dados[0]).registrarAudiencia(series.get(Integer.valueOf(dados[2]))); // Registra +1 ponto de audiência na série
 				}
 			}
 		}
@@ -197,15 +253,27 @@ public class PlataformaStreaming {
 		filereader.close();
 	}
 	
-	public Lista<Serie> filtrarPorGenero(String genero) {
-		return clienteAtual != null ? clienteAtual.filtrarPorGenero(genero) : null;
+	public Lista<Serie> filtrarPorGenero(String genero) throws ClienteNullException {
+		if (clienteAtual == null) {
+			throw new ClienteNullException();
+		}
+		
+		return clienteAtual.filtrarPorGenero(genero);
 	}
 
-	public Lista<Serie> filtrarPorIdioma(String idioma) {
-		return clienteAtual != null ? clienteAtual.filtrarPorIdioma(idioma) : null;
+	public Lista<Serie> filtrarPorIdioma(String idioma) throws ClienteNullException {
+		if (clienteAtual == null) {
+			throw new ClienteNullException();
+		}
+		
+		return clienteAtual.filtrarPorIdioma(idioma);
 	}
 
-	public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios) {
-		return clienteAtual != null ? clienteAtual.filtrarPorQtdEpisodios(quantEpisodios) : null;
+	public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios) throws ClienteNullException {
+		if (clienteAtual == null) {
+			throw new ClienteNullException();
+		}
+		
+		return clienteAtual.filtrarPorQtdEpisodios(quantEpisodios);
 	}
 }

@@ -317,6 +317,11 @@ public class PlataformaStreaming {
 		return c;
 	}
 
+	
+	/**
+	 * Lê os dados da nova serie registrada e cria um objeto com esses dados
+	 * @return Nova série com os dados informados
+	 */
 	public Serie cadastrarSerie() {
 		Scanner read = new Scanner(System.in);
 

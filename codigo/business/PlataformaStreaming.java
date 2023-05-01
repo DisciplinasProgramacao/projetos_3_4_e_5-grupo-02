@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.function.IntPredicate;
 
 import business.exceptions.ClienteJaExisteException;
 import business.exceptions.ClienteNullException;
@@ -311,7 +312,45 @@ public class PlataformaStreaming {
 
 		Cliente c = new Cliente(nome, id, senha);
 
+		sc.close();
+
 		return c;
+	}
+
+	public Serie cadastrarSerie() {
+		Scanner read = new Scanner(System.in);
+
+    	 String nome;
+    	 String genero;
+    	 String idioma;
+    	 String lancamento;
+		 int quantidadeEpisodios;
+
+		 System.out.println("Insira o nome da série: ");
+		 nome = read.nextLine();
+		
+
+		 System.out.println("Insira o genero da série: ");
+		 genero = read.nextLine();
+
+
+		 System.out.println("Insira o idioma da série: ");
+		 idioma = read.nextLine();
+
+
+		 System.out.println("Insira a data de lançamento da série: ");
+		 lancamento = read.nextLine();
+
+		 System.out.println("Insira a quantidade de episodios da série: ");
+		 quantidadeEpisodios = read.nextInt();
+
+		read.close();
+
+		 Date dataLancamento = new Date(lancamento);
+
+		 Serie serie = new Serie(nome, genero, idioma, dataLancamento, quantidadeEpisodios);
+
+		return serie;
 	}
 
 }

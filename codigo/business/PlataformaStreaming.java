@@ -68,17 +68,18 @@ public class PlataformaStreaming {
 			} catch (ClienteNullException | ClienteJaExisteException e) {
 				e.printStackTrace();
 			}
-//			this.clientes.put(split[1], novoCliente);
+			// this.clientes.put(split[1], novoCliente);
 		}
 
 		this.clientes.forEach((key, value) -> System.out.println(
 				this.clientes.get(key) + "\nID: " + key + " \n"));
-		
+
 		filereader.close();
 	}
 
 	/**
-	 * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado já esteja previamente
+	 * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado
+	 * já esteja previamente
 	 * presente na lista, a operação não é executada
 	 *
 	 * @param novoCliente cliente a ser adicionado
@@ -87,42 +88,44 @@ public class PlataformaStreaming {
 		if (novoCliente == null) {
 			throw new ClienteNullException();
 		}
-		
+
 		if (this.clientes.containsKey(novoCliente.getId())) {
 			throw new ClienteJaExisteException();
 		}
-			
+
 		this.clientes.put(novoCliente.getId(), novoCliente);
 	}
-	
+
 	public void adicionarFilme(Integer id, Filme novoFilme) throws FilmeNullException, FilmeJaExisteException {
 		if (novoFilme == null) {
 			throw new FilmeNullException();
 		}
-		
+
 		if (this.filmes.containsKey(id)) {
 			throw new FilmeJaExisteException();
 		}
-		
+
 		this.filmes.put(id, novoFilme);
 	}
-	
+
 	public void adicionarSerie(Integer id, Serie novaSerie) throws SerieNullException, SerieJaExisteException {
 		if (novaSerie == null) {
 			throw new SerieNullException();
 		}
-		
+
 		if (this.series.containsKey(id)) {
 			throw new SerieJaExisteException();
 		}
-		
+
 		this.series.put(id, novaSerie);
 	}
 
 	/**
-	 * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv, sobrepondo o arquivo já existente
+	 * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv,
+	 * sobrepondo o arquivo já existente
 	 * de nome Espectadores.csv
-	 * O salvamento deve ser realizado após execução do programa a fim de registrar em arquivo todas as mudanças
+	 * O salvamento deve ser realizado após execução do programa a fim de registrar
+	 * em arquivo todas as mudanças
 	 * realizadas nos dados em memória
 	 */
 	public void salvarClientes() {
@@ -134,11 +137,11 @@ public class PlataformaStreaming {
 			this.clientes.forEach((key, value) -> {
 				try {
 					writer.append(value.getNomeUsuario())
-						.append(";")
-						.append(value.getId())
-						.append(";")
-						.append(value.getSenha())
-						.append("\n");
+							.append(";")
+							.append(value.getId())
+							.append(";")
+							.append(value.getSenha())
+							.append("\n");
 				} catch (IOException e) {
 					System.out.println("Erro: não foi escrever no arquivo para salvar dados do cliente.");
 				}
@@ -155,10 +158,10 @@ public class PlataformaStreaming {
 		if (clienteAtual == null) {
 			throw new ClienteNullException();
 		}
-		
+
 		clienteAtual.registrarAudiencia(serie);
 	}
-	
+
 	public void carregarSeries() throws FileNotFoundException {
 		File file = new File("docs/database/Series.csv");
 		Scanner filereader = new Scanner(file);
@@ -168,11 +171,13 @@ public class PlataformaStreaming {
 		while (filereader.hasNextLine()) {
 			String[] dados = filereader.nextLine().split(";");
 
-			// Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas, como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
+			// Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas,
+			// como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
 			String novoGenero = Midia.GENEROS[(int) (Math.random() * (Midia.GENEROS.length))];
 			String novoIdioma = Midia.IDIOMAS[(int) (Math.random() * (Midia.IDIOMAS.length))];
 
-			// Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string não apresente formato válido, é lançada uma exceção
+			// Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string
+			// não apresente formato válido, é lançada uma exceção
 			Date novaData = null;
 			try {
 				novaData = new SimpleDateFormat("dd/MM/yyyy").parse(dados[2]);
@@ -180,7 +185,9 @@ public class PlataformaStreaming {
 				System.out.println("Erro: Formato inválido na leitura da data de lançamento de série");
 			}
 
-			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios.Em seguida, insere-se a nova série no hashmap
+			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e
+			// idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios.Em
+			// seguida, insere-se a nova série no hashmap
 			Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
 
 			try {
@@ -202,14 +209,16 @@ public class PlataformaStreaming {
 
 		filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
 
-		while (filereader.hasNextLine()){
+		while (filereader.hasNextLine()) {
 			String[] dados = filereader.nextLine().split(";");
 
-			// Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas, como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
+			// Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas,
+			// como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
 			String novoGenero = Midia.GENEROS[(int) (Math.random() * (Midia.GENEROS.length))];
 			String novoIdioma = Midia.IDIOMAS[(int) (Math.random() * (Midia.IDIOMAS.length))];
 
-			// Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string não apresente formato válido, é lançada uma exceção
+			// Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string
+			// não apresente formato válido, é lançada uma exceção
 			Date novaData = null;
 			try {
 				novaData = new SimpleDateFormat("dd/MM/yyyy").parse(dados[2]);
@@ -217,7 +226,9 @@ public class PlataformaStreaming {
 				System.out.println("Erro: Formato inválido na leitura da data de lançamento de série");
 			}
 
-			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero, idioma, data de lançamento e duracao (dados[3]) em segundos. Em seguida, insere-se o novo filme no hashmap
+			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero,
+			// idioma, data de lançamento e duracao (dados[3]) em segundos. Em seguida,
+			// insere-se o novo filme no hashmap
 			Filme novoFilme = new Filme(dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
 
 			try {
@@ -237,27 +248,31 @@ public class PlataformaStreaming {
 		File file = new File("docs/database/Audiencia.csv");
 		Scanner filereader = new Scanner(file);
 
-		while (filereader.hasNextLine()){
+		while (filereader.hasNextLine()) {
 			String[] dados = filereader.nextLine().split(";");
 
-			if (clientes.containsKey(dados[0]) && series.containsKey(Integer.valueOf(dados[2]))){
+			if (clientes.containsKey(dados[0]) && series.containsKey(Integer.valueOf(dados[2]))) {
 
-				if (dados[1].equals("F")){
-					clientes.get(dados[0]).adicionarNaLista(series.get(Integer.valueOf(dados[2]))); // Adiciona série à lista
+				if (dados[1].equals("F")) {
+					clientes.get(dados[0]).adicionarNaLista(series.get(Integer.valueOf(dados[2]))); // Adiciona série à
+																									// lista
 				} else if (dados[1].equals("A")) {
-					clientes.get(dados[0]).registrarAudiencia(series.get(Integer.valueOf(dados[2]))); // Registra +1 ponto de audiência na série
+					clientes.get(dados[0]).registrarAudiencia(series.get(Integer.valueOf(dados[2]))); // Registra +1
+																										// ponto de
+																										// audiência na
+																										// série
 				}
 			}
 		}
 
 		filereader.close();
 	}
-	
+
 	public Lista<Serie> filtrarPorGenero(String genero) throws ClienteNullException {
 		if (clienteAtual == null) {
 			throw new ClienteNullException();
 		}
-		
+
 		return clienteAtual.filtrarPorGenero(genero);
 	}
 
@@ -265,7 +280,7 @@ public class PlataformaStreaming {
 		if (clienteAtual == null) {
 			throw new ClienteNullException();
 		}
-		
+
 		return clienteAtual.filtrarPorIdioma(idioma);
 	}
 
@@ -273,7 +288,30 @@ public class PlataformaStreaming {
 		if (clienteAtual == null) {
 			throw new ClienteNullException();
 		}
-		
+
 		return clienteAtual.filtrarPorQtdEpisodios(quantEpisodios);
 	}
+
+	public Cliente cadastraCliente() {
+
+		Scanner sc = new Scanner(System.in);
+
+		String nome;
+		String id;
+		String senha;
+
+		System.out.println("Por favor digite seu nome de usuário: ");
+		nome = sc.nextLine();
+
+		System.out.println("Por favor digite seu id: ");
+		id = sc.nextLine();
+
+		System.out.println("Por favor digite sua senha: ");
+		senha = sc.nextLine();
+
+		Cliente c = new Cliente(nome, id, senha);
+
+		return c;
+	}
+
 }

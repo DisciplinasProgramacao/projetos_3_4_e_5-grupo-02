@@ -36,6 +36,14 @@ public class PlataformaStreaming {
 		return clientes;
 	}
 
+	public HashMap<Integer, Serie> getSeries() {
+		return series;
+	}
+	
+	public HashMap<Integer, Filme> getFilmes() {
+		return filmes;
+	}
+
 	// MÉTODOS
 	public Cliente login(String nomeUsuario, String senha) throws LoginInvalidoException {
 		for (Cliente cliente : this.clientes.values()) {

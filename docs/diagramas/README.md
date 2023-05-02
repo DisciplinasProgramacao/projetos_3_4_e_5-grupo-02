@@ -1,2 +1,5 @@
 # Diagramas de classe
-Coloque aqui todas as versões do seu diagrama de classes. Cada versão deve começar com um número de dois dígitos, na ordem crescente.
+- 01: diagrama de classes base do projeto.
+- 02: adicionando classe filme ao diagrama.
+- 03: adicionando classe midia e relação de herança.
+- 04: adicionando métodos de carregar, cadastrar e salvar à classe PlataformaStreaming.

@@ -26,5 +26,7 @@ public class App {
 		}
 
         plataforma.salvarClientes();
+
+	// javadoc -d doc -encoding "utf-8" -subpackages business app business.exceptions 
     }
 }

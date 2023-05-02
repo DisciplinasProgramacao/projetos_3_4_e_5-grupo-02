@@ -70,4 +70,11 @@ public class ClienteTest {
         assertEquals(1,c.tamanhoListaParaVer());
     }
 
+    @Test
+    public void avaliarMidiaTest() {
+        c.avaliarMidia(s, 3);
+
+        
+    }
+
 }

@@ -10,13 +10,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.function.IntPredicate;
 
-import business.exceptions.ClienteJaExisteException;
-import business.exceptions.ClienteNullException;
-import business.exceptions.FilmeJaExisteException;
-import business.exceptions.FilmeNullException;
+import business.exceptions.ElementoJaExisteException;
 import business.exceptions.LoginInvalidoException;
-import business.exceptions.SerieJaExisteException;
-import business.exceptions.SerieNullException;
 
 public class PlataformaStreaming {
 
@@ -57,19 +52,23 @@ public class PlataformaStreaming {
 		Scanner filereader = new Scanner(file);
 
 		filereader.nextLine(); // Artifício para ignorar primeira linha do csv
-
+		int linha=0;
 		while (filereader.hasNextLine()) {
 			String[] split = filereader.nextLine().split(";");
-
+			
 			Cliente novoCliente = new Cliente(split[0], split[1], split[2]);
 
 			// dados[1] = id
 			try {
 				adicionarCliente(novoCliente);
-			} catch (ClienteNullException | ClienteJaExisteException e) {
-				e.printStackTrace();
+			} catch (NullPointerException e) {
+				System.out.println(linha + ":" + split);
+				
+			} catch (ElementoJaExisteException e) {
+				System.out.println(e.getMessage());
 			}
 			// this.clientes.put(split[1], novoCliente);
+			linha++;
 		}
 
 		this.clientes.forEach((key, value) -> System.out.println(
@@ -85,37 +84,37 @@ public class PlataformaStreaming {
 	 *
 	 * @param novoCliente cliente a ser adicionado
 	 */
-	public void adicionarCliente(Cliente novoCliente) throws ClienteNullException, ClienteJaExisteException {
+	public void adicionarCliente(Cliente novoCliente) throws NullPointerException, ElementoJaExisteException {
 		if (novoCliente == null) {
-			throw new ClienteNullException();
+			throw new NullPointerException();
 		}
 
 		if (this.clientes.containsKey(novoCliente.getId())) {
-			throw new ClienteJaExisteException();
+			throw new ElementoJaExisteException(novoCliente.getNomeUsuario(), "clientes");
 		}
 
 		this.clientes.put(novoCliente.getId(), novoCliente);
 	}
 
-	public void adicionarFilme(Integer id, Filme novoFilme) throws FilmeNullException, FilmeJaExisteException {
+	public void adicionarFilme(Integer id, Filme novoFilme) throws NullPointerException, ElementoJaExisteException {
 		if (novoFilme == null) {
-			throw new FilmeNullException();
+			throw new NullPointerException();
 		}
 
 		if (this.filmes.containsKey(id)) {
-			throw new FilmeJaExisteException();
+			throw new ElementoJaExisteException(id.toString(), "filmes");
 		}
 
 		this.filmes.put(id, novoFilme);
 	}
 
-	public void adicionarSerie(Integer id, Serie novaSerie) throws SerieNullException, SerieJaExisteException {
+	public void adicionarSerie(Integer id, Serie novaSerie) throws NullPointerException, ElementoJaExisteException {
 		if (novaSerie == null) {
-			throw new SerieNullException();
+			throw new NullPointerException();
 		}
 
 		if (this.series.containsKey(id)) {
-			throw new SerieJaExisteException();
+			throw new ElementoJaExisteException(id.toString(), "series");
 		}
 
 		this.series.put(id, novaSerie);
@@ -155,9 +154,9 @@ public class PlataformaStreaming {
 		}
 	}
 
-	public void registrarAudiencia(Serie serie) throws ClienteNullException {
+	public void registrarAudiencia(Serie serie) throws NullPointerException {
 		if (clienteAtual == null) {
-			throw new ClienteNullException();
+			throw new NullPointerException();
 		}
 
 		clienteAtual.registrarAudiencia(serie);
@@ -169,6 +168,7 @@ public class PlataformaStreaming {
 
 		filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
 
+		int linha = 0;
 		while (filereader.hasNextLine()) {
 			String[] dados = filereader.nextLine().split(";");
 
@@ -193,9 +193,13 @@ public class PlataformaStreaming {
 
 			try {
 				adicionarSerie(Integer.valueOf(dados[0]), novaSerie);
-			} catch (NumberFormatException | SerieNullException | SerieJaExisteException e) {
-				e.printStackTrace();
+			} catch (NumberFormatException | NullPointerException e) {
+				 System.out.println(linha + ":" + dados);
+			} catch (ElementoJaExisteException e) {
+				System.out.println(e.getMessage());
 			}
+			
+			linha++;
 		}
 
 		// Imprimir lista
@@ -264,7 +268,7 @@ public class PlataformaStreaming {
 
 			try {
 				adicionarFilme(Integer.valueOf(dados[0]), novoFilme);
-			} catch (NumberFormatException | FilmeNullException | FilmeJaExisteException e) {
+			} catch (NumberFormatException | NullPointerException | ElementoJaExisteException e) {
 				e.printStackTrace();
 			}
 		}
@@ -299,25 +303,25 @@ public class PlataformaStreaming {
 		filereader.close();
 	}
 
-	public Lista<Serie> filtrarPorGenero(String genero) throws ClienteNullException {
+	public Lista<Serie> filtrarPorGenero(String genero) throws NullPointerException {
 		if (clienteAtual == null) {
-			throw new ClienteNullException();
+			throw new NullPointerException();
 		}
 
 		return clienteAtual.filtrarPorGenero(genero);
 	}
 
-	public Lista<Serie> filtrarPorIdioma(String idioma) throws ClienteNullException {
+	public Lista<Serie> filtrarPorIdioma(String idioma) throws NullPointerException {
 		if (clienteAtual == null) {
-			throw new ClienteNullException();
+			throw new NullPointerException();
 		}
 
 		return clienteAtual.filtrarPorIdioma(idioma);
 	}
 
-	public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios) throws ClienteNullException {
+	public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios) throws NullPointerException {
 		if (clienteAtual == null) {
-			throw new ClienteNullException();
+			throw new NullPointerException();
 		}
 
 		return clienteAtual.filtrarPorQtdEpisodios(quantEpisodios);

@@ -204,6 +204,36 @@ public class PlataformaStreaming {
 		filereader.close();
 	}
 
+	 /**
+	 * Le o HashMap series e registra um arquivo contendo o nome, genero e quantidade de episodios de uma serie
+	 */
+	public void salvarSeries() {
+		String arquivo = "docs/database/Series.csv";
+
+		
+		try (FileWriter writer = new FileWriter(arquivo)) {
+			writer.append("nome; genero; quantidadeEpisodios\n");
+
+			this.series.forEach((key, value) -> {
+				try {
+					writer.append(value.getNome())
+						.append(";")
+						.append(value.getGenero())
+						.append(";")
+						.append(value.toString())
+						.append("\n");
+				} catch (IOException e) {
+					System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados da serie.");
+				}
+			});
+
+			System.out.println("Serie salva com sucesso!");
+
+		} catch (IOException e) {
+			System.out.println("Erro: não foi possível gerar arquivo para salvar dados da serie.");
+		}
+	}
+
 	public void carregarFilmes() throws FileNotFoundException {
 		File file = new File("docs/database/Filmes.csv");
 		Scanner filereader = new Scanner(file);

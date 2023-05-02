@@ -224,7 +224,7 @@ public class PlataformaStreaming {
 						.append(";")
 						.append(value.getGenero())
 						.append(";")
-						.append(value.toString())
+						.append(value.getLancamento().toString())
 						.append("\n");
 				} catch (IOException e) {
 					System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados da serie.");

@@ -13,6 +13,8 @@ public abstract class Midia {
     private String idioma;
     private Date lancamento;
     private int audiencia;
+    private int somaNotas;
+    private int totalNotas;
 
     // CONSTRUTORES
     public Midia(String nome, String genero, String idioma, Date lancamento){
@@ -21,13 +23,26 @@ public abstract class Midia {
         this.idioma = idioma;
         this.lancamento = lancamento;
         this.audiencia = 0;
+        this.somaNotas = 0;
+        this.totalNotas = 0;
     }
 
     // GETTERS E SETTERS
     public void setNome(String nome){
-        if(nome.length() > 0){
+        if (nome.length() > 0){
             this.nome = nome;
         }
+    }
+    
+    private void addNota(int nota) {
+    	if (nota >= 1 && nota <= 5) {
+    		this.somaNotas += nota;
+    		this.totalNotas++;
+    	}
+    }
+    
+    public double getMediaNota() {
+    	return this.somaNotas / this.totalNotas;
     }
 
     public String getNome(){
@@ -41,6 +56,10 @@ public abstract class Midia {
     // MÉTODOS
     public void registrarAudiencia(){
         this.audiencia++;
+    }
+    
+    public void avaliar(int nota) {
+    	addNota(nota);
     }
 
     @Override

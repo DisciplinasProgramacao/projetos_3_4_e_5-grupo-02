@@ -237,6 +237,10 @@ public class PlataformaStreaming {
 			System.out.println("Erro: não foi possível gerar arquivo para salvar dados da serie.");
 		}
 	}
+	
+	public void salvarNotas() {
+		
+	}
 
 	public void carregarFilmes() throws FileNotFoundException {
 		File file = new File("docs/database/Filmes.csv");
@@ -244,6 +248,7 @@ public class PlataformaStreaming {
 
 		filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
 
+		int linha = 0;
 		while (filereader.hasNextLine()) {
 			String[] dados = filereader.nextLine().split(";");
 
@@ -268,9 +273,13 @@ public class PlataformaStreaming {
 
 			try {
 				adicionarFilme(Integer.valueOf(dados[0]), novoFilme);
-			} catch (NumberFormatException | NullPointerException | ElementoJaExisteException e) {
-				e.printStackTrace();
+			} catch (NumberFormatException | NullPointerException e) {
+				 System.out.println(linha + ":" + dados);
+			} catch (ElementoJaExisteException e) {
+				System.out.println(e.getMessage());
 			}
+			
+			linha++;
 		}
 
 		// Imprimir lista
@@ -303,6 +312,25 @@ public class PlataformaStreaming {
 		filereader.close();
 	}
 
+	public void carregarNotas() throws FileNotFoundException {
+		File file = new File("docs/database/Notas.csv");
+		Scanner filereader = new Scanner(file);
+
+		while (filereader.hasNextLine()) {
+			String[] dados = filereader.nextLine().split(";");
+			
+			if (series.containsKey(Integer.valueOf(dados[0]))) {
+				series.get(Integer.valueOf(dados[0])).avaliar(Integer.valueOf(dados[1]));
+			}
+			
+			if (filmes.containsKey(Integer.valueOf(dados[0]))) {
+				filmes.get(Integer.valueOf(dados[0])).avaliar(Integer.valueOf(dados[1]));
+			}
+		}
+
+		filereader.close();
+	}
+	
 	public Lista<Serie> filtrarPorGenero(String genero) throws NullPointerException {
 		if (clienteAtual == null) {
 			throw new NullPointerException();

@@ -31,6 +31,10 @@ public class Cliente {
     }
 
     // MÉTODOS
+    
+    public void avaliarMidia(Midia midia, int nota) {
+    	midia.avaliar(nota);
+    }
 
     /**
      * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada

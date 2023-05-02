@@ -53,6 +53,10 @@ public abstract class Midia {
         return genero;
     }
 
+     public Date getLancamento() { 
+    	return this.lancamento;
+    }
+
     // MÉTODOS
     public void registrarAudiencia(){
         this.audiencia++;

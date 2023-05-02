@@ -13,8 +13,8 @@ public abstract class Midia {
     private String idioma;
     private Date lancamento;
     private int audiencia;
-    private int somaNotas;
-    private int totalNotas;
+    private double somaNotas;
+    private double totalNotas;
 
     // CONSTRUTORES
     public Midia(String nome, String genero, String idioma, Date lancamento){
@@ -34,17 +34,33 @@ public abstract class Midia {
         }
     }
     
-    private void addNota(int nota) {
+    public void setSomaNotas(double somaNotas) {
+    	this.somaNotas = somaNotas;
+    }
+    
+    public void setTotalNotas(double totalNotas) {
+    	this.totalNotas = totalNotas;
+    }
+    
+    public double getSomaNota() {
+    	return this.somaNotas;
+    }
+    
+    public double getTotalNotas() {
+    	return this.totalNotas;
+    }
+    
+    public double getMediaNota() {
+    	return this.somaNotas / this.totalNotas;
+    }
+    
+    public void avaliar(double nota) {
     	if (nota >= 1 && nota <= 5) {
     		this.somaNotas += nota;
     		this.totalNotas++;
     	}
     }
     
-    public double getMediaNota() {
-    	return this.somaNotas / this.totalNotas;
-    }
-
     public String getNome(){
         return this.nome;
     }
@@ -62,10 +78,6 @@ public abstract class Midia {
         this.audiencia++;
     }
     
-    public void avaliar(int nota) {
-    	addNota(nota);
-    }
-
     @Override
     public String toString(){
         return ("Nome: " + this.nome +

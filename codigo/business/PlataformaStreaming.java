@@ -128,6 +128,81 @@ public class PlataformaStreaming {
 	 * em arquivo todas as mudanças
 	 * realizadas nos dados em memória
 	 */
+	public void registrarAudiencia(Serie serie) throws NullPointerException {
+		if (clienteAtual == null) {
+			throw new NullPointerException();
+		}
+
+		clienteAtual.registrarAudiencia(serie);
+	}
+
+	 /**
+	 * Le o HashMap series e registra um arquivo contendo o nome, genero e quantidade de episodios de uma serie
+	 */
+	public void salvarSeries() {
+		String arquivo = "docs/database/Series.csv";
+
+		
+		try (FileWriter writer = new FileWriter(arquivo)) {
+			writer.append("id; nome; lancamento; somaNotas; totalNotas\n");
+
+			this.series.forEach((key, value) -> {
+				try {
+					writer.append(key.toString())
+						.append(";")
+						.append(value.getNome())
+						.append(";")
+						.append(value.getLancamento().toString())
+						.append(";")
+						.append(String.valueOf(value.getSomaNota()))
+						.append(";")
+						.append(String.valueOf(value.getTotalNotas()))
+						.append("\n");
+				} catch (IOException e) {
+					System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados da serie.");
+				}
+			});
+
+			System.out.println("Serie salva com sucesso!");
+
+		} catch (IOException e) {
+			System.out.println("Erro: não foi possível gerar arquivo para salvar dados da serie.");
+		}
+	}
+	
+	public void salvarFilmes() {
+		String arquivo = "docs/database/Filmes.csv";
+
+		
+		try (FileWriter writer = new FileWriter(arquivo)) {
+			writer.append("id; nome; lancamento; duracao; somaNotas; totalNotas\n");
+
+			this.filmes.forEach((key, value) -> {
+				try {
+					writer.append(key.toString())
+						.append(";")
+						.append(value.getNome())
+						.append(";")
+						.append(value.getLancamento().toString())
+						.append(";")
+						.append(String.valueOf(value.getDuracao()))
+						.append(";")
+						.append(String.valueOf(value.getSomaNota()))
+						.append(";")
+						.append(String.valueOf(value.getTotalNotas()))
+						.append("\n");
+				} catch (IOException e) {
+					System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");
+				}
+			});
+
+			System.out.println("Filme salva com sucesso!");
+
+		} catch (IOException e) {
+			System.out.println("Erro: não foi possível gerar arquivo para salvar dados do filme.");
+		}
+	}
+	
 	public void salvarClientes() {
 		String csvFilename = "docs/database/Espectadores.csv";
 
@@ -153,95 +228,7 @@ public class PlataformaStreaming {
 			System.out.println("Erro: não foi possível gerar arquivo para salvar dados do cliente.");
 		}
 	}
-
-	public void registrarAudiencia(Serie serie) throws NullPointerException {
-		if (clienteAtual == null) {
-			throw new NullPointerException();
-		}
-
-		clienteAtual.registrarAudiencia(serie);
-	}
-
-	public void carregarSeries() throws FileNotFoundException {
-		File file = new File("docs/database/Series.csv");
-		Scanner filereader = new Scanner(file);
-
-		filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
-
-		int linha = 0;
-		while (filereader.hasNextLine()) {
-			String[] dados = filereader.nextLine().split(";");
-
-			// Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas,
-			// como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
-			String novoGenero = Midia.GENEROS[(int) (Math.random() * (Midia.GENEROS.length))];
-			String novoIdioma = Midia.IDIOMAS[(int) (Math.random() * (Midia.IDIOMAS.length))];
-
-			// Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string
-			// não apresente formato válido, é lançada uma exceção
-			Date novaData = null;
-			try {
-				novaData = new SimpleDateFormat("dd/MM/yyyy").parse(dados[2]);
-			} catch (Exception e) {
-				System.out.println("Erro: Formato inválido na leitura da data de lançamento de série");
-			}
-
-			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e
-			// idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios.Em
-			// seguida, insere-se a nova série no hashmap
-			Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
-
-			try {
-				adicionarSerie(Integer.valueOf(dados[0]), novaSerie);
-			} catch (NumberFormatException | NullPointerException e) {
-				 System.out.println(linha + ":" + dados);
-			} catch (ElementoJaExisteException e) {
-				System.out.println(e.getMessage());
-			}
-			
-			linha++;
-		}
-
-		// Imprimir lista
-		this.series.forEach((key, value) -> System.out.println("\n" + this.series.get(key)));
-
-		filereader.close();
-	}
-
-	 /**
-	 * Le o HashMap series e registra um arquivo contendo o nome, genero e quantidade de episodios de uma serie
-	 */
-	public void salvarSeries() {
-		String arquivo = "docs/database/Series.csv";
-
-		
-		try (FileWriter writer = new FileWriter(arquivo)) {
-			writer.append("nome; genero; quantidadeEpisodios\n");
-
-			this.series.forEach((key, value) -> {
-				try {
-					writer.append(value.getNome())
-						.append(";")
-						.append(value.getGenero())
-						.append(";")
-						.append(value.getLancamento().toString())
-						.append("\n");
-				} catch (IOException e) {
-					System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados da serie.");
-				}
-			});
-
-			System.out.println("Serie salva com sucesso!");
-
-		} catch (IOException e) {
-			System.out.println("Erro: não foi possível gerar arquivo para salvar dados da serie.");
-		}
-	}
 	
-	public void salvarNotas() {
-		
-	}
-
 	public void carregarFilmes() throws FileNotFoundException {
 		File file = new File("docs/database/Filmes.csv");
 		Scanner filereader = new Scanner(file);
@@ -271,6 +258,14 @@ public class PlataformaStreaming {
 			// insere-se o novo filme no hashmap
 			Filme novoFilme = new Filme(dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
 
+			if (dados[4] != null && dados[5] != null) {
+			
+			novoFilme.setSomaNotas(Double.valueOf(dados[4]));
+			
+			novoFilme.setTotalNotas(Double.valueOf(dados[5]));
+			
+			}
+			
 			try {
 				adicionarFilme(Integer.valueOf(dados[0]), novoFilme);
 			} catch (NumberFormatException | NullPointerException e) {
@@ -312,21 +307,56 @@ public class PlataformaStreaming {
 		filereader.close();
 	}
 
-	public void carregarNotas() throws FileNotFoundException {
-		File file = new File("docs/database/Notas.csv");
+	public void carregarSeries() throws FileNotFoundException {
+		File file = new File("docs/database/Series.csv");
 		Scanner filereader = new Scanner(file);
 
+		filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
+
+		int linha = 0;
 		while (filereader.hasNextLine()) {
 			String[] dados = filereader.nextLine().split(";");
+
+			// Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas,
+			// como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
+			String novoGenero = Midia.GENEROS[(int) (Math.random() * (Midia.GENEROS.length))];
+			String novoIdioma = Midia.IDIOMAS[(int) (Math.random() * (Midia.IDIOMAS.length))];
+
+			// Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string
+			// não apresente formato válido, é lançada uma exceção
+			Date novaData = null;
+			try {
+				novaData = new SimpleDateFormat("dd/MM/yyyy").parse(dados[2]);
+			} catch (Exception e) {
+				System.out.println("Erro: Formato inválido na leitura da data de lançamento de série");
+			}
+
+			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e
+			// idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios.Em
+			// seguida, insere-se a nova série no hashmap
+			Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
+
+			if (dados[3] != null && dados[4] != null) {
 			
-			if (series.containsKey(Integer.valueOf(dados[0]))) {
-				series.get(Integer.valueOf(dados[0])).avaliar(Integer.valueOf(dados[1]));
+			novaSerie.setSomaNotas(Double.valueOf(dados[3]));
+			
+			novaSerie.setTotalNotas(Double.valueOf(dados[4]));
+			
 			}
 			
-			if (filmes.containsKey(Integer.valueOf(dados[0]))) {
-				filmes.get(Integer.valueOf(dados[0])).avaliar(Integer.valueOf(dados[1]));
+			try {
+				adicionarSerie(Integer.valueOf(dados[0]), novaSerie);
+			} catch (NumberFormatException | NullPointerException e) {
+				 System.out.println(linha + ":" + dados);
+			} catch (ElementoJaExisteException e) {
+				System.out.println(e.getMessage());
 			}
+			
+			linha++;
 		}
+
+		// Imprimir lista
+		this.series.forEach((key, value) -> System.out.println("\n" + this.series.get(key)));
 
 		filereader.close();
 	}

@@ -120,7 +120,7 @@ public class Cliente {
         series = listaJaVistas.allElements(series);
 
         for (Serie serie : series) {
-            if (serie.getGenero().equals(idioma)) {
+            if (serie != null && serie.getGenero().equals(idioma)) {
                 seriesFiltradas.add(serie);
             }
         }

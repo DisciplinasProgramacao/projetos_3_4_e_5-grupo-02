@@ -23,10 +23,10 @@ public class ClienteTest {
 
     @BeforeEach
     public void setUp() {
-        s = new Serie("Breaking Bad", "Drama", "Portuguese", new Date(), 25);
+        s = new Serie("Breaking Bad", "Drama", "Português", new Date(), 25);
         c = new Cliente("xX_TesterCraft_Xx", "10", "teste123");
 
-        Lista<Serie> l = new Lista<>(); // Cria uma lista secundária de Séries
+        l = new Lista<>(); // Cria uma lista secundária de Séries
 
         c.adicionarNaLista(s); // Adiciona a série na lista de series do cliente
 
@@ -39,6 +39,15 @@ public class ClienteTest {
         l = c.filtrarPorGenero("Drama"); // A lista de séries recebe a serie filtrada pelo genero
 
         assertEquals(1, l.size());
+    }
+
+    @Test
+    public void filtrarPorIdiomaTest() {
+        Serie s1 = new Serie("Breaking Good", "Suspense", "Português", new Date(), 25);
+        c.adicionarNaLista(s1);
+        l = c.filtrarPorIdioma("Português"); // A lista de séries recebe a serie filtrada pelo genero
+
+        assertEquals(2, l.size());
     }
 
     @Test

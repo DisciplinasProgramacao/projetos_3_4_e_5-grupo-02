@@ -7,6 +7,7 @@ public class Cliente {
     private String senha;
     private Lista<Serie> listaParaVer;
     private Lista<Serie> listaJaVistas;
+    private Iavaliador modoAvaliacao;
 
     // CONSTRUTORES
     public Cliente(String nomeDeUsuario, String id, String senha) {
@@ -33,7 +34,7 @@ public class Cliente {
     // MÉTODOS
     
     public void avaliarMidia(Midia midia, int nota) {
-    	midia.avaliar(nota);
+    	midia.avaliar(this, nota);
     }
 
     /**
@@ -170,6 +171,8 @@ public class Cliente {
      public void registrarAudiencia(Serie serie){
          Serie[] buscaJaVistas = new Serie[listaJaVistas.size()];
          buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
+         if(this.viu5NoMes())
+        	 	this.modoAvaliacao = new especialista
 
          for (Serie buscada : buscaJaVistas){
              if (buscada.equals(serie)){

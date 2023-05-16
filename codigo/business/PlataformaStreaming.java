@@ -55,12 +55,18 @@ public class PlataformaStreaming {
 		throw new LoginInvalidoException(nomeUsuario, senha);
 	}
 
+	/**
+	 * Lê o arquivo "Espectadores.csv", ignorando a primeira linha do arquivo, instancia
+	 * clientes a partir das informações lidas e os adiciona à lista de clientes.
+	 *
+	 * @throws FileNotFoundException se o arquivo não for encontrado.
+	 */
 	public void carregarClientes() throws FileNotFoundException {
 		File file = new File("docs/database/Espectadores.csv");
 		Scanner filereader = new Scanner(file);
 
 		filereader.nextLine(); // Artifício para ignorar primeira linha do csv
-		int linha=0;
+		int linha = 0;
 		while (filereader.hasNextLine()) {
 			String[] split = filereader.nextLine().split(";");
 			
@@ -86,8 +92,7 @@ public class PlataformaStreaming {
 	}
 
 	/**
-	 * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado
-	 * já esteja previamente
+	 * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado já esteja previamente
 	 * presente na lista, a operação não é executada
 	 *
 	 * @param novoCliente cliente a ser adicionado
@@ -129,12 +134,9 @@ public class PlataformaStreaming {
 	}
 
 	/**
-	 * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv,
-	 * sobrepondo o arquivo já existente
-	 * de nome Espectadores.csv
-	 * O salvamento deve ser realizado após execução do programa a fim de registrar
-	 * em arquivo todas as mudanças
-	 * realizadas nos dados em memória
+	 * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv, sobrepondo o arquivo já existente
+	 * de nome Espectadores.csv. O salvamento deve ser realizado após execução do programa a fim de registrar
+	 * em arquivo todas as mudanças realizadas nos dados em memória
 	 */
 	public void registrarAudiencia(Serie serie) throws NullPointerException {
 		if (clienteAtual == null) {
@@ -149,7 +151,6 @@ public class PlataformaStreaming {
 	 */
 	public void salvarSeries() {
 		String arquivo = "docs/database/Series.csv";
-
 		
 		try (FileWriter writer = new FileWriter(arquivo)) {
 			writer.append("id; nome; lancamento; somaNotas; totalNotas\n");
@@ -177,11 +178,13 @@ public class PlataformaStreaming {
 			System.out.println("Erro: não foi possível gerar arquivo para salvar dados da serie.");
 		}
 	}
-	
+
+	/**
+	 * Lê o hashmap filmes e registra no arquivo Filmes.csv os atributos de cada filme presente.
+	 */
 	public void salvarFilmes() {
 		String arquivo = "docs/database/Filmes.csv";
 
-		
 		try (FileWriter writer = new FileWriter(arquivo)) {
 			writer.append("id; nome; lancamento; duracao; somaNotas; totalNotas\n");
 
@@ -204,13 +207,16 @@ public class PlataformaStreaming {
 				}
 			});
 
-			System.out.println("Filme salva com sucesso!");
+			System.out.println("Filme salvo com sucesso!");
 
 		} catch (IOException e) {
 			System.out.println("Erro: não foi possível gerar arquivo para salvar dados do filme.");
 		}
 	}
-	
+
+	/**
+	 * Lê o hashmap clientes e registra no arquivo Filmes.csv os atributos de cada cliente presente.
+	 */
 	public void salvarClientes() {
 		String csvFilename = "docs/database/Espectadores.csv";
 
@@ -236,7 +242,13 @@ public class PlataformaStreaming {
 			System.out.println("Erro: não foi possível gerar arquivo para salvar dados do cliente.");
 		}
 	}
-	
+
+	/**
+	 * Lê o arquivo "Filmes.csv", ignorando a primeira linha do arquivo, instancia
+	 * filmes a partir das informações lidas e os adiciona à lista de filmes.
+	 *
+	 * @throws FileNotFoundException se o arquivo não for encontrado.
+	 */
 	public void carregarFilmes() throws FileNotFoundException {
 		File file = new File("docs/database/Filmes.csv");
 		Scanner filereader = new Scanner(file);
@@ -291,6 +303,12 @@ public class PlataformaStreaming {
 		filereader.close();
 	}
 
+	/**
+	 * Lê o arquivo "Audiencia.csv" e, conforme lido no arquivo, adiciona série à lista para assistir
+	 * ou registra audiência de série já assistida pelo cliente.
+	 *
+	 * @throws FileNotFoundException se o arquivo não for encontrado.
+	 */
 	public void carregarAudiencia() throws FileNotFoundException {
 		File file = new File("docs/database/Audiencia.csv");
 		Scanner filereader = new Scanner(file);
@@ -301,13 +319,9 @@ public class PlataformaStreaming {
 			if (clientes.containsKey(dados[0]) && series.containsKey(Integer.valueOf(dados[2]))) {
 
 				if (dados[1].equals("F")) {
-					clientes.get(dados[0]).adicionarNaLista(series.get(Integer.valueOf(dados[2]))); // Adiciona série à
-																									// lista
+					clientes.get(dados[0]).adicionarNaLista(series.get(Integer.valueOf(dados[2]))); // Adiciona série à lista
 				} else if (dados[1].equals("A")) {
-					clientes.get(dados[0]).registrarAudiencia(series.get(Integer.valueOf(dados[2]))); // Registra +1
-																										// ponto de
-																										// audiência na
-																										// série
+					clientes.get(dados[0]).registrarAudiencia(series.get(Integer.valueOf(dados[2]))); // Registra +1 ponto de audiência na série
 				}
 			}
 		}
@@ -315,6 +329,12 @@ public class PlataformaStreaming {
 		filereader.close();
 	}
 
+	/**
+	 * Lê o arquivo "Series.csv", ignorando a primeira linha do arquivo, instancia
+	 * séries a partir das informações lidas e as adiciona à lista de séries.
+	 *
+	 * @throws FileNotFoundException se o arquivo não for encontrado.
+	 */
 	public void carregarSeries() throws FileNotFoundException {
 		File file = new File("docs/database/Series.csv");
 		Scanner filereader = new Scanner(file);
@@ -340,7 +360,7 @@ public class PlataformaStreaming {
 			}
 
 			// Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e
-			// idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios.Em
+			// idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios. Em
 			// seguida, insere-se a nova série no hashmap
 			Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
 
@@ -368,7 +388,15 @@ public class PlataformaStreaming {
 
 		filereader.close();
 	}
-	
+
+	/**
+	 * Invoca o método "filtrarPorGenero" do cliente atual, obtendo, assim, as séries das listas
+	 * que correspondem ao gênero selecionado.
+	 *
+	 * @param genero Gênero selecionado
+	 * @return	Lista filtrada por gênero das séries encontradas
+	 * @throws NullPointerException Se não houver cliente atual na plataforma
+	 */
 	public Lista<Serie> filtrarPorGenero(String genero) throws NullPointerException {
 		if (clienteAtual == null) {
 			throw new NullPointerException();
@@ -377,6 +405,14 @@ public class PlataformaStreaming {
 		return clienteAtual.filtrarPorGenero(genero);
 	}
 
+	/**
+	 * Invoca o método "filtrarPorIdioma" do cliente atual, obtendo, assim, as séries das listas
+	 * que correspondem ao idioma selecionado.
+	 *
+	 * @param idioma Idioma selecionado
+	 * @return	Lista filtrada por idioma das séries encontradas
+	 * @throws NullPointerException Se não houver cliente atual na plataforma
+	 */
 	public Lista<Serie> filtrarPorIdioma(String idioma) throws NullPointerException {
 		if (clienteAtual == null) {
 			throw new NullPointerException();
@@ -385,6 +421,14 @@ public class PlataformaStreaming {
 		return clienteAtual.filtrarPorIdioma(idioma);
 	}
 
+	/**
+	 * Invoca o método "filtrarPorQtdEpisodios" do cliente atual, obtendo, assim, as séries das listas
+	 * que possuem a quantidade de episódios selecionada.
+	 *
+	 * @param quantEpisodios Quantidade de episódios selecionada
+	 * @return	Lista filtrada por idioma das séries encontradas
+	 * @throws NullPointerException Se não houver cliente atual na plataforma
+	 */
 	public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios) throws NullPointerException {
 		if (clienteAtual == null) {
 			throw new NullPointerException();
@@ -393,6 +437,11 @@ public class PlataformaStreaming {
 		return clienteAtual.filtrarPorQtdEpisodios(quantEpisodios);
 	}
 
+	// TODO Corrigir método com lógica de aplicação em camada de negócio
+	/**
+	 * Instancia um novo cliente conforme nome de usuário, id e senha informados.
+	 * @return Novo cliente instanciado
+	 */
 	public Cliente cadastraCliente() {
 
 		Scanner sc = new Scanner(System.in);
@@ -457,5 +506,4 @@ public class PlataformaStreaming {
 
 		return serie;
 	}
-
 }

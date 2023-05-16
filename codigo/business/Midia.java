@@ -47,6 +47,10 @@ public abstract class Midia {
     }
 
     // MÉTODOS
+
+    /**
+     * Aumenta um ponto de audiência da mídia
+     */
     public void registrarAudiencia(){
         this.audiencia++;
     }

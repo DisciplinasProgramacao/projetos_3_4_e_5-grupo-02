@@ -163,9 +163,9 @@ public class PlataformaStreaming {
 						.append(";")
 						.append(value.getLancamento().toString())
 						.append(";")
-						.append(String.valueOf(value.getSomaNota()))
-						.append(";")
-						.append(String.valueOf(value.getTotalNotas()))
+//						.append(String.valueOf(value.getSomaNota()))
+//						.append(";")
+//						.append(String.valueOf(value.getTotalNotas()))
 						.append("\n");
 				} catch (IOException e) {
 					System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados da serie.");
@@ -198,9 +198,9 @@ public class PlataformaStreaming {
 						.append(";")
 						.append(String.valueOf(value.getDuracao()))
 						.append(";")
-						.append(String.valueOf(value.getSomaNota()))
-						.append(";")
-						.append(String.valueOf(value.getTotalNotas()))
+//						.append(String.valueOf(value.getSomaNota()))
+//						.append(";")
+//						.append(String.valueOf(value.getTotalNotas()))
 						.append("\n");
 				} catch (IOException e) {
 					System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");
@@ -278,13 +278,13 @@ public class PlataformaStreaming {
 			// insere-se o novo filme no hashmap
 			Filme novoFilme = new Filme(dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
 
-			if (dados[4] != null && dados[5] != null) {
-			
-			novoFilme.setSomaNotas(Double.valueOf(dados[4]));
-			
-			novoFilme.setTotalNotas(Double.valueOf(dados[5]));
-			
-			}
+//			if (dados[4] != null && dados[5] != null) {
+//			
+////			novoFilme.setSomaNotas(Double.valueOf(dados[4]));
+////			
+////			novoFilme.setTotalNotas(Double.valueOf(dados[5]));
+//			
+//			}
 			
 			try {
 				adicionarFilme(Integer.valueOf(dados[0]), novoFilme);
@@ -364,13 +364,13 @@ public class PlataformaStreaming {
 			// seguida, insere-se a nova série no hashmap
 			Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
 
-			if (dados[3] != null && dados[4] != null) {
-			
-			novaSerie.setSomaNotas(Double.valueOf(dados[3]));
-			
-			novaSerie.setTotalNotas(Double.valueOf(dados[4]));
-			
-			}
+//			if (dados[3] != null && dados[4] != null) {
+//			
+////			novaSerie.setSomaNotas(Double.valueOf(dados[3]));
+////			
+////			novaSerie.setTotalNotas(Double.valueOf(dados[4]));
+//			
+//			}
 			
 			try {
 				adicionarSerie(Integer.valueOf(dados[0]), novaSerie);

@@ -26,6 +26,10 @@ public class App {
 		}
 
         plataforma.salvarClientes();
+        
+        Cliente c = new Cliente();
+        c.verificarCategoria()
+        c.avaliarMidia(null, 0);
 
 	// javadoc -d doc -encoding "utf-8" -subpackages business app business.exceptions 
     }

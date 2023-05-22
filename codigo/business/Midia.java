@@ -54,6 +54,36 @@ public abstract class Midia {
     public void registrarAudiencia(){
         this.audiencia++;
     }
+
+    public void avaliar(Cliente cliente, int nota) throws Exception {
+        Avaliacao avaliacao = new Avaliacao(cliente, nota);
+        for(Avaliacao a: avaliacoes) {
+            if(a.getCliente() == cliente) {
+                throw new Exception("Um cliente não pode avaliar a midia 2 vezes");
+            }
+        }
+        avaliacoes.add(avaliacao);
+    }
+
+
+    public void avaliar(Cliente cliente, int nota, String comentario) throws Exception {
+        Avaliacao avaliacao = new Avaliacao(cliente, nota, comentario);
+        for(Avaliacao a: avaliacoes) {
+            if(a.getCliente() == cliente) {
+                throw new Exception("Um cliente não pode avaliar a midia 2 vezes");
+            }
+        }
+        avaliacoes.add(avaliacao);
+    }
+
+    public int mediaAvaliacoes() {
+        int total = 0;
+        for(Avaliacao a: avaliacoes) {
+            total += a.getNota();
+        }
+
+        return total / avaliacoes.size();
+    }
     
     @Override
     public String toString(){

@@ -7,6 +7,7 @@ public class Cliente {
     private String senha;
     private Lista<Serie> listaParaVer;
     private Lista<Serie> listaJaVistas;
+
 //    private Iavaliador modoAvaliacao;
 
     // CONSTRUTORES
@@ -33,14 +34,12 @@ public class Cliente {
 
     // MÉTODOS
     
-    public void avaliarMidia(Midia midia, int nota) {
-//    	midia.avaliar(this, nota);
+    public void avaliarMidia(Midia midia, int nota) throws Exception {
+    	midia.avaliar(this, nota);
     }
     
-    public void avaliarMidia(Midia midia, int nota, String comentario) {
-//    	midia.avaliar(this, nota);
-    	meuTipo.avaliar(midia, nota);
-    	((Comentarista)meutipo).avaliar(midia, comentario);
+    public void avaliarMidia(Midia midia, int nota, String comentario) throws Exception {
+          midia.avaliar(this, nota, comentario);
     }
 
     /**

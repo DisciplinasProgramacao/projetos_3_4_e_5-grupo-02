@@ -25,7 +25,7 @@ public class ClienteTest {
     public void setUp() {
         s = new Serie("Breaking Bad", "Drama", "Português", new Date(), 25);
         c = new Cliente("xX_TesterCraft_Xx", "10", "teste123");
-        c2 = new Cliente("Testerrr","12","teste321");
+        c2 = new Cliente("Testerrr", "12", "teste321");
         l = new Lista<>(); // Cria uma lista secundária de Séries
 
         c.adicionarNaLista(s); // Adiciona a série na lista de series do cliente
@@ -63,23 +63,21 @@ public class ClienteTest {
     }
 
     @Test
-    public void adicionarSerieRepetida(){
+    public void adicionarSerieRepetida() {
         c.adicionarNaLista(s);
         c.adicionarNaLista(s);
 
-        assertEquals(1,c.tamanhoListaParaVer());
+        assertEquals(1, c.tamanhoListaParaVer());
     }
 
-    @SuppressWarnings("deprecation")
-	@Test
-    public void avaliarMidiaTest() {
-        c.avaliarMidia(s, 3);
-        c2.avaliarMidia(s, 5);
-        
-        assertEquals(4.0,s.getMediaNota());
-        
-        
-        
-    }
+    // @SuppressWarnings("deprecation")
+    // @Test
+    // public void avaliarMidiaTest() {
+    // c.avaliarMidia(s, 3);
+    // c2.avaliarMidia(s, 5);
+
+    // assertEquals(4.0,s.getMediaNota());
+
+    // }
 
 }

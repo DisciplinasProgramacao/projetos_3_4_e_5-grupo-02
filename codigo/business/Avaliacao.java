@@ -1,20 +1,23 @@
 package business;
 
+import business.interfaces.ICliente;
+
 public class Avaliacao {
 
 	private int nota;
-	private Cliente cliente;  
-	private String texto;
+	private ICliente cliente;
+	private String comentario;
 	
-	public Avaliacao(Cliente cliente, int nota) {
+	public Avaliacao(ICliente cliente, int nota) {
 		this.setCliente(cliente);
 		this.setNota(nota);
+		// ? Aqui deveria ser inicializado String comentário?
 	}
 	
-	public Avaliacao(Cliente cliente, int nota, String texto) {
+	public Avaliacao(ICliente cliente, String comentario) {
 		this.setCliente(cliente);
-		this.setNota(nota);
-		this.setTexto(texto);
+		this.setTexto(comentario);
+		// ? Aqui deveria ser inicializado int nota?
 	}
 
 	public int getNota() {
@@ -27,19 +30,19 @@ public class Avaliacao {
 		}
 	}
 
-	public Cliente getCliente() {
+	public ICliente getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(Cliente cliente) {
+	public void setCliente(ICliente cliente) {
 		this.cliente = cliente;
 	}
 
 	public String getTexto() {
-		return texto;
+		return comentario;
 	}
 
-	public void setTexto(String texto) {
-		this.texto = texto;
+	public void setTexto(String comentario) {
+		this.comentario = comentario;
 	}
 }

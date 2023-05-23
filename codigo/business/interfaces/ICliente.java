@@ -8,5 +8,6 @@ public interface ICliente {
 	
 	public ICliente verificarCategoria(Lista<Serie> assistidas);
 	public boolean avaliarMidia(Midia midia, int nota);
+	public boolean avaliarMidia(Midia midia, String comentario);
 
 }

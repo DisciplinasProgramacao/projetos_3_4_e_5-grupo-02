@@ -4,21 +4,30 @@ import business.interfaces.ICliente;
 
 public class ClienteEspecialista implements ICliente {
 
-	@Override
-	public ICliente verificarCategoria(Lista<Serie> assistidas) {
-		// verifica e return new ClienteEspecialista(); ou return new ClienteRegular();
-		return null;
-	}
+    @Override
+    public ICliente verificarCategoria(Lista<Serie> assistidas) {
+        // verifica e return new ClienteEspecialista(); ou return new ClienteRegular();
+        return null;
+    }
 
-	public boolean avaliarMidia(Midia midia, int nota, String comentario) {
-		avaliarMidia(midia, nota);
-		return false;
-	}
+    // TODO Em vez de Exception genérica, capturar a exceção customizada lançada em midia.avaliar()
+    public boolean avaliarMidia(Midia midia, int nota) {
+        try {
+            midia.avaliar(this, nota);
+        } catch (Exception e) {
 
-	@Override
-	public boolean avaliarMidia(Midia midia, int nota) {
-		
-		return false;
-	}
+        }
 
+        return false;
+    }
+
+    public boolean avaliarMidia(Midia midia, String comentario) {
+        try {
+            midia.avaliar(this, comentario);
+        } catch (Exception e) {
+
+        }
+
+        return false;
+    }
 }

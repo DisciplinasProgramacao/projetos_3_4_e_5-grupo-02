@@ -1,4 +1,5 @@
 package business;
+import business.interfaces.*;
 
 public class Cliente {
     // ATRIBUTOS
@@ -7,8 +8,7 @@ public class Cliente {
     private String senha;
     private Lista<Serie> listaParaVer;
     private Lista<Serie> listaJaVistas;
-
-//    private Iavaliador modoAvaliacao;
+    private ICliente modoAvaliacao;
 
     // CONSTRUTORES
     public Cliente(String nomeDeUsuario, String id, String senha) {
@@ -17,6 +17,7 @@ public class Cliente {
         this.senha = senha;
         this.listaParaVer = new Lista<Serie>();
         this.listaJaVistas = new Lista<Serie>();
+        this.modoAvaliacao = new ClienteRegular();
     }
 
     // GETTERS E SETTERS
@@ -34,11 +35,11 @@ public class Cliente {
 
     // MÉTODOS
     public void avaliarMidia(Midia midia, int nota) throws Exception {
-        midia.avaliar(this, nota);
+        midia.avaliar(modoAvaliacao, nota);
     }
     
-    public void avaliarMidia(Midia midia, int nota, String comentario) throws Exception {
-          midia.avaliar(this, nota, comentario);
+    public void avaliarMidia(Midia midia, String comentario) throws Exception {
+          midia.avaliar(modoAvaliacao, comentario);
     }
 
     /**

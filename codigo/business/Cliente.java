@@ -33,9 +33,8 @@ public class Cliente {
     }
 
     // MÉTODOS
-    
     public void avaliarMidia(Midia midia, int nota) throws Exception {
-    	midia.avaliar(this, nota);
+        midia.avaliar(this, nota);
     }
     
     public void avaliarMidia(Midia midia, int nota, String comentario) throws Exception {
@@ -60,7 +59,6 @@ public class Cliente {
 
         this.listaParaVer.add(nomeSerie);
     }
-
 
     /**
      * Retira uma série da lista de séries para ver, contanto que a série
@@ -106,7 +104,7 @@ public class Cliente {
         }
 
         return seriesFiltradas;
-    };
+    }
 
     /**
      * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que
@@ -136,7 +134,7 @@ public class Cliente {
         }
 
         return seriesFiltradas;
-    };
+    }
 
     /**
      * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que
@@ -165,40 +163,35 @@ public class Cliente {
             }
         }
         return filtrada;
-    };
+    }
 
     /**
      * Contabiliza audiência de uma série. Caso a série selecionada já esteja presente na lista
-     * de séries para ver, a operação não é realizada
+     * de séries para ver, a operação não é realizada.
      *
      * @param serie série selecionada
      */
      public void registrarAudiencia(Serie serie){
          Serie[] buscaJaVistas = new Serie[listaJaVistas.size()];
-         if(!listaJaVistas.contains(serie)) {
-        	 // adicionar na lista
-        	 //chamar serie.registrar
-        	 // verificar categoria:
-        	 //meuTipo = meuTipo.veificarCategoria(listajaVistas);
-        	 
-         }
-         
-         buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
-//         if(this.viu5NoMes())
-//        	 	this.modoAvaliacao = new especialista
+
+         // Chamar a função de categorizar cliente
+         // meuTipo = meuTipo.veificarCategoria(listajaVistas);
+         // buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
+         // if(this.viu5NoMes())
+         //    this.modoAvaliacao = new especialista
 
          for (Serie buscada : buscaJaVistas){
              if (buscada.equals(serie)){
                  return;
              }
-
+             listaJaVistas.add(serie);
              serie.registrarAudiencia();
          }
      }
 
     /**
      * Sobrepoe o método toString() da classe Java Object a fim de modificar o resultado da impressão tela ao
-     * se passar um objeto da classe Cliente como parâmetro do método print()
+     * se passar um objeto da classe Cliente como parâmetro do método print().
      *
      * @return string contendo nome de usuário e senha do objeto Cliente
      */

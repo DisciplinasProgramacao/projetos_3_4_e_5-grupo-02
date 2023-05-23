@@ -222,4 +222,10 @@ public class Cliente {
             System.out.println(serie);
         }
     }
+
+    @Override 
+    public boolean equals(Object o){
+        Cliente outro = (Cliente) o;
+        return this.id.equals(outro.id);
+    }
 }

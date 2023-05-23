@@ -45,4 +45,10 @@ public class Avaliacao {
 	public void setTexto(String comentario) {
 		this.comentario = comentario;
 	}
+
+	@Override
+	public boolean equals(Object o){
+		Avaliacao outra = (Avaliacao) o;
+		return this.cliente.equals(outra.cliente);
+	}
 }

@@ -60,12 +60,9 @@ public abstract class Midia {
     // TODO Criar exceção personalizada para o método midia.avaliar()
     public void avaliar(ICliente cliente, int nota) throws Exception {
         Avaliacao avaliacao = new Avaliacao(cliente, nota);
-
-        for (Avaliacao a : avaliacoes) {
-            if (a.getCliente().equals(cliente))
-                throw new Exception("Cliente não pode avaliar a mídia mais de uma vez.");
-        }
-
+        if (avaliacoes.contains(avaliacao))
+            throw new Exception("Cliente não pode avaliar a mídia mais de uma vez.");
+      
         avaliacoes.add(avaliacao);
     }
 

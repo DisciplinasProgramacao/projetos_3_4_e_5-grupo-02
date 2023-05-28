@@ -7,8 +7,10 @@ Projeto apresentado à disciplina de Laboratório de Programação Modular. O ob
 ## Correção Projeto 3 (branch de 02/05)
 
 ### Nota base: 13,4
+
 ### Comentários
 
+- *ADICIONAR RESPONSÁVEIS NAS TAREFAS DA DOCUMENTAÇÃO AQUI ABAIXO* (ou link para Kanban)
 - Midia tem vários sets desnecessários e, pior, sem validação. A avaliação (nota) de uma mídia só pode ser feita por método específico. Acontece em outras classes. Revisar.
 - Erro na carga: procura campos 3 e 4 em carregar séries (só vai até 2)
 - Em adicionarCliente, veja que a linha 100 já lança um NullPointer se for nulo.

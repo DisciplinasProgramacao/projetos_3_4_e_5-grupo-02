@@ -19,26 +19,25 @@ Projeto apresentado à disciplina de Laboratório de Programação Modular. O ob
 - Filtros da plataforma precisam ser por mídia, não por série
 
 1. Aderência às classes do diagrama: 2/2 pontos
-- Diagramas
+
 
 2. Requisitos de corretamente implementados: 7,6/12 pontos
-- Carga de dados					1/2 pontos
-- Cadastro + salvar dados			0,6/2 pontos
-- Robustez básica					1/1 ponto
-- Clientes							1,5/2 pontos
-	Listas, audiência sem repet
-- Séries							1/1 ponto
-	audiência
-- Filme/Herança de mídia			1/1 ponto
-- Buscas 							2,5/3 pontos
-	nome, gênero, idioma
+    - Carga de dados					1/2 pontos
+    - Cadastro + salvar dados			0,6/2 pontos
+    - Robustez básica					1/1 ponto
+    - Clientes							1,5/2 pontos
+	      - Listas, audiência sem repet
+    - Séries							1/1 ponto
+    - Filme/Herança de mídia			1/1 ponto
+    - Buscas 							2,5/3 pontos
+        - nome, gênero, idioma
 
 3. Documentação de código: 2,8/4 pontos
-  - PlataformaStreaming mal documentada
+    - PlataformaStreaming mal documentada
 
 4. Implementação na aula inicial: 1/2 pontos (cliente e série testados)
-  - Cliente ok, teste não
-  - Série ok, teste não
+    - Cliente ok, teste não
+    - Série ok, teste não
 
 ----
 ## Alunos integrantes da equipe

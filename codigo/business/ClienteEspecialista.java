@@ -10,7 +10,8 @@ public class ClienteEspecialista implements ICliente {
         return null;
     }
 
-    public void avaliarMidia(Midia midia, String comentario) throws IllegalStateException {
-        midia.avaliar(this, comentario);
+    @Override
+    public void avaliarMidia(Midia midia, Cliente avaliador, String comentario) throws IllegalStateException {
+        midia.avaliar(avaliador, comentario);
     }
 }

@@ -3,23 +3,23 @@ package business;
 import business.interfaces.ICliente;
 
 public class Avaliacao {
-
+	// ATRIBUTOS
 	private int nota;
-	private ICliente cliente;
+	private Cliente cliente;
 	private String comentario;
-	
-	public Avaliacao(ICliente cliente, int nota) {
+
+	// CONSTRUTORES
+	public Avaliacao(Cliente cliente, int nota) {
 		this.setCliente(cliente);
 		this.setNota(nota);
-		// ? Aqui deveria ser inicializado String comentário?
 	}
 	
-	public Avaliacao(ICliente cliente, String comentario) {
-		this.setCliente(cliente);
+	public Avaliacao(Cliente cliente, String comentario) {
+		this.setCliente((Cliente) cliente);
 		this.setTexto(comentario);
-		// ? Aqui deveria ser inicializado int nota?
 	}
 
+	// GETTERS E SETTERS
 	public int getNota() {
 		return nota;
 	}
@@ -30,11 +30,11 @@ public class Avaliacao {
 		}
 	}
 
-	public ICliente getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(ICliente cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
@@ -46,6 +46,16 @@ public class Avaliacao {
 		this.comentario = comentario;
 	}
 
+	// MÉTODOS
+
+	/**
+	 * Sobrepõe o método equals() da classe Java Object a fim de modificar o resultado da comparação entre
+	 * dois objetos. Para isso, realiza downcast para Avaliação, possibilitando comparar o cliente avaliador
+	 * de ambos objetos. Caso possuam o mesmo cliente avaliador, o método assegura que os dois objetos se
+	 * tratam de uma mesma avaliação.
+	 * @param o Objeto a ser comparado com this.
+	 * @return Se os clientes avaliadores são iguais.
+	 */
 	@Override
 	public boolean equals(Object o){
 		Avaliacao outra = (Avaliacao) o;

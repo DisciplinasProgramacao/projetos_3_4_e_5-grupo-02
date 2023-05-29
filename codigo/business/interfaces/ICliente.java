@@ -1,5 +1,6 @@
 package business.interfaces;
 
+import business.Cliente;
 import business.Lista;
 import business.Midia;
 import business.Serie;
@@ -9,8 +10,8 @@ public interface ICliente {
 
 	// Atributo com a qtd de filmes assistidos
 	// Atributo com a qtd de listas
-	
+
 	public ICliente verificarCategoria(Lista<Serie> assistidas);	// deve ser static
-	public void avaliarMidia(Midia midia, String comentario) throws ElementoJaExisteException;
+	public void avaliarMidia(Midia midia, Cliente avaliador, String comentario) throws IllegalStateException;
 
 }

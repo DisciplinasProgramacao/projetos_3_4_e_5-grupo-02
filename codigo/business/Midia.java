@@ -1,8 +1,5 @@
 package business;
 
-import business.exceptions.ElementoJaExisteException;
-import business.interfaces.ICliente;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,7 +56,7 @@ public abstract class Midia {
     }
 
     // TODO Criar exceção personalizada para o método midia.avaliar()
-    public void avaliar(ICliente cliente, int nota) throws IllegalStateException {
+    public void avaliar(Cliente cliente, int nota) throws IllegalStateException {
         Avaliacao avaliacao = new Avaliacao(cliente, nota);
         if (avaliacoes.contains(avaliacao))
             throw new IllegalStateException("Cliente não pode avaliar a mídia mais de uma vez.");
@@ -68,7 +65,7 @@ public abstract class Midia {
     }
 
     // TODO Criar exceção personalizada para o método midia.avaliar()
-    public void avaliar(ICliente cliente, String comentario) throws IllegalStateException {
+    public void avaliar(Cliente cliente, String comentario) throws IllegalStateException {
         Avaliacao avaliacao = new Avaliacao(cliente, comentario);
 
         for (Avaliacao a : avaliacoes) {
@@ -79,8 +76,8 @@ public abstract class Midia {
         avaliacoes.add(avaliacao);
     }
 
-    public int mediaAvaliacoes() {
-        int total = 0;
+    public double mediaAvaliacoes() {
+        double total = 0;
         for (Avaliacao a : avaliacoes) {
             total += a.getNota();
         }
@@ -88,10 +85,27 @@ public abstract class Midia {
         return total / avaliacoes.size();
     }
 
+    public StringBuilder comentarios() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Avaliacao a : avaliacoes) {
+            if (a.getTexto() != null) {
+                sb.append(a.getCliente().getNomeUsuario());
+                sb.append(" - ");
+                sb.append("\"" + a.getTexto() + "\"" + "; ");
+            }
+        }
+
+        return sb;
+    }
+
     @Override
     public String toString() {
         return ("Nome: " + this.nome +
                 "\nGênero: " + this.genero +
-                "\nIdioma: " + this.idioma);
+                "\nIdioma: " + this.idioma +
+                "\nAvaliação média: " + this.mediaAvaliacoes() +
+                "\nComentários: " + this.comentarios()
+        );
     }
 }

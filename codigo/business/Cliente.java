@@ -8,7 +8,7 @@ public class Cliente {
     private String senha;
     private Lista<Serie> listaParaVer;
     private Lista<Serie> listaJaVistas;
-    private ICliente modoAvaliacao;
+    public ICliente modoAvaliacao;
 
     // CONSTRUTORES
     public Cliente(String nomeDeUsuario, String id, String senha) {
@@ -34,13 +34,30 @@ public class Cliente {
     }
 
     // MÉTODOS
-    public void avaliarMidia(Midia midia, int nota) throws Exception {
-        midia.avaliar(modoAvaliacao, nota);
+
+    /**
+     * Chama o método avaliar(Cliente, int) de Midia, passando-o como parâmetro o cliente atual que
+     * está avaliando a mídia em questão, bem como a nota a ser inserida na avaliação.
+     * @param midia Mídia a ser avaliada
+     * @param nota Nota a ser atribuída na mídia avaliada
+     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia previamente.
+     */
+    public void avaliarMidia(Midia midia, int nota) throws IllegalStateException {
+        midia.avaliar(this, nota);
     }
-    
-//    public void avaliarMidia(Midia midia, String comentario) throws Exception {
-//          midia.avaliar(modoAvaliacao, comentario);
-//    }
+
+    /**
+     * Verifica se o cliente que está avaliando possui modoAvaliador especialista. Se positivo,
+     * prossegue em chamar o método avaliar(Cliente, int) de Midia, passando-o como parâmetro o cliente
+     * atual que está avaliando a mídia, bem como a nota a ser inserida na avaliação.
+     * @param midia Mídia a ser avaliada
+     * @param comentario Comentário a ser atribuído na mídia avaliada
+     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia previamente.
+     */
+    public void avaliarMidia(Midia midia, String comentario) throws IllegalStateException {
+        if (modoAvaliacao instanceof ClienteEspecialista)
+            modoAvaliacao.avaliarMidia(midia,this, comentario);
+    }
 
     /**
      * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada
@@ -191,18 +208,6 @@ public class Cliente {
      }
 
     /**
-     * Sobrepoe o método toString() da classe Java Object a fim de modificar o resultado da impressão tela ao
-     * se passar um objeto da classe Cliente como parâmetro do método print().
-     *
-     * @return string contendo nome de usuário e senha do objeto Cliente
-     */
-    @Override
-    public String toString() {
-        return "Usuário: " + nomeDeUsuario +
-                "\nSenha: " + senha;
-    }
-
-    /**
      * Retorna o tamanho da lista de séries para ver
      *
      * @return o tamanho de listaParaVer
@@ -223,6 +228,26 @@ public class Cliente {
         }
     }
 
+    /**
+     * Sobrepoe o método toString() da classe Java Object a fim de modificar o resultado da impressão tela ao
+     * se passar um objeto da classe Cliente como parâmetro do método print().
+     *
+     * @return string contendo nome de usuário e senha do objeto Cliente
+     */
+    @Override
+    public String toString() {
+        return "Usuário: " + nomeDeUsuario +
+                "\nSenha: " + senha;
+    }
+
+    /**
+     * Sobrepõe o método equals() da classe Java Object a fim de modificar o resultado da comparação entre
+     * dois objetos. Para isso, realiza downcast para Cliente, possibilitando comparar os ids de Cliente de
+     * ambos objetos. Caso os ids sejam iguais, o método assegura que os dois objetos se tratam de um mesmo
+     * cliente.
+     * @param o Objeto a ser comparado com this.
+     * @return Se os ids de cliente são iguais.
+     */
     @Override 
     public boolean equals(Object o){
         Cliente outro = (Cliente) o;

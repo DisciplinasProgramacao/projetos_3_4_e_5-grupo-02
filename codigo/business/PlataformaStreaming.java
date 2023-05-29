@@ -435,7 +435,7 @@ public class PlataformaStreaming {
 
 		return clienteAtual.filtrarPorQtdEpisodios(quantEpisodios);
 	}
-		
+
 	/**
 	 * Lê os dados da nova serie registrada e cria um objeto com esses dados
 	 * @return Nova série com os dados informados
@@ -467,7 +467,7 @@ public class PlataformaStreaming {
 		 System.out.println("Insira a quantidade de episodios da série: ");
 		 quantidadeEpisodios = read.nextInt();
 
-		read.close();
+		 read.close();
 
 		 Date dataLancamento = new Date(lancamento);
 

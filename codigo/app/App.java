@@ -3,9 +3,7 @@ package app;
 import business.Cliente;
 import business.Filme;
 import business.PlataformaStreaming;
-import business.exceptions.ElementoJaExisteException;
-
-import java.io.FileNotFoundException;
+import business.exceptions.*;
 import java.util.Date;
 
 public class App {

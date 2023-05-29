@@ -33,3 +33,10 @@ replay_pid*
 projetos_3_4_e_5-grupo-02.iml
 .idea/libraries/lib.xml
 .idea/inspectionProfiles/Project_Default.xml
+codigo/test/AvaliacaoTest.java
+codigo/test/ClienteEspecialistaTest.java
+codigo/test/ClienteRegularTest.java
+codigo/test/ClienteTest.java
+codigo/test/FilmeTest.java
+codigo/test/PlataformaStreamingTest.java
+codigo/test/SerieTest.java

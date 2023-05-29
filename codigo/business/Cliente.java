@@ -17,7 +17,7 @@ public class Cliente {
         this.senha = senha;
         this.listaParaVer = new Lista<Serie>();
         this.listaJaVistas = new Lista<Serie>();
-        this.modoAvaliacao = new ClienteRegular();
+        this.modoAvaliacao = null;
     }
 
     // GETTERS E SETTERS
@@ -38,9 +38,9 @@ public class Cliente {
         midia.avaliar(modoAvaliacao, nota);
     }
     
-    public void avaliarMidia(Midia midia, String comentario) throws Exception {
-          midia.avaliar(modoAvaliacao, comentario);
-    }
+//    public void avaliarMidia(Midia midia, String comentario) throws Exception {
+//          midia.avaliar(modoAvaliacao, comentario);
+//    }
 
     /**
      * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada

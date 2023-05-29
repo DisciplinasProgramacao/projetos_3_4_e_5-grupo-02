@@ -1,5 +1,6 @@
 package business;
 
+import business.exceptions.ElementoJaExisteException;
 import business.interfaces.ICliente;
 
 import java.util.ArrayList;
@@ -58,22 +59,21 @@ public abstract class Midia {
     }
 
     // TODO Criar exceção personalizada para o método midia.avaliar()
-    public void avaliar(ICliente cliente, int nota) throws Exception {
+    public void avaliar(ICliente cliente, int nota) throws IllegalStateException {
         Avaliacao avaliacao = new Avaliacao(cliente, nota);
         if (avaliacoes.contains(avaliacao))
-            throw new Exception("Cliente não pode avaliar a mídia mais de uma vez.");
+            throw new IllegalStateException("Cliente não pode avaliar a mídia mais de uma vez.");
       
         avaliacoes.add(avaliacao);
     }
 
     // TODO Criar exceção personalizada para o método midia.avaliar()
-    public void avaliar(ICliente cliente, String comentario) throws Exception {
-        // ? Typecasting de ICliente para Cliente está correto?
+    public void avaliar(ICliente cliente, String comentario) throws IllegalStateException {
         Avaliacao avaliacao = new Avaliacao(cliente, comentario);
 
         for (Avaliacao a : avaliacoes) {
             if (a.getCliente().equals(cliente))
-                throw new Exception("Cliente não pode avaliar a mídia mais de uma vez.");
+                throw new IllegalStateException("Cliente não pode avaliar a mídia mais de uma vez.");
         }
 
         avaliacoes.add(avaliacao);

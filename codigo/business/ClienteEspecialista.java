@@ -10,24 +10,7 @@ public class ClienteEspecialista implements ICliente {
         return null;
     }
 
-    // TODO Em vez de Exception genérica, capturar a exceção customizada lançada em midia.avaliar()
-    public boolean avaliarMidia(Midia midia, int nota) {
-        try {
-            midia.avaliar(this, nota);
-        } catch (Exception e) {
-
-        }
-
-        return false;
-    }
-
-    public boolean avaliarMidia(Midia midia, String comentario) {
-        try {
-            midia.avaliar(this, comentario);
-        } catch (Exception e) {
-
-        }
-
-        return false;
+    public void avaliarMidia(Midia midia, String comentario) throws IllegalStateException {
+        midia.avaliar(this, comentario);
     }
 }

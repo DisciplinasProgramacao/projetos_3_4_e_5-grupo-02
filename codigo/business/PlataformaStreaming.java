@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.function.IntPredicate;
 
 import business.exceptions.ElementoJaExisteException;
 import business.exceptions.LoginInvalidoException;
@@ -436,37 +435,7 @@ public class PlataformaStreaming {
 
 		return clienteAtual.filtrarPorQtdEpisodios(quantEpisodios);
 	}
-
-	// TODO Corrigir método com lógica de aplicação em camada de negócio
-	/**
-	 * Instancia um novo cliente conforme nome de usuário, id e senha informados.
-	 * @return Novo cliente instanciado
-	 */
-	public Cliente cadastraCliente() {
-
-		Scanner sc = new Scanner(System.in);
-
-		String nome;
-		String id;
-		String senha;
-
-		System.out.println("Por favor digite seu nome de usuário: ");
-		nome = sc.nextLine();
-
-		System.out.println("Por favor digite seu id: ");
-		id = sc.nextLine();
-
-		System.out.println("Por favor digite sua senha: ");
-		senha = sc.nextLine();
-
-		Cliente c = new Cliente(nome, id, senha);
-
-		sc.close();
-
-		return c;
-	}
-
-	
+		
 	/**
 	 * Lê os dados da nova serie registrada e cria um objeto com esses dados
 	 * @return Nova série com os dados informados

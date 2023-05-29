@@ -3,6 +3,7 @@ package business.interfaces;
 import business.Lista;
 import business.Midia;
 import business.Serie;
+import business.exceptions.ElementoJaExisteException;
 
 public interface ICliente {
 
@@ -10,7 +11,6 @@ public interface ICliente {
 	// Atributo com a qtd de listas
 	
 	public ICliente verificarCategoria(Lista<Serie> assistidas);	// deve ser static
-	public boolean avaliarMidia(Midia midia, int nota);
-	public boolean avaliarMidia(Midia midia, String comentario);
+	public void avaliarMidia(Midia midia, String comentario) throws ElementoJaExisteException;
 
 }

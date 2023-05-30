@@ -55,8 +55,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o arquivo "Espectadores.csv", ignorando a primeira linha do arquivo, instancia
-     * clientes a partir das informações lidas e os adiciona à lista de clientes.
+     * Lê o arquivo "Espectadores.csv", ignorando a primeira linha do arquivo, instancia clientes a partir das
+     * informações lidas e os adiciona à lista de clientes.
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
      */
@@ -90,8 +90,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado já esteja previamente
-     * presente na lista, a operação não é executada
+     * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado já esteja previamente presente na
+     * lista, a operação não é executada
      *
      * @param novoCliente cliente a ser adicionado
      */
@@ -132,9 +132,9 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv, sobrepondo o arquivo já existente
-     * de nome Espectadores.csv. O salvamento deve ser realizado após execução do programa a fim de registrar
-     * em arquivo todas as mudanças realizadas nos dados em memória
+     * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv, sobrepondo o arquivo já existente de nome
+     * Espectadores.csv. O salvamento deve ser realizado após execução do programa a fim de registrar em arquivo todas
+     * as mudanças realizadas nos dados em memória
      */
     public void registrarAudiencia(Serie serie) throws NullPointerException {
         if (clienteAtual == null) {
@@ -236,8 +236,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o arquivo "Filmes.csv", ignorando a primeira linha do arquivo, instancia
-     * filmes a partir das informações lidas e os adiciona à lista de filmes.
+     * Lê o arquivo "Filmes.csv", ignorando a primeira linha do arquivo, instancia filmes a partir das informações lidas
+     * e os adiciona à lista de filmes.
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
      */
@@ -288,8 +288,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o arquivo "Audiencia.csv" e, conforme lido no arquivo, adiciona série à lista para assistir
-     * ou registra audiência de série já assistida pelo cliente.
+     * Lê o arquivo "Audiencia.csv" e, conforme lido no arquivo, adiciona série à lista para assistir ou registra
+     * audiência de série já assistida pelo cliente.
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
      */
@@ -314,8 +314,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o arquivo "Series.csv", ignorando a primeira linha do arquivo, instancia
-     * séries a partir das informações lidas e as adiciona à lista de séries.
+     * Lê o arquivo "Series.csv", ignorando a primeira linha do arquivo, instancia séries a partir das informações lidas
+     * e as adiciona à lista de séries.
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
      */
@@ -366,8 +366,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Invoca o método "filtrarPorGenero" do cliente atual, obtendo, assim, as séries das listas
-     * que correspondem ao gênero selecionado.
+     * Invoca o método "filtrarPorGenero" do cliente atual, obtendo, assim, as séries das listas que correspondem ao
+     * gênero selecionado.
      *
      * @param genero Gênero selecionado
      * @return Lista filtrada por gênero das séries encontradas
@@ -382,8 +382,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Invoca o método "filtrarPorIdioma" do cliente atual, obtendo, assim, as séries das listas
-     * que correspondem ao idioma selecionado.
+     * Invoca o método "filtrarPorIdioma" do cliente atual, obtendo, assim, as séries das listas que correspondem ao
+     * idioma selecionado.
      *
      * @param idioma Idioma selecionado
      * @return Lista filtrada por idioma das séries encontradas
@@ -398,8 +398,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Invoca o método "filtrarPorQtdEpisodios" do cliente atual, obtendo, assim, as séries das listas
-     * que possuem a quantidade de episódios selecionada.
+     * Invoca o método "filtrarPorQtdEpisodios" do cliente atual, obtendo, assim, as séries das listas que possuem a
+     * quantidade de episódios selecionada.
      *
      * @param quantEpisodios Quantidade de episódios selecionada
      * @return Lista filtrada por idioma das séries encontradas

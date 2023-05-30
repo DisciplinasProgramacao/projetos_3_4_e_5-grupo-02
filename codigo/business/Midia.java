@@ -12,11 +12,11 @@ public abstract class Midia {
     public static final String[] IDIOMAS = new String[]{"Português", "Inglês", "Esperanto", "Romeno"};
     private int id;
     private String nome;
-    private String genero;
-    private String idioma;
-    private Date lancamento;
+    private final String genero;
+    private final String idioma;
+    private final Date lancamento;
     private int audiencia;
-    private List<Avaliacao> avaliacoes;
+    private final List<Avaliacao> avaliacoes;
 
     // CONSTRUTORES
     public Midia(String nome, String genero, String idioma, Date lancamento) {
@@ -46,9 +46,9 @@ public abstract class Midia {
     public Date getLancamento() {
         return this.lancamento;
     }
-    
+
     public List<Avaliacao> getQtdAva() {
-    	return avaliacoes;
+        return avaliacoes;
     }
 
     // MÉTODOS
@@ -60,21 +60,42 @@ public abstract class Midia {
         this.audiencia++;
     }
 
+
+    /**
+     * Verifica se, na lista de avaliações, já existe uma valiação feita pelo mesmo cliente anteriormente. Caso não
+     * exista, instancia uma nova avaliação contendo cliente avaliador, nota e comentário recebidos pela função que a
+     * chamou.  Em seguida, a adiciona à lista de avaliações da mídia.
+     *
+     * @param cliente    Cliente que está avaliando
+     * @param nota       Nota a ser atribuída à mídia avaliada
+     * @param comentario Comentário a ser atribuído na mídia avaliada
+     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia anteriormente
+     */
     public void criarAvaliacao(Cliente cliente, int nota, String comentario) throws IllegalStateException {
         Avaliacao avaliacao = new Avaliacao(cliente, nota, comentario);
         if (avaliacoes.contains(avaliacao))
             throw new IllegalStateException("Cliente não pode avaliar a mídia mais de uma vez.");
-      
+
         avaliacoes.add(avaliacao);
     }
 
+    /**
+     * Calcula a média de notas recebidas como avaliação.
+     *
+     * @return Média de notas
+     */
     public double mediaAvaliacoes() {
-    	return avaliacoes.stream()
-    			.mapToInt(Avaliacao::getNota)
-    			.average()
-    			.orElse(0.0);
+        return avaliacoes.stream()
+                .mapToInt(Avaliacao::getNota)
+                .average()
+                .orElse(0.0);
     }
 
+    /**
+     * Retorna um objeto StringBuilder contendo os comentários das avaliações.
+     *
+     * @return Objeto StringBuilder contendo os comentários das avaliações.
+     */
     public StringBuilder comentarios() {
         StringBuilder sb = new StringBuilder();
 
@@ -82,7 +103,7 @@ public abstract class Midia {
             if (a.getTexto() != null) {
                 sb.append(a.getCliente().getNomeUsuario());
                 sb.append(" - ");
-                sb.append("\"" + a.getTexto() + "\"" + "; ");
+                sb.append("\"").append(a.getTexto()).append("\"").append("; ");
             }
         }
 

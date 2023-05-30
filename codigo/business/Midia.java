@@ -73,13 +73,6 @@ public abstract class Midia {
     			.mapToInt(Avaliacao::getNota)
     			.average()
     			.orElse(0.0);
-    	
-//        double total = 0;
-//        for (Avaliacao a : avaliacoes) {
-//            total += a.getNota();
-//        }
-//
-//        return total / avaliacoes.size();
     }
 
     public StringBuilder comentarios() {

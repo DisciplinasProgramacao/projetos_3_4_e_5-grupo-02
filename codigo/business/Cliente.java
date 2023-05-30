@@ -64,7 +64,6 @@ public class Cliente {
 	 */
 	public void avaliarMidia(Midia midia, int nota, String comentario) throws IllegalStateException {
 		if (modoAvaliacao instanceof ClienteEspecialista)
-//            modoAvaliacao.avaliarMidia(midia, this, nota, comentario);
 			midia.criarAvaliacao(this, nota, comentario);
 	}
 

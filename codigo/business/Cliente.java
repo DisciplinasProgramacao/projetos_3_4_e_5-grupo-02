@@ -43,7 +43,8 @@ public class Cliente {
      * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia previamente.
      */
     public void avaliarMidia(Midia midia, int nota) throws IllegalStateException {
-        midia.avaliar(this, nota);
+    	// null = comentario (Pq cliente normal não avalia com comentario)
+        midia.criarAvaliacao(this, nota, null);
     }
 
     /**
@@ -54,9 +55,10 @@ public class Cliente {
      * @param comentario Comentário a ser atribuído na mídia avaliada
      * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia previamente.
      */
-    public void avaliarMidia(Midia midia, String comentario) throws IllegalStateException {
+    public void avaliarMidia(Midia midia, int nota, String comentario) throws IllegalStateException {
         if (modoAvaliacao instanceof ClienteEspecialista)
-            modoAvaliacao.avaliarMidia(midia,this, comentario);
+//            modoAvaliacao.avaliarMidia(midia, this, nota, comentario);
+    		midia.criarAvaliacao(this, nota, comentario);
     }
 
     /**

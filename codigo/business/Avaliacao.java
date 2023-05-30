@@ -1,7 +1,5 @@
 package business;
 
-import business.interfaces.ICliente;
-
 public class Avaliacao {
 	// ATRIBUTOS
 	private int nota;
@@ -9,16 +7,13 @@ public class Avaliacao {
 	private String comentario;
 
 	// CONSTRUTORES
-	public Avaliacao(Cliente cliente, int nota) {
-		this.setCliente(cliente);
+	
+	public Avaliacao(Cliente cliente, int nota, String comentario) {
+		this.setCliente((Cliente) cliente);
+		this.setTexto(comentario);
 		this.setNota(nota);
 	}
 	
-	public Avaliacao(Cliente cliente, String comentario) {
-		this.setCliente((Cliente) cliente);
-		this.setTexto(comentario);
-	}
-
 	// GETTERS E SETTERS
 	public int getNota() {
 		return nota;

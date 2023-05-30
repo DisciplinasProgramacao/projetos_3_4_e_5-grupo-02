@@ -12,6 +12,6 @@ public interface ICliente {
 	// Atributo com a qtd de listas
 
 	public ICliente verificarCategoria(Lista<Serie> assistidas);	// deve ser static
-	public void avaliarMidia(Midia midia, Cliente avaliador, String comentario) throws IllegalStateException;
+	public void avaliarMidia(Midia midia, Cliente avaliador, int nota, String comentario) throws IllegalStateException;
 
 }

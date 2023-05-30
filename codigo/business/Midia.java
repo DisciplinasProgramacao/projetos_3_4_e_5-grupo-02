@@ -3,6 +3,7 @@ package business;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.OptionalDouble;
 
 public abstract class Midia {
 
@@ -45,6 +46,10 @@ public abstract class Midia {
     public Date getLancamento() {
         return this.lancamento;
     }
+    
+    public List<Avaliacao> getQtdAva() {
+    	return avaliacoes;
+    }
 
     // MÉTODOS
 
@@ -55,34 +60,26 @@ public abstract class Midia {
         this.audiencia++;
     }
 
-    // TODO Criar exceção personalizada para o método midia.avaliar()
-    public void avaliar(Cliente cliente, int nota) throws IllegalStateException {
-        Avaliacao avaliacao = new Avaliacao(cliente, nota);
+    public void criarAvaliacao(Cliente cliente, int nota, String comentario) throws IllegalStateException {
+        Avaliacao avaliacao = new Avaliacao(cliente, nota, comentario);
         if (avaliacoes.contains(avaliacao))
             throw new IllegalStateException("Cliente não pode avaliar a mídia mais de uma vez.");
       
         avaliacoes.add(avaliacao);
     }
 
-    // TODO Criar exceção personalizada para o método midia.avaliar()
-    public void avaliar(Cliente cliente, String comentario) throws IllegalStateException {
-        Avaliacao avaliacao = new Avaliacao(cliente, comentario);
-
-        for (Avaliacao a : avaliacoes) {
-            if (a.getCliente().equals(cliente))
-                throw new IllegalStateException("Cliente não pode avaliar a mídia mais de uma vez.");
-        }
-
-        avaliacoes.add(avaliacao);
-    }
-
     public double mediaAvaliacoes() {
-        double total = 0;
-        for (Avaliacao a : avaliacoes) {
-            total += a.getNota();
-        }
-
-        return total / avaliacoes.size();
+    	return avaliacoes.stream()
+    			.mapToInt(Avaliacao::getNota)
+    			.average()
+    			.orElse(0.0);
+    	
+//        double total = 0;
+//        for (Avaliacao a : avaliacoes) {
+//            total += a.getNota();
+//        }
+//
+//        return total / avaliacoes.size();
     }
 
     public StringBuilder comentarios() {

@@ -30,10 +30,13 @@ public class App {
 
         /* Demonstração de salvamento de dados em arquivo .csv */
         plataforma.salvarClientes();
+        
+        System.out.println();
 
         /* Demonstração de avaliação para clientes regulares */
-        Cliente avaliadorRegular = new Cliente("Clientinho", "client12", "cli");
-        Filme filme = new Filme("Nome", "Genero", "Idioma", new Date(), 120);
+        Cliente avaliadorRegular = new Cliente("Ednaldo Pereira", "ed.pereira", "123");
+        
+        Filme filme = new Filme("Minions", "Terror", "Aramaico", new Date(), 120);
 
         avaliadorRegular.avaliarMidia(filme,3);
 
@@ -41,7 +44,7 @@ public class App {
         Cliente clienteEsp = new Cliente("Givanildo", "hulk13", "13");
 
         clienteEsp.modoAvaliacao = new ClienteEspecialista();
-        clienteEsp.avaliarMidia(filme, "Muito ruim, nota 9");
+        clienteEsp.avaliarMidia(filme, 4, "Muito ruim");
 
         System.out.println(filme);
 

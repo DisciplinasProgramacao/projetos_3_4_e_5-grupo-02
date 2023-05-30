@@ -17,7 +17,7 @@ public class ClienteTest {
         assertTrue(1 + 1 == 2);
     }
 
-    Serie s;
+    Serie s, s1;
     Cliente c, c2;
     Lista<Serie> l;
 

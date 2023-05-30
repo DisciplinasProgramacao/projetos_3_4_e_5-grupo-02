@@ -64,7 +64,9 @@ public class Cliente {
 	 */
 	public void avaliarMidia(Midia midia, int nota, String comentario) throws IllegalStateException {
 		if (modoAvaliacao instanceof ClienteEspecialista)
-			midia.criarAvaliacao(this, nota, comentario);
+			modoAvaliacao.avaliarMidia(midia, this, nota, comentario);
+		else
+			throw new IllegalStateException("O cliente não possui modo avaliador de especialista.");
 	}
 
 	/**

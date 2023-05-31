@@ -33,15 +33,19 @@ public class App {
 
         while (!exit) {
             System.out.println("\nOlá, " + plataforma.getClienteAtual().getNomeUsuario() + "! Bem-vindo(a) ao Xam OBH!\n");
-            System.out.println("Escolha a operação que deseja realizar:\n");
-            System.out.println("--- Gerenciamento de clientes ---");
-            System.out.println("\t1 - Fazer login com outro usuário");
-            System.out.println("\t2 - Cadastrar novo cliente");
-            System.out.println("--- Gerenciamento de mídias ---");
-            System.out.println("\t3 - Cadastrar nova série ou filme");
-            System.out.println("--- Outros ---");
-            System.out.println("\t99 - Fechar plataforma");
 
+            System.out.println("""
+                Escolha a operação que deseja realizar:
+                 --- Gerenciamento de clientes ---
+                 \t1 - Fazer login com outro usuário"
+                 \t2 - Cadastrar novo cliente
+                 --- Gerenciamento de mídias ---
+                 \t3 - Cadastrar nova série ou filme
+                 \t4 - Assistir série
+                 --- Outros ---
+                 \t98 - Demonstração de outras funções
+                 \t99 - Salvar alterações e sair
+                 """);
 
             int op = scanner.nextInt();
 
@@ -55,17 +59,24 @@ public class App {
                     break;
                 case 3:
                     cadastrarMidia(plataforma);
+                    break;
+                case 4:
+                    assistirSerie(plataforma);
+                    break;
+                case 98:
+                    demo(plataforma);
+                    break;
                 case 99:
-                    System.out.println("Fechando plataforma...");
+                    System.out.println("Salvando alterações...");
+                    plataforma.salvarClientes();
+                    plataforma.salvarFilmes();
+                    plataforma.salvarSeries();
                     exit = true;
+                    break;
             }
         }
 
         scanner.close();
-
-        plataforma.salvarClientes();
-        plataforma.salvarFilmes();
-        plataforma.salvarSeries();
 
     }
 
@@ -166,5 +177,53 @@ public class App {
         }
 
         scanner.close();
+    }
+
+    public static void assistirSerie(PlataformaStreaming plataforma) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Insira o id da série que você deseja assistir: ");
+        String id = scanner.nextLine();
+
+        if (plataforma.getSeries().containsKey(id)){
+            plataforma.getSeries().get(id).registrarAudiencia();
+            System.out.println("Série assistida e adicionada à lista.");
+        }
+
+        else
+            System.out.println("A série de id " + id + " não foi encontrada.");
+    }
+
+    public static void demo(PlataformaStreaming plataforma) {
+        /* Demonstração de adição de dados */
+        Cliente novoCliente = new Cliente("Cirilo", "maria_joaquina_stan", "cirilo12");
+
+        try {
+            plataforma.adicionarCliente(novoCliente);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (ElementoJaExisteException e) {
+            System.out.println(e.getMessage());
+        }
+
+        /* Demonstração de salvamento de dados em arquivo .csv */
+        plataforma.salvarClientes();
+
+        System.out.println();
+
+        /* Demonstração de avaliação para clientes regulares */
+        Cliente avaliadorRegular = new Cliente("Ednaldo Pereira", "ed.pereira", "123");
+
+        Filme filme = new Filme("Minions", "Terror", "Aramaico", new Date(), 120);
+
+        avaliadorRegular.avaliarMidia(filme,3);
+
+        /* Demonstração de avaliação para cliente especialista*/
+        Cliente clienteEsp = new Cliente("Givanildo", "hulk13", "13");
+
+        clienteEsp.modoAvaliacao = new ClienteEspecialista();
+        clienteEsp.avaliarMidia(filme, 4, "Muito ruim");
+
+        System.out.println(filme);
     }
 }

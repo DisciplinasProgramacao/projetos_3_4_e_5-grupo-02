@@ -180,16 +180,6 @@ public class Cliente {
         }
     }
 
-    // TEMP
-    public void imprimirListaJaVistas() {
-        Serie[] listaImprimir = new Serie[listaJaVistas.size()];
-        listaImprimir = listaJaVistas.allElements(listaImprimir);
-
-        for (Serie serie : listaImprimir) {
-            System.out.println(serie);
-        }
-    }
-
     /**
      * Contabiliza audiência de uma série. Caso a série selecionada já esteja presente na lista de séries para ver, a
      * operação não é realizada.
@@ -217,13 +207,18 @@ public class Cliente {
         serie.registrarAudiencia();
     }
 
+    /**
+     * Categoriza o cliente com base no número de itens já vistos.
+     *
+     * @return Uma instância de ICliente representando a categoria do cliente, ou null se o cliente tiver atingido
+     * critério para receber nova categoria.
+     */
     private ICliente categorizarCliente() {
         if (listaJaVistas.size() >= 5)
             return new ClienteEspecialista();
         else
             return null;
     }
-
     /**
      * Chama o método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
      * avaliando a mídia em questão, bem como a nota a ser inserida na avaliação. Como parâmetro de comentário, passa o

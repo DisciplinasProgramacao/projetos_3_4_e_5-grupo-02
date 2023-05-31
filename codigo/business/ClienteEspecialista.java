@@ -4,12 +4,12 @@ import business.interfaces.ICliente;
 
 public class ClienteEspecialista implements ICliente {
 
-    private int midiasAssistidas;
-
     @Override
     public ICliente verificarCategoria(Lista<Serie> assistidas) {
-        // verifica e return new ClienteEspecialista(); ou return new ClienteRegular();
-        return null;
+        if (assistidas.size() >= 5)
+            return new ClienteEspecialista();
+        else
+            return null;
     }
 
     /**

@@ -37,36 +37,6 @@ public class Cliente {
     // MÉTODOS
 
     /**
-     * Chama o método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
-     * avaliando a mídia em questão, bem como a nota a ser inserida na avaliação. Como parâmetro de comentário, passa o
-     * valor null, uma vez que clientes regulares não podem avaliar com comentários.
-     *
-     * @param midia Mídia a ser avaliada
-     * @param nota  Nota a ser atribuída à mídia avaliada
-     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia previamente.
-     */
-    public void avaliarMidia(Midia midia, int nota) throws IllegalStateException {
-        midia.criarAvaliacao(this, nota, null);
-    }
-
-    /**
-     * Verifica se o cliente que está avaliando possui modoAvaliador especialista. Se positivo, prossegue em chamar o
-     * método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
-     * avaliando a mídia, bem como a nota a ser inserida na avaliação.
-     *
-     * @param midia      Mídia a ser avaliada
-     * @param nota       Nota a ser atribuída à mídia avaliada
-     * @param comentario Comentário a ser atribuído na mídia avaliada
-     * @throws IllegalStateException Caso o cliente que está tentando avaliar não seja ClienteEspecialista
-     */
-    public void avaliarMidia(Midia midia, int nota, String comentario) throws IllegalStateException {
-        if (modoAvaliacao instanceof ClienteEspecialista)
-            modoAvaliacao.avaliarMidia(midia, this, nota, comentario);
-        else
-            throw new IllegalStateException("O cliente não possui modo avaliador de especialista.");
-    }
-
-    /**
      * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada já exista na lista, a operação não é
      * realizada
      *
@@ -190,30 +160,6 @@ public class Cliente {
     }
 
     /**
-     * Contabiliza audiência de uma série. Caso a série selecionada já esteja presente na lista de séries para ver, a
-     * operação não é realizada.
-     *
-     * @param serie série selecionada
-     */
-    public void registrarAudiencia(Serie serie) {
-        Serie[] buscaJaVistas = new Serie[listaJaVistas.size()];
-
-        // Chamar a função de categorizar cliente
-        // meuTipo = meuTipo.veificarCategoria(listajaVistas);
-        // buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
-        // if(this.viu5NoMes())
-        // this.modoAvaliacao = new especialista
-
-        for (Serie buscada : buscaJaVistas) {
-            if (buscada.equals(serie)) {
-                return;
-            }
-            listaJaVistas.add(serie);
-            serie.registrarAudiencia();
-        }
-    }
-
-    /**
      * Retorna o tamanho da lista de séries para ver
      *
      * @return o tamanho de listaParaVer
@@ -234,15 +180,99 @@ public class Cliente {
         }
     }
 
+    // TEMP
+    public void imprimirListaJaVistas() {
+        Serie[] listaImprimir = new Serie[listaJaVistas.size()];
+        listaImprimir = listaJaVistas.allElements(listaImprimir);
+
+        for (Serie serie : listaImprimir) {
+            System.out.println(serie);
+        }
+    }
+
+    /**
+     * Contabiliza audiência de uma série. Caso a série selecionada já esteja presente na lista de séries para ver, a
+     * operação não é realizada.
+     *
+     * @param serie série selecionada
+     */
+    public void registrarAudiencia(Serie serie) {
+        this.modoAvaliacao = categorizarCliente();
+
+        Serie[] buscaJaVistas = new Serie[listaJaVistas.size()];
+        buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
+
+        // Chamar a função de categorizar cliente
+        // meuTipo = meuTipo.veificarCategoria(listajaVistas);
+        // buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
+        // if(this.viu5NoMes())
+        // this.modoAvaliacao = new especialista
+
+        for (Serie buscada : buscaJaVistas) {
+            if (buscada.equals(serie))
+                return;
+        }
+
+        listaJaVistas.add(serie);
+        serie.registrarAudiencia();
+    }
+
+    ICliente categorizarCliente() {
+        if (listaJaVistas.size() >= 5)
+            return new ClienteEspecialista();
+        else
+            return null;
+    }
+
+    /**
+     * Chama o método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
+     * avaliando a mídia em questão, bem como a nota a ser inserida na avaliação. Como parâmetro de comentário, passa o
+     * valor null, uma vez que clientes regulares não podem avaliar com comentários.
+     *
+     * @param midia Mídia a ser avaliada
+     * @param nota  Nota a ser atribuída à mídia avaliada
+     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia previamente.
+     */
+    public void avaliarMidia(Midia midia, int nota) throws IllegalStateException {
+        midia.criarAvaliacao(this, nota, null);
+    }
+
+    /**
+     * Verifica se o cliente que está avaliando possui modoAvaliador especialista. Se positivo, prossegue em chamar o
+     * método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
+     * avaliando a mídia, bem como a nota a ser inserida na avaliação.
+     *
+     * @param midia      Mídia a ser avaliada
+     * @param nota       Nota a ser atribuída à mídia avaliada
+     * @param comentario Comentário a ser atribuído na mídia avaliada
+     * @throws IllegalStateException Caso o cliente que está tentando avaliar não seja ClienteEspecialista
+     */
+    public void avaliarMidia(Midia midia, int nota, String comentario) throws IllegalStateException {
+        if (modoAvaliacao instanceof ClienteEspecialista)
+            modoAvaliacao.avaliarMidia(midia, this, nota, comentario);
+        else
+            throw new IllegalStateException("O cliente não possui modo avaliador de especialista.");
+    }
+
     /**
      * Sobrepoe o método toString() da classe Java Object a fim de modificar o resultado da impressão tela ao se passar
      * um objeto da classe Cliente como parâmetro do método print().
      *
-     * @return string contendo nome de usuário e senha do objeto Cliente
+     * @return string contendo nome de usuário, senha e modo de avaliação do objeto Cliente
      */
     @Override
     public String toString() {
-        return "Usuário: " + nomeDeUsuario + "\nSenha: " + senha;
+
+        String printModoAvaliacao;
+
+        if (modoAvaliacao instanceof ClienteEspecialista)
+            printModoAvaliacao = "Cliente Especialista";
+        else
+            printModoAvaliacao = "Cliente Regular";
+
+        return "Usuário: " + nomeDeUsuario
+                + "\nSenha: " + senha
+                + "\nModo de avaliação: " + printModoAvaliacao;
     }
 
     /**

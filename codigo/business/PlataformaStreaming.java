@@ -107,6 +107,48 @@ public class PlataformaStreaming {
         this.clientes.put(novoCliente.getId(), novoCliente);
     }
 
+    /**
+     * Lê o hashmap clientes e registra no arquivo Filmes.csv os atributos de cada cliente presente.
+     */
+    public void salvarClientes() {
+        String csvFilename = "docs/database/Espectadores.csv";
+
+        try (FileWriter writer = new FileWriter(csvFilename)) {
+            writer.append("nomeDeUsuario; id; senha\n");
+
+            this.clientes.forEach((key, value) -> {
+                try {
+                    writer.append(value.getNomeUsuario())
+                            .append(";")
+                            .append(value.getId())
+                            .append(";")
+                            .append(value.getSenha())
+                            .append("\n");
+                } catch (IOException e) {
+                    System.out.println("Erro: não foi escrever no arquivo para salvar dados do cliente.");
+                }
+            });
+
+            System.out.println("Clientes salvos com sucesso!");
+
+        } catch (IOException e) {
+            System.out.println("Erro: não foi possível gerar arquivo para salvar dados do cliente.");
+        }
+    }
+    
+    /**
+     * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv, sobrepondo o arquivo já existente de nome
+     * Espectadores.csv. O salvamento deve ser realizado após execução do programa a fim de registrar em arquivo todas
+     * as mudanças realizadas nos dados em memória
+     */
+    public void registrarAudiencia(Serie serie) throws NullPointerException {
+        if (clienteAtual == null) {
+            throw new NullPointerException();
+        }
+
+        clienteAtual.registrarAudiencia(serie);
+    }
+
     public void adicionarFilme(Integer id, Filme novoFilme) throws NullPointerException, ElementoJaExisteException {
         if (novoFilme == null) {
             throw new NullPointerException();
@@ -129,19 +171,6 @@ public class PlataformaStreaming {
         }
 
         this.series.put(id, novaSerie);
-    }
-
-    /**
-     * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv, sobrepondo o arquivo já existente de nome
-     * Espectadores.csv. O salvamento deve ser realizado após execução do programa a fim de registrar em arquivo todas
-     * as mudanças realizadas nos dados em memória
-     */
-    public void registrarAudiencia(Serie serie) throws NullPointerException {
-        if (clienteAtual == null) {
-            throw new NullPointerException();
-        }
-
-        clienteAtual.registrarAudiencia(serie);
     }
 
     /**
@@ -203,35 +232,6 @@ public class PlataformaStreaming {
 
         } catch (IOException e) {
             System.out.println("Erro: não foi possível gerar arquivo para salvar dados do filme.");
-        }
-    }
-
-    /**
-     * Lê o hashmap clientes e registra no arquivo Filmes.csv os atributos de cada cliente presente.
-     */
-    public void salvarClientes() {
-        String csvFilename = "docs/database/Espectadores.csv";
-
-        try (FileWriter writer = new FileWriter(csvFilename)) {
-            writer.append("nomeDeUsuario; id; senha\n");
-
-            this.clientes.forEach((key, value) -> {
-                try {
-                    writer.append(value.getNomeUsuario())
-                            .append(";")
-                            .append(value.getId())
-                            .append(";")
-                            .append(value.getSenha())
-                            .append("\n");
-                } catch (IOException e) {
-                    System.out.println("Erro: não foi escrever no arquivo para salvar dados do cliente.");
-                }
-            });
-
-            System.out.println("Clientes salvos com sucesso!");
-
-        } catch (IOException e) {
-            System.out.println("Erro: não foi possível gerar arquivo para salvar dados do cliente.");
         }
     }
 
@@ -449,8 +449,6 @@ public class PlataformaStreaming {
 
         Date dataLancamento = new Date(lancamento);
 
-        Serie serie = new Serie(nome, genero, idioma, dataLancamento, quantidadeEpisodios);
-
-        return serie;
+        return new Serie(nome, genero, idioma, dataLancamento, quantidadeEpisodios);
     }
 }

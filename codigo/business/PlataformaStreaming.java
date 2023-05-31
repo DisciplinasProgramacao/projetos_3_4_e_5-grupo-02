@@ -49,11 +49,20 @@ public class PlataformaStreaming {
     }
 
     // MÉTODOS
+
+    /**
+     * Realiza operação de login a partir do nome de usuário e senha informados. Se um usuário correspondente for
+     * encontrado, o cliente atual será definido como o cliente conectado. Caso contrário, lança
+     * LoginInvalidoException.
+     *
+     * @param nomeUsuario Nome de usuário do cliente que tenta logar.
+     * @param senha       Senha do cliente que tenta logar.
+     * @throws LoginInvalidoException Se o nome de usuário e a senha fornecidos não corresponderem a nenhum cliente na lista.
+     */
     public void login(String nomeUsuario, String senha) throws LoginInvalidoException {
         for (Cliente cliente : this.clientes.values()) {
-            System.out.println(cliente.getNomeUsuario());
             if (cliente.getId().equals(nomeUsuario)
-                && cliente.getSenha().equals(senha)) {
+                    && cliente.getSenha().equals(senha)) {
                 this.clienteAtual = cliente;
                 System.out.println("Login realizado com sucesso!");
             }
@@ -428,44 +437,5 @@ public class PlataformaStreaming {
         }
 
         return clienteAtual.filtrarPorQtdEpisodios(quantEpisodios);
-    }
-
-    /**
-     * Lê os dados da nova serie registrada e cria um objeto com esses dados
-     *
-     * @return Nova série com os dados informados
-     */
-    public Serie cadastrarSerie() {
-        Scanner read = new Scanner(System.in);
-
-        String nome;
-        String genero;
-        String idioma;
-        String lancamento;
-        int quantidadeEpisodios;
-
-        System.out.println("Insira o nome da série: ");
-        nome = read.nextLine();
-
-
-        System.out.println("Insira o genero da série: ");
-        genero = read.nextLine();
-
-
-        System.out.println("Insira o idioma da série: ");
-        idioma = read.nextLine();
-
-
-        System.out.println("Insira a data de lançamento da série: ");
-        lancamento = read.nextLine();
-
-        System.out.println("Insira a quantidade de episodios da série: ");
-        quantidadeEpisodios = read.nextInt();
-
-        read.close();
-
-        Date dataLancamento = new Date(lancamento);
-
-        return new Serie(nome, genero, idioma, dataLancamento, quantidadeEpisodios);
     }
 }

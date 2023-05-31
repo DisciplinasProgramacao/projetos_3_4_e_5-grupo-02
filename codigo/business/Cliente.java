@@ -217,7 +217,7 @@ public class Cliente {
         serie.registrarAudiencia();
     }
 
-    ICliente categorizarCliente() {
+    private ICliente categorizarCliente() {
         if (listaJaVistas.size() >= 5)
             return new ClienteEspecialista();
         else

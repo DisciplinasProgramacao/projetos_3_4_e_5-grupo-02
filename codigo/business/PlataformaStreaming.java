@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 
 import business.exceptions.ElementoJaExisteException;
@@ -43,14 +44,21 @@ public class PlataformaStreaming {
         return filmes;
     }
 
+    public Cliente getClienteAtual() {
+        return clienteAtual;
+    }
+
     // MÉTODOS
-    public Cliente login(String nomeUsuario, String senha) throws LoginInvalidoException {
+    public void login(String nomeUsuario, String senha) throws LoginInvalidoException {
         for (Cliente cliente : this.clientes.values()) {
-            if (cliente.getNomeUsuario() == nomeUsuario && cliente.getSenha() == senha) {
+            System.out.println(cliente.getNomeUsuario());
+            if (cliente.getId().equals(nomeUsuario)
+                && cliente.getSenha().equals(senha)) {
                 this.clienteAtual = cliente;
-                return cliente;
+                System.out.println("Login realizado com sucesso!");
             }
         }
+
         throw new LoginInvalidoException(nomeUsuario, senha);
     }
 
@@ -87,6 +95,15 @@ public class PlataformaStreaming {
         // 		this.clientes.get(key) + "\nID: " + key + " \n"));
 
         filereader.close();
+    }
+
+    public void adicionarCliente(String userName, String userId, String userPassword) throws ElementoJaExisteException {
+        if (clientes.containsKey(userId))
+            throw new ElementoJaExisteException(userId);
+        else {
+            Cliente novoCliente = new Cliente(userName, userId, userPassword);
+            clientes.put(userId, novoCliente);
+        }
     }
 
     /**
@@ -135,7 +152,7 @@ public class PlataformaStreaming {
             System.out.println("Erro: não foi possível gerar arquivo para salvar dados do cliente.");
         }
     }
-    
+
     /**
      * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv, sobrepondo o arquivo já existente de nome
      * Espectadores.csv. O salvamento deve ser realizado após execução do programa a fim de registrar em arquivo todas
@@ -196,7 +213,7 @@ public class PlataformaStreaming {
                 }
             });
 
-            System.out.println("Serie salva com sucesso!");
+            System.out.println("Série salvas com sucesso!");
 
         } catch (IOException e) {
             System.out.println("Erro: não foi possível gerar arquivo para salvar dados da serie.");
@@ -228,7 +245,7 @@ public class PlataformaStreaming {
                 }
             });
 
-            System.out.println("Filme salvo com sucesso!");
+            System.out.println("Filmes salvos com sucesso!");
 
         } catch (IOException e) {
             System.out.println("Erro: não foi possível gerar arquivo para salvar dados do filme.");
@@ -282,7 +299,7 @@ public class PlataformaStreaming {
         }
 
         // Imprimir lista
-        this.filmes.forEach((key, value) -> System.out.println("\n" + this.filmes.get(key)));
+//        this.filmes.forEach((key, value) -> System.out.println("\n" + this.filmes.get(key)));
 
         filereader.close();
     }
@@ -360,7 +377,7 @@ public class PlataformaStreaming {
         }
 
         // Imprimir lista
-        this.series.forEach((key, value) -> System.out.println("\n" + this.series.get(key)));
+//        this.series.forEach((key, value) -> System.out.println("\n" + this.series.get(key)));
 
         filereader.close();
     }

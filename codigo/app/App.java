@@ -38,7 +38,7 @@ public class App {
             System.out.println("""
                 Escolha a operação que deseja realizar:
                  --- Gerenciamento de clientes ---
-                 \t1 - Fazer login com outro usuário"
+                 \t1 - Fazer login com outro usuário
                  \t2 - Cadastrar novo cliente
                  --- Gerenciamento de mídias ---
                  \t3 - Cadastrar nova série ou filme
@@ -78,13 +78,12 @@ public class App {
         }
 
         scanner.close();
-
     }
 
     public static void fazerLogin(PlataformaStreaming plataforma) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Nome de usuário: ");
+        System.out.println("ID: ");
         String loginUserName = scanner.nextLine();
         System.out.println("Senha: ");
         String loginPassword = scanner.nextLine();
@@ -103,7 +102,7 @@ public class App {
         System.out.println("-- Cadastrando um novo cliente --");
         System.out.println("Nome de usuário: ");
         String userName = scanner.nextLine();
-        System.out.println("Id: ");
+        System.out.println("ID: ");
         String userId = scanner.nextLine();
         System.out.println("Senha: ");
         String userPassword = scanner.nextLine();

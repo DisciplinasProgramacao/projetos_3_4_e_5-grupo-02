@@ -168,6 +168,12 @@ public class Cliente {
         return this.listaParaVer.size();
     }
 
+    public int tamanhoListaJaVistos(){
+        return this.listaJaVistas.size();
+    }
+
+
+
     /**
      * Imprime na tela as séries existentes na lista de séries para ver
      */

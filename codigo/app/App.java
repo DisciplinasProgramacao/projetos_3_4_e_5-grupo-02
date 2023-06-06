@@ -17,6 +17,7 @@ public class App {
 
         PlataformaStreaming plataforma = new PlataformaStreaming("Xam OBH", new Cliente("Lott", "Lott123", "senha"));
 
+
         System.out.println("\nOlá, " + plataforma.getClienteAtual().getNomeUsuario() + "! Bem-vindo(a) ao Xam OBH!\n");
 
         /* Carregamento de dados */

@@ -5,10 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.Set;
 
 import business.exceptions.ElementoJaExisteException;
 import business.exceptions.LoginInvalidoException;
@@ -437,5 +440,16 @@ public class PlataformaStreaming {
         }
 
         return clienteAtual.filtrarPorQtdEpisodios(quantEpisodios);
+    }
+
+    public Cliente qualClienteAssistiuMaisMidias(){
+        
+        Cliente c =this.clientes.values().stream()
+        .max(Comparator.comparing(Cliente::tamanhoListaJaVistos)).get();
+        
+        System.out.println(c);
+
+        return c;
+
     }
 }

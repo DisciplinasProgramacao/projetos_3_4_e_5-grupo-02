@@ -65,6 +65,7 @@ public class PlataformaStreaming {
                     && cliente.getSenha().equals(senha)) {
                 this.clienteAtual = cliente;
                 System.out.println("Login realizado com sucesso!");
+                return;
             }
         }
 
@@ -375,6 +376,7 @@ public class PlataformaStreaming {
             Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
 
             try {
+                System.out.println("!!!!Integer.valueOf(dados[0]): " + Integer.valueOf(dados[0]));
                 adicionarSerie(Integer.valueOf(dados[0]), novaSerie);
             } catch (NumberFormatException | NullPointerException e) {
                 System.out.println(linha + ":" + dados);

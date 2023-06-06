@@ -37,7 +37,7 @@ public class App {
             System.out.println("""
                 Escolha a operação que deseja realizar:
                  --- Gerenciamento de clientes ---
-                 \t1 - Fazer login com outro usuário"
+                 \t1 - Fazer login com outro usuário
                  \t2 - Cadastrar novo cliente
                  --- Gerenciamento de mídias ---
                  \t3 - Cadastrar nova série ou filme

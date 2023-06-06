@@ -83,7 +83,7 @@ public class App {
     public static void fazerLogin(PlataformaStreaming plataforma) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Nome de usuário: ");
+        System.out.println("ID: ");
         String loginUserName = scanner.nextLine();
         System.out.println("Senha: ");
         String loginPassword = scanner.nextLine();

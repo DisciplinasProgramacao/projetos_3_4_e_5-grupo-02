@@ -48,6 +48,7 @@ public class App {
                  \t99 - Salvar alterações e sair
                  """);
 
+            System.out.print("Opção: ");
             int op = scanner.nextInt();
 
             switch (op) {
@@ -94,6 +95,8 @@ public class App {
         } catch (LoginInvalidoException e) {
             System.out.println(e.getMessage());
         }
+
+        scanner.close();
     }
 
     public static void cadastrarCliente(PlataformaStreaming plataforma) {
@@ -113,6 +116,8 @@ public class App {
         } catch (ElementoJaExisteException e) {
             System.out.println(e.getMessage());
         }
+
+        scanner.close();
     }
 
     public static void cadastrarMidia(PlataformaStreaming plataforma) {
@@ -161,7 +166,6 @@ public class App {
                 } catch (ElementoJaExisteException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
-                scanner.close();
             }
             case "b" -> {
                 System.out.println("Insira a duração do filme: ");
@@ -172,7 +176,6 @@ public class App {
                 } catch (ElementoJaExisteException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
-                scanner.close();
             }
         }
 
@@ -185,13 +188,15 @@ public class App {
         System.out.println("Insira o id da série que você deseja assistir: ");
         String id = scanner.nextLine();
 
-        if (plataforma.getSeries().containsKey(id)){
-            plataforma.getSeries().get(id).registrarAudiencia();
+        if (plataforma.getSeries().containsKey((Object)id)){
+            plataforma.getSeries().get((Object)id).registrarAudiencia();
             System.out.println("Série assistida e adicionada à lista.");
         }
 
         else
             System.out.println("A série de id " + id + " não foi encontrada.");
+
+        scanner.close();
     }
 
     public static void demo(PlataformaStreaming plataforma) {

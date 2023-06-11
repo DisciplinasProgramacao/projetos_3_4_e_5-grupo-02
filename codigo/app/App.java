@@ -164,6 +164,8 @@ public class App {
             }
         }
     }
+   
+   
     public static void main(String[] args) {
         /*Variaveis */
         PlataformaStreaming plataform = new PlataformaStreaming("Xam OBH", new Cliente("John Doe", "Jd123", "psswd456"));
@@ -194,8 +196,11 @@ public class App {
                                 --- Gerenciar Mídias ---
                                 3. Cadastrar nova mídia.
                                 4. Assistir mídia.
+                                5. Ver audiencia de uma midia.
                                 --- Outros ---
-                                98. Demonstrar outras funções.
+                                6. Ver lista para assistir.
+                                7. Ver lista já visto.
+                                8. Fazer buscar a partir de um filtro.
                                 99. Salvar e sair.
                                 """);
             System.out.printf("Opção: ");

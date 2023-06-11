@@ -11,9 +11,28 @@ import java.util.Scanner;
 
 
 public class App {
+    public static Scanner read = new Scanner(System.in);
+    /*Método estatico para fazer login */
+    public static void fazerLogin(PlataformaStreaming plat) {
+        String userName, password;
+
+        System.out.printf("---------- Fazer Login ----------\n");
+        
+        System.out.printf("Insira o ID do usuário: ");
+        userName = read.nextLine();
+
+        System.out.printf("Insira a SENHA do usuário: ");
+        password = read.nextLine();
+
+        try{
+            plat.login(userName, password);
+        } catch(LoginInvalidoException e) {
+            System.out.printf(e.getMessage());
+        } 
+    }
+
     public static void main(String[] args) {
         /*Variaveis */
-        Scanner read = new Scanner(System.in);
         PlataformaStreaming plataform = new PlataformaStreaming("Xam OBH", new Cliente("John Doe", "Jd123", "psswd789"));
         int option = 0;
 
@@ -30,6 +49,7 @@ public class App {
         }
 
         while(option != 99) {
+            /*Criar menu */
             System.out.printf("------- DEMO -------\n");
             System.out.printf("Usuário: %s\n", plataform.getClienteAtual().getNomeUsuario());
             System.out.printf("Menu: \n");
@@ -47,10 +67,12 @@ public class App {
                                 """);
             System.out.printf("Opção: ");
             option = read.nextInt();
+            read.nextLine();
 
+            //Escolher opção
             switch(option) {
                 case 1: 
-                    System.out.printf("Opção 01 selecionada\n");
+                    fazerLogin(plataform);
                     break;
                 case 2:
                     System.out.printf("Opção 02 selecionada\n");

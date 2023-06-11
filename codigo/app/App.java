@@ -127,7 +127,43 @@ public class App {
         }
     }
 
+    /*Método estatico para assistir midia */
+    public static void assistirMidia(PlataformaStreaming plat) {
+        String midiaId;
+        int midiaOption;
 
+        System.out.printf("---------- Assistir uma séire ----------\n");
+        
+        System.out.printf("Escolha o que assistir:\n1.Filme\n2.Série\n");
+        midiaOption = read.nextInt();
+        read.nextLine();
+
+        switch(midiaOption) {
+            case 1 -> {
+                System.out.printf("ID do filme: ");
+                midiaId = read.nextLine();
+
+                if(plat.getFilmes().containsKey((Object)midiaId)) {
+                    plat.getFilmes().get((Object)midiaId).registrarAudiencia();
+                    System.out.printf("Filme assistido\n");
+                } else {
+                    System.out.printf("O filme de id: %s não foi encontrado\n", midiaId);
+                }
+            }
+            
+            case 2 -> {
+                System.out.printf("ID da série: ");
+                midiaId = read.nextLine();
+
+                if(plat.getSeries().containsKey((Object)midiaId)) {
+                    plat.getSeries().get((Object)midiaId).registrarAudiencia();
+                    System.out.printf("Série assistida\n");
+                } else {
+                    System.out.printf("A séirie de id: %s não foi encontrada\n", midiaId);
+                }
+            }
+        }
+    }
     public static void main(String[] args) {
         /*Variaveis */
         PlataformaStreaming plataform = new PlataformaStreaming("Xam OBH", new Cliente("John Doe", "Jd123", "psswd456"));
@@ -178,7 +214,7 @@ public class App {
                     cadastrarMidia(plataform);
                     break;
                 case 4:
-                    System.out.printf("Opção 04 selecionada\n");
+                    assistirMidia(plataform);
                     break;
                 case 98: 
                     System.out.printf("Opção 98 selecionada\n");

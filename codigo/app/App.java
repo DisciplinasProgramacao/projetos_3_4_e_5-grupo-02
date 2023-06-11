@@ -24,14 +24,13 @@ public class App {
             plataform.carregarFilmes();
             plataform.carregarSeries();
 
-            System.out.printf("Olá, " + plataform.getClienteAtual().getNomeUsuario() + "! Bem-vindo(a) a demonstração do Xam OBH!\n");
-            
         } catch(FileNotFoundException e) {
             System.out.printf("Erro ao entrar na plataforma");
             read.close();
         }
 
         while(option != 99) {
+            System.out.printf("------- DEMO -------\n");
             System.out.printf("Usuário: %s\n", plataform.getClienteAtual().getNomeUsuario());
             System.out.printf("Menu: \n");
             System.out.printf("""
@@ -48,6 +47,32 @@ public class App {
                                 """);
             System.out.printf("Opção: ");
             option = read.nextInt();
+
+            switch(option) {
+                case 1: 
+                    System.out.printf("Opção 01 selecionada\n");
+                    break;
+                case 2:
+                    System.out.printf("Opção 02 selecionada\n");
+                    break;
+                case 3:
+                    System.out.printf("Opção 03 selecionada\n");
+                    break;
+                case 4:
+                    System.out.printf("Opção 04 selecionada\n");
+                    break;
+                case 98: 
+                    System.out.printf("Opção 98 selecionada\n");
+                    break;
+                case 99:
+                    System.out.printf("Opção 99 selecionada\n");
+                    break;
+                default:
+                    System.out.printf("A opção %d é inválida\n", option);
+
+            }
         }
+
+        read.close();
     }     
 }

@@ -11,7 +11,9 @@ import java.util.Scanner;
 
 
 public class App {
-    public static Scanner read = new Scanner(System.in);
+    /*System.in implementa a interface Closable. Ver javadoc java.util.scanner -> Scanner.close*/
+    public static Scanner read = new Scanner(System.in); 
+
     /*Método estatico para fazer login */
     public static void fazerLogin(PlataformaStreaming plat) {
         String userName, password;
@@ -31,9 +33,31 @@ public class App {
         } 
     }
 
+    /*Método estatico para cadastrar cliente */
+    public static void cadastrarCliente(PlataformaStreaming plat) {
+        String userName, userId, userPassword;
+
+        System.out.printf("---------- Cadastrar Cliente ----------\n");
+        
+        System.out.printf("Nome do usuário: ");
+        userName = read.nextLine();
+
+        System.out.printf("ID do usuário: ");
+        userId = read.nextLine();
+
+        System.out.printf("Senha do usuário: ");
+        userPassword = read.nextLine();
+
+        try{
+            plat.adicionarCliente(userName, userId, userPassword);
+            System.out.printf("Usuário cadastrado com sucesso.");
+        } catch(ElementoJaExisteException e) {
+            System.out.printf(e.getMessage());
+        }
+    }
     public static void main(String[] args) {
         /*Variaveis */
-        PlataformaStreaming plataform = new PlataformaStreaming("Xam OBH", new Cliente("John Doe", "Jd123", "psswd789"));
+        PlataformaStreaming plataform = new PlataformaStreaming("Xam OBH", new Cliente("John Doe", "Jd123", "psswd456"));
         int option = 0;
 
         /*Carregar dados */
@@ -67,7 +91,7 @@ public class App {
                                 """);
             System.out.printf("Opção: ");
             option = read.nextInt();
-            read.nextLine();
+            read.nextLine(); /*Lê o \n que o nextInt não lê */
 
             //Escolher opção
             switch(option) {
@@ -75,7 +99,7 @@ public class App {
                     fazerLogin(plataform);
                     break;
                 case 2:
-                    System.out.printf("Opção 02 selecionada\n");
+                    cadastrarCliente(plataform);
                     break;
                 case 3:
                     System.out.printf("Opção 03 selecionada\n");

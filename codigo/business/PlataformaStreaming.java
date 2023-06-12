@@ -479,7 +479,8 @@ public class PlataformaStreaming {
                 .max(Comparator.comparing(Cliente::tamanhoListaJaVistos)).get();
 
         System.out.println(c);
-
+        int quantidadeDeMidiasAssistidas = c.tamanhoListaJaVistos();
+        System.out.println(quantidadeDeMidiasAssistidas);
         return c;
 
     }

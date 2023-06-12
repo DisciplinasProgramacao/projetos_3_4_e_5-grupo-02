@@ -172,22 +172,22 @@ public class App {
     public static void midiasParaAssistir(PlataformaStreaming plat) {
         Lista<Serie> listaParaVer = plat.getClienteAtual().getListaParaVer();
 
-        Serie[] listaAssistidos = new Serie[listaParaVer.size()];
-        listaAssistidos = listaParaVer.allElements(listaAssistidos);
+        Serie[] listaImprimir = new Serie[listaParaVer.size()];
+        listaImprimir = listaParaVer.allElements(listaImprimir);
 
-        for (Serie serie : listaAssistidos) {
+        for (Serie serie : listaImprimir) {
             System.out.printf("%s\n", serie.getNome());
         }
     }
 
     /*Método estatico para exibir todas as midias assistidas pelo cliente atual*/
     public static void midiasAssistidas(PlataformaStreaming plat) {
-        Lista<Serie> listaParaVer = plat.getClienteAtual().getListaJaVistas();
+        Lista<Serie> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
 
-        Serie[] listaAssistidos = new Serie[listaParaVer.size()];
-        listaAssistidos = listaParaVer.allElements(listaAssistidos);
+        Serie[] listaImprimir = new Serie[listaJaVistas.size()];
+        listaImprimir = listaJaVistas.allElements(listaImprimir);
 
-        for (Serie serie : listaAssistidos) {
+        for (Serie serie : listaImprimir) {
             System.out.printf("%s\n", serie.getNome());
         }
     }
@@ -200,15 +200,16 @@ public class App {
 
         /*Carregar dados */
         try {
-            plataform.carregarAudiencia();
             plataform.carregarClientes();
             plataform.carregarFilmes();
             plataform.carregarSeries();
+            plataform.carregarAudiencia();
 
         } catch (FileNotFoundException e) {
             System.out.print("Erro ao carregar dados da plataforma!");
             read.close();
         }
+
 
         while (option != 99) {
             System.out.print("-------------- MENU --------------\n");

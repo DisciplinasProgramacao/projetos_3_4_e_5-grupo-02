@@ -1,17 +1,8 @@
 package business;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 import business.exceptions.ElementoJaExisteException;
 import business.exceptions.LoginInvalidoException;
@@ -91,16 +82,14 @@ public class PlataformaStreaming {
 
         filereader.nextLine(); // Artifício para ignorar primeira linha do csv
         int linha = 0;
+
         while (filereader.hasNextLine()) {
             String[] split = filereader.nextLine().split(";");
 
-            Cliente novoCliente = new Cliente(split[0], split[1], split[2]);
-
             try {
-                adicionarCliente(novoCliente);
+                adicionarCliente(split[0], split[1], split[2]);
             } catch (NullPointerException e) {
                 System.out.println(linha + ":" + split);
-
             } catch (ElementoJaExisteException e) {
                 System.out.println(e.getMessage());
             }
@@ -114,6 +103,14 @@ public class PlataformaStreaming {
         filereader.close();
     }
 
+    /**
+     * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado
+     * já esteja previamente presente na lista, a operação não é executada
+     *
+     * @param userId Id do novo cliente
+     * @param userName Nome do novo cliente
+     * @param userPassword Senha do novo cliente
+     */
     public void adicionarCliente(String userName, String userId, String userPassword) throws ElementoJaExisteException {
         if (clientes.containsKey(userId))
             throw new ElementoJaExisteException(userId);
@@ -121,25 +118,6 @@ public class PlataformaStreaming {
             Cliente novoCliente = new Cliente(userName, userId, userPassword);
             clientes.put(userId, novoCliente);
         }
-    }
-
-    /**
-     * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado
-     * já esteja previamente presente na
-     * lista, a operação não é executada
-     *
-     * @param novoCliente cliente a ser adicionado
-     */
-    public void adicionarCliente(Cliente novoCliente) throws NullPointerException, ElementoJaExisteException {
-        if (novoCliente == null) {
-            throw new NullPointerException();
-        }
-
-        if (this.clientes.containsKey(novoCliente.getId())) {
-            throw new ElementoJaExisteException(novoCliente.getNomeUsuario(), "clientes");
-        }
-
-        this.clientes.put(novoCliente.getId(), novoCliente);
     }
 
     /**
@@ -255,7 +233,6 @@ public class PlataformaStreaming {
                             .append(value.getNome())
                             .append(";")
                             .append(value.getLancamento().toString())
-                            .append(";")
                             .append("\n");
                 } catch (IOException e) {
                     System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados da serie.");
@@ -354,7 +331,6 @@ public class PlataformaStreaming {
                             .append(value.getLancamento().toString())
                             .append(";")
                             .append(String.valueOf(value.getDuracao()))
-                            .append(";")
                             .append("\n");
                 } catch (IOException e) {
                     System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");
@@ -375,24 +351,29 @@ public class PlataformaStreaming {
      * @throws FileNotFoundException se o arquivo não for encontrado.
      */
     public void carregarAudiencia() throws FileNotFoundException {
-        File file = new File("docs/database/Audiencia.csv");
-        Scanner filereader = new Scanner(file);
+        String arquivo = "docs/database/Audiencia.csv";
 
-        while (filereader.hasNextLine()) {
-            String[] dados = filereader.nextLine().split(";");
 
-            if (clientes.containsKey(dados[0]) && series.containsKey(Integer.valueOf(dados[2]))) {
-                if (dados[1].equals("F")) {
-                    // Adiciona série à lista para assistir
-                    clientes.get(dados[0]).adicionarNaLista(series.get(Integer.valueOf(dados[2])));
-                } else if (dados[1].equals("A")) {
-                    // Registra +1 ponto de audiência sobre a série
-                    clientes.get(dados[0]).registrarAudiencia(series.get(Integer.valueOf(dados[2])));
+        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                StringTokenizer tokenizer = new StringTokenizer(line, ";");
+
+                String userId = tokenizer.nextToken();
+                String status = tokenizer.nextToken();
+                int mediaId = Integer.parseInt(tokenizer.nextToken());
+
+                if (clientes.containsKey(userId) && series.containsKey(mediaId)) {
+                    if (status.equals("F")) {
+                        clientes.get(userId).adicionarNaLista(series.get(mediaId));
+                    } else if (status.equals("A")) {
+                        clientes.get(userId).registrarAudiencia(series.get(mediaId));
+                    }
                 }
             }
+        } catch (IOException e) {
+            System.out.println("Erro: não foi possível ler arquivo de dados de audiência");
         }
-
-        filereader.close();
     }
 
     public void salvarAudiencia() {
@@ -402,16 +383,17 @@ public class PlataformaStreaming {
             this.getClientes().forEach((key, value) -> {
 
                 // Séries assistidas
-                Serie[] listaAssistidos = new Serie[value.getListaParaVer().size()];
+                Serie[] listaAssistidos = new Serie[value.getListaJaVistas().size()];
                 listaAssistidos = value.getListaJaVistas().allElements(listaAssistidos);
 
                 for (int i = 0; i < listaAssistidos.length; i++) {
-                    System.out.println("ENTROU!");
                     try {
                         writer.append(value.getId());
                         writer.append(";");
                         writer.append("F");
+                        writer.append(";");
                         writer.append(listaAssistidos[i].getId());
+                        writer.append("\n");
                     } catch (IOException e) {
                         System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
                     }
@@ -426,7 +408,9 @@ public class PlataformaStreaming {
                         writer.append(value.getId());
                         writer.append(";");
                         writer.append("A");
+                        writer.append(";");
                         writer.append(listaParaVer[i].getId());
+                        writer.append("\n");
                     } catch (IOException e) {
                         System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
                     }

@@ -5,10 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
@@ -482,6 +485,37 @@ public class PlataformaStreaming {
         int quantidadeDeMidiasAssistidas = c.tamanhoListaJaVistos();
         System.out.println(quantidadeDeMidiasAssistidas);
         return c;
+
+    }
+
+    public Cliente qualClienteTemMaisAvaliações() {
+
+        List<Avaliacao> lista = new LinkedList<>();
+        List<Integer> l = new LinkedList<>();
+
+        for (Serie s : series.values()) {
+            lista = s.getQtdAva(); // 'lista' recebe uma lista de avaliações da série no loop
+            l.add(lista.stream().mapToInt(Avaliacao::getNota).max().getAsInt()); // 'l' recebe a maior avaliação da
+                                                                                 // midia no loop
+        }
+
+        int maior = Integer.MIN_VALUE;
+
+        for (int num : l) {
+            if (num > maior) {
+                maior = num; // Variável 'maior' recebe a maior avaliação da lista de series
+            }
+        }
+
+        for (Serie s : series.values()) {
+            lista = s.getQtdAva();
+            for (Avaliacao a : lista) {
+                if (a.getNota() == maior) {
+                    Cliente c = a.getCliente();
+                    return c;
+                }
+            }
+        }
 
     }
 }

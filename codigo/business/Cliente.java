@@ -2,6 +2,8 @@ package business;
 
 import business.interfaces.*;
 
+import java.util.List;
+
 public class Cliente {
     // ATRIBUTOS
     private String nomeDeUsuario;
@@ -32,6 +34,18 @@ public class Cliente {
 
     public String getSenha() {
         return this.senha;
+    }
+
+    public Lista<Serie> getListaParaVer() {
+        return listaParaVer;
+    }
+
+    public Lista<Serie> getListaJaVistas() {
+        return listaJaVistas;
+    }
+
+    public ICliente getModoAvaliacao() {
+        return modoAvaliacao;
     }
 
     // MÉTODOS
@@ -77,7 +91,7 @@ public class Cliente {
      * que correspondem ao gênero
      * selecionado
      *
-     * @param genero gênero selecionado.
+     * @param genero gênero selecionado
      * @return lista filtrada por gênero das séries encontradas
      */
     public Lista<Serie> filtrarPorGenero(String genero) {
@@ -210,12 +224,6 @@ public class Cliente {
 
         Serie[] buscaJaVistas = new Serie[listaJaVistas.size()];
         buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
-
-        // Chamar a função de categorizar cliente
-        // meuTipo = meuTipo.veificarCategoria(listajaVistas);
-        // buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
-        // if(this.viu5NoMes())
-        // this.modoAvaliacao = new especialista
 
         for (Serie buscada : buscaJaVistas) {
             if (buscada.equals(serie))

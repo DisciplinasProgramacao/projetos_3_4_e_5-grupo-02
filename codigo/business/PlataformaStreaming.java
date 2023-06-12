@@ -1,23 +1,12 @@
 package business;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 import business.exceptions.ElementoJaExisteException;
 import business.exceptions.LoginInvalidoException;
+import business.interfaces.ICliente;
 
 public class PlataformaStreaming {
 
@@ -94,16 +83,14 @@ public class PlataformaStreaming {
 
         filereader.nextLine(); // Artifício para ignorar primeira linha do csv
         int linha = 0;
+
         while (filereader.hasNextLine()) {
             String[] split = filereader.nextLine().split(";");
 
-            Cliente novoCliente = new Cliente(split[0], split[1], split[2]);
-
             try {
-                adicionarCliente(novoCliente);
+                adicionarCliente(split[0], split[1], split[2]);
             } catch (NullPointerException e) {
                 System.out.println(linha + ":" + split);
-
             } catch (ElementoJaExisteException e) {
                 System.out.println(e.getMessage());
             }
@@ -117,6 +104,14 @@ public class PlataformaStreaming {
         filereader.close();
     }
 
+    /**
+     * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado
+     * já esteja previamente presente na lista, a operação não é executada
+     *
+     * @param userId Id do novo cliente
+     * @param userName Nome do novo cliente
+     * @param userPassword Senha do novo cliente
+     */
     public void adicionarCliente(String userName, String userId, String userPassword) throws ElementoJaExisteException {
         if (clientes.containsKey(userId))
             throw new ElementoJaExisteException(userId);
@@ -124,25 +119,6 @@ public class PlataformaStreaming {
             Cliente novoCliente = new Cliente(userName, userId, userPassword);
             clientes.put(userId, novoCliente);
         }
-    }
-
-    /**
-     * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado
-     * já esteja previamente presente na
-     * lista, a operação não é executada
-     *
-     * @param novoCliente cliente a ser adicionado
-     */
-    public void adicionarCliente(Cliente novoCliente) throws NullPointerException, ElementoJaExisteException {
-        if (novoCliente == null) {
-            throw new NullPointerException();
-        }
-
-        if (this.clientes.containsKey(novoCliente.getId())) {
-            throw new ElementoJaExisteException(novoCliente.getNomeUsuario(), "clientes");
-        }
-
-        this.clientes.put(novoCliente.getId(), novoCliente);
     }
 
     /**
@@ -175,33 +151,6 @@ public class PlataformaStreaming {
         }
     }
 
-    /**
-     * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv,
-     * sobrepondo o arquivo já existente de nome
-     * Espectadores.csv. O salvamento deve ser realizado após execução do programa a
-     * fim de registrar em arquivo todas
-     * as mudanças realizadas nos dados em memória
-     */
-    public void registrarAudiencia(Serie serie) throws NullPointerException {
-        if (clienteAtual == null) {
-            throw new NullPointerException();
-        }
-
-        clienteAtual.registrarAudiencia(serie);
-    }
-
-    public void adicionarFilme(Integer id, Filme novoFilme) throws NullPointerException, ElementoJaExisteException {
-        if (novoFilme == null) {
-            throw new NullPointerException();
-        }
-
-        if (this.filmes.containsKey(id)) {
-            throw new ElementoJaExisteException(id.toString(), "filmes");
-        }
-
-        this.filmes.put(id, novoFilme);
-    }
-
     public void adicionarSerie(Integer id, Serie novaSerie) throws NullPointerException, ElementoJaExisteException {
         if (novaSerie == null) {
             throw new NullPointerException();
@@ -212,155 +161,6 @@ public class PlataformaStreaming {
         }
 
         this.series.put(id, novaSerie);
-    }
-
-    /**
-     * Le o HashMap series e registra um arquivo contendo o nome, genero e
-     * quantidade de episodios de uma serie
-     */
-    public void salvarSeries() {
-        String arquivo = "docs/database/Series.csv";
-
-        try (FileWriter writer = new FileWriter(arquivo)) {
-            writer.append("id; nome; lancamento; somaNotas; totalNotas\n");
-
-            this.series.forEach((key, value) -> {
-                try {
-                    writer.append(key.toString())
-                            .append(";")
-                            .append(value.getNome())
-                            .append(";")
-                            .append(value.getLancamento().toString())
-                            .append(";")
-                            .append("\n");
-                } catch (IOException e) {
-                    System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados da serie.");
-                }
-            });
-
-            System.out.println("Série salvas com sucesso!");
-
-        } catch (IOException e) {
-            System.out.println("Erro: não foi possível gerar arquivo para salvar dados da serie.");
-        }
-    }
-
-    /**
-     * Lê o hashmap filmes e registra no arquivo Filmes.csv os atributos de cada
-     * filme presente.
-     */
-    public void salvarFilmes() {
-        String arquivo = "docs/database/Filmes.csv";
-
-        try (FileWriter writer = new FileWriter(arquivo)) {
-            writer.append("id; nome; lancamento; duracao; somaNotas; totalNotas\n");
-
-            this.filmes.forEach((key, value) -> {
-                try {
-                    writer.append(key.toString())
-                            .append(";")
-                            .append(value.getNome())
-                            .append(";")
-                            .append(value.getLancamento().toString())
-                            .append(";")
-                            .append(String.valueOf(value.getDuracao()))
-                            .append(";")
-                            .append("\n");
-                } catch (IOException e) {
-                    System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");
-                }
-            });
-
-            System.out.println("Filmes salvos com sucesso!");
-
-        } catch (IOException e) {
-            System.out.println("Erro: não foi possível gerar arquivo para salvar dados do filme.");
-        }
-    }
-
-    /**
-     * Lê o arquivo "Filmes.csv", ignorando a primeira linha do arquivo, instancia
-     * filmes a partir das informações lidas
-     * e os adiciona à lista de filmes.
-     *
-     * @throws FileNotFoundException se o arquivo não for encontrado.
-     */
-    public void carregarFilmes() throws FileNotFoundException {
-        File file = new File("docs/database/Filmes.csv");
-        Scanner filereader = new Scanner(file);
-
-        filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
-
-        int linha = 0;
-        while (filereader.hasNextLine()) {
-            String[] dados = filereader.nextLine().split(";");
-
-            // Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas,
-            // como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
-            String novoGenero = Midia.GENEROS[(int) (Math.random() * (Midia.GENEROS.length))];
-            String novoIdioma = Midia.IDIOMAS[(int) (Math.random() * (Midia.IDIOMAS.length))];
-
-            // Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string
-            // não apresente formato válido, é lançada uma exceção
-            Date novaData = null;
-            try {
-                novaData = new SimpleDateFormat("dd/MM/yyyy").parse(dados[2]);
-            } catch (Exception e) {
-                System.out.println("Erro: Formato inválido na leitura da data de lançamento de série");
-            }
-
-            // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero,
-            // idioma, data de lançamento e duracao (dados[3]) em segundos. Em seguida,
-            // insere-se o novo filme no hashmap
-            Filme novoFilme = new Filme(dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
-
-            try {
-                adicionarFilme(Integer.valueOf(dados[0]), novoFilme);
-            } catch (NumberFormatException | NullPointerException e) {
-                System.out.println(linha + ":" + dados);
-            } catch (ElementoJaExisteException e) {
-                System.out.println(e.getMessage());
-            }
-
-            linha++;
-        }
-
-        // Imprimir lista
-        // this.filmes.forEach((key, value) -> System.out.println("\n" +
-        // this.filmes.get(key)));
-
-        filereader.close();
-    }
-
-    /**
-     * Lê o arquivo "Audiencia.csv" e, conforme lido no arquivo, adiciona série à
-     * lista para assistir ou registra
-     * audiência de série já assistida pelo cliente.
-     *
-     * @throws FileNotFoundException se o arquivo não for encontrado.
-     */
-    public void carregarAudiencia() throws FileNotFoundException {
-        File file = new File("docs/database/Audiencia.csv");
-        Scanner filereader = new Scanner(file);
-
-        while (filereader.hasNextLine()) {
-            String[] dados = filereader.nextLine().split(";");
-
-            if (clientes.containsKey(dados[0]) && series.containsKey(Integer.valueOf(dados[2]))) {
-
-                if (dados[1].equals("F")) {
-                    clientes.get(dados[0]).adicionarNaLista(series.get(Integer.valueOf(dados[2]))); // Adiciona série à
-                                                                                                    // lista
-                } else if (dados[1].equals("A")) {
-                    clientes.get(dados[0]).registrarAudiencia(series.get(Integer.valueOf(dados[2]))); // Registra +1
-                                                                                                      // ponto de
-                                                                                                      // audiência na
-                                                                                                      // série
-                }
-            }
-        }
-
-        filereader.close();
     }
 
     /**
@@ -397,10 +197,9 @@ public class PlataformaStreaming {
             // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e
             // idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios. Em
             // seguida, insere-se a nova série no hashmap
-            Serie novaSerie = new Serie(dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
+            Serie novaSerie = new Serie(dados[0], dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
 
             try {
-                System.out.println("!!!!Integer.valueOf(dados[0]): " + Integer.valueOf(dados[0]));
                 adicionarSerie(Integer.valueOf(dados[0]), novaSerie);
             } catch (NumberFormatException | NullPointerException e) {
                 System.out.println(linha + ":" + dados);
@@ -416,6 +215,281 @@ public class PlataformaStreaming {
         // this.series.get(key)));
 
         filereader.close();
+    }
+
+    /**
+     * Le o HashMap series e registra um arquivo contendo o nome, genero e
+     * quantidade de episodios de uma serie
+     */
+    public void salvarSeries() {
+        String arquivo = "docs/database/Series.csv";
+
+        try (FileWriter writer = new FileWriter(arquivo)) {
+            writer.append("id; nome; lancamento; somaNotas; totalNotas\n");
+
+            this.series.forEach((key, value) -> {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String lancamentoFormatted = dateFormat.format(value.getLancamento());
+
+                try {
+                    writer.append(key.toString())
+                            .append(";")
+                            .append(value.getNome())
+                            .append(";")
+                            .append(lancamentoFormatted)
+//                            .append(value.getLancamento().toString())
+                            .append("\n");
+                } catch (IOException e) {
+                    System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados da serie.");
+                }
+            });
+
+            System.out.println("Série salvas com sucesso!");
+
+        } catch (IOException e) {
+            System.out.println("Erro: não foi possível gerar arquivo para salvar dados da serie.");
+        }
+    }
+
+    public void adicionarFilme(Integer id, Filme novoFilme) throws NullPointerException, ElementoJaExisteException {
+        if (novoFilme == null) {
+            throw new NullPointerException();
+        }
+
+        if (this.filmes.containsKey(id)) {
+            throw new ElementoJaExisteException(id.toString(), "filmes");
+        }
+
+        this.filmes.put(id, novoFilme);
+    }
+
+    /**
+     * Lê o arquivo "Filmes.csv", ignorando a primeira linha do arquivo, instancia
+     * filmes a partir das informações lidas
+     * e os adiciona à lista de filmes.
+     *
+     * @throws FileNotFoundException se o arquivo não for encontrado.
+     */
+    public void carregarFilmes() throws FileNotFoundException {
+        File file = new File("docs/database/Filmes.csv");
+        Scanner filereader = new Scanner(file);
+
+        filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
+
+        int linha = 0;
+        while (filereader.hasNextLine()) {
+            String[] dados = filereader.nextLine().split(";");
+
+            // Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas,
+            // como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
+            String novoGenero = Midia.GENEROS[(int) (Math.random() * (Midia.GENEROS.length))];
+            String novoIdioma = Midia.IDIOMAS[(int) (Math.random() * (Midia.IDIOMAS.length))];
+
+            // Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string
+            // não apresente formato válido, é lançada uma exceção
+            Date novaData = null;
+            try {
+                novaData = new SimpleDateFormat("dd/MM/yyyy").parse(dados[2]);
+            } catch (Exception e) {
+                System.out.println("Erro: Formato inválido na leitura da data de lançamento de série");
+            }
+
+            // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero,
+            // idioma, data de lançamento e duracao (dados[3]) em segundos. Em seguida,
+            // insere-se o novo filme no hashmap
+            Filme novoFilme = new Filme(dados[0], dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
+
+            try {
+                adicionarFilme(Integer.valueOf(dados[0]), novoFilme);
+            } catch (NumberFormatException | NullPointerException e) {
+                System.out.println(linha + ":" + dados);
+            } catch (ElementoJaExisteException e) {
+                System.out.println(e.getMessage());
+            }
+
+            linha++;
+        }
+
+        // Imprimir lista
+        // this.filmes.forEach((key, value) -> System.out.println("\n" +
+        // this.filmes.get(key)));
+
+        filereader.close();
+    }
+
+    /**
+     * Lê o hashmap filmes e registra no arquivo Filmes.csv os atributos de cada
+     * filme presente.
+     */
+    public void salvarFilmes() {
+        String arquivo = "docs/database/Filmes.csv";
+
+        try (FileWriter writer = new FileWriter(arquivo)) {
+            writer.append("id; nome; lancamento; duracao; somaNotas; totalNotas\n");
+
+            this.filmes.forEach((key, value) -> {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String lancamentoFormatted = dateFormat.format(value.getLancamento());
+
+                try {
+                    writer.append(key.toString())
+                            .append(";")
+                            .append(value.getNome())
+                            .append(";")
+                            .append(lancamentoFormatted)
+                            .append(";")
+                            .append(String.valueOf(value.getDuracao()))
+                            .append("\n");
+                } catch (IOException e) {
+                    System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");
+                }
+            });
+
+            System.out.println("Filmes salvos com sucesso!");
+
+        } catch (IOException e) {
+            System.out.println("Erro: não foi possível gerar arquivo para salvar dados do filme.");
+        }
+    }
+
+    /**
+     * Lê o arquivo "Audiencia.csv" e, conforme lido no arquivo, adiciona série à
+     * lista para assistir (F) ou registra audiência de série já assistida pelo cliente (A).
+     *
+     * @throws FileNotFoundException se o arquivo não for encontrado.
+     */
+    public void carregarAudiencia() throws FileNotFoundException {
+        String arquivo = "docs/database/Audiencia.csv";
+
+
+        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                StringTokenizer tokenizer = new StringTokenizer(line, ";");
+
+                String userId = tokenizer.nextToken();
+                String status = tokenizer.nextToken();
+                int mediaId = Integer.parseInt(tokenizer.nextToken());
+
+                if (clientes.containsKey(userId) && series.containsKey(mediaId)) {
+                    if (status.equals("F")) {
+                        clientes.get(userId).adicionarNaLista(series.get(mediaId));
+                    } else if (status.equals("A")) {
+                        clientes.get(userId).registrarAudiencia(series.get(mediaId));
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro: não foi possível ler arquivo de dados de audiência");
+        }
+    }
+
+    /**
+     * Lê as listas de séries assistidas e para ver e registra no arquivo Audiencia.csv a audiência de cada
+     * uma delas no formato idDoUsuario;F/A;idDaSerie, sendo que "F" significa que a série já foi assistida,
+     * e "A" significa que a série está na lista para ver.
+     */
+    public void salvarAudiencia() {
+        String arquivo = "docs/database/Audiencia.csv";
+
+        try (FileWriter writer = new FileWriter(arquivo)) {
+            this.getClientes().forEach((key, value) -> {
+
+                // Séries assistidas
+                Serie[] listaAssistidos = new Serie[value.getListaJaVistas().size()];
+                listaAssistidos = value.getListaJaVistas().allElements(listaAssistidos);
+
+                for (Serie listaAssistido : listaAssistidos) {
+                    try {
+                        writer.append(value.getId());
+                        writer.append(";");
+                        writer.append("F");
+                        writer.append(";");
+                        writer.append(listaAssistido.getId());
+                        writer.append("\n");
+                    } catch (IOException e) {
+                        System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
+                    }
+                }
+
+                // Séries para ver
+                Serie[] listaParaVer = new Serie[value.getListaParaVer().size()];
+                listaParaVer = value.getListaParaVer().allElements(listaParaVer);
+
+                for (Serie serie : listaParaVer) {
+                    try {
+                        writer.append(value.getId());
+                        writer.append(";");
+                        writer.append("A");
+                        writer.append(";");
+                        writer.append(serie.getId());
+                        writer.append("\n");
+                    } catch (IOException e) {
+                        System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
+                    }
+                }
+            });
+
+        } catch (IOException e) {
+            System.out.println("Erro: não foi possível gerar arquivo para salvar dados de audiência.");
+        }
+
+        System.out.println("Audiência salva com sucesso!");
+    }
+
+    /**
+     * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv,
+     * sobrepondo o arquivo já existente de nome
+     * Espectadores.csv. O salvamento deve ser realizado após execução do programa a
+     * fim de registrar em arquivo todas
+     * as mudanças realizadas nos dados em memória
+     */
+    public void registrarAudiencia(Serie serie) throws NullPointerException {
+        if (clienteAtual == null) {
+            throw new NullPointerException();
+        }
+
+        clienteAtual.registrarAudiencia(serie);
+    }
+
+    /**
+     * Lê o arquivo "Avaliacoes.csv" e, conforme lido no arquivo, adiciona às midias as avaliações presentes,
+     * com nota e comentário. No entanto, caso o cliente avaliador não seja do tipo cliente especialista, se
+     * adiciona à avaliação apenas nota.
+     *
+     * @throws FileNotFoundException se o arquivo não for encontrado.
+     */
+    // Adiciona comentário somente se o cliente é avaliador. Senão, o ignora
+    public void carregarAvaliacoes() throws FileNotFoundException, NullPointerException {
+        File file = new File("docs/database/Avaliacoes.csv");
+        Scanner filereader = new Scanner(file);
+
+        filereader.nextLine();  // Pular primeira linha do arquivo
+
+        while (filereader.hasNextLine()) {
+            String[] dados = filereader.nextLine().split(";");
+
+            Midia midiaAvaliada = null;
+
+            // Verificar se mídia é filme, série ou se não existe na plataforma
+            if (this.series.containsKey(Integer.parseInt(dados[0])))
+                midiaAvaliada = this.series.get(Integer.parseInt(dados[0]));
+            else if (this.filmes.containsKey(Integer.parseInt(dados[0])))
+                midiaAvaliada = this.filmes.get(Integer.parseInt(dados[0]));
+            else throw new NullPointerException("Erro: A mídia a ser avaliada não existe");
+
+            Cliente avaliador = this.clientes.get(dados[1]);
+
+            if (avaliador.getModoAvaliacao() instanceof ClienteEspecialista) {
+                avaliador.avaliarMidia(midiaAvaliada, Integer.parseInt(dados[2]), dados[3]);
+            } else {
+                avaliador.avaliarMidia(midiaAvaliada, Integer.parseInt(dados[2]));
+            }
+        }
+    }
+
+    public void salvarAvaliacoes() {
+
     }
 
     /**

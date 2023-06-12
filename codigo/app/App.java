@@ -13,118 +13,116 @@ import java.util.Scanner;
 
 public class App {
     /*System.in implementa a interface Closable. Ver javadoc java.util.scanner -> Scanner.close*/
-    public static Scanner read = new Scanner(System.in); 
+    public static Scanner read = new Scanner(System.in);
 
     /*Método estatico para fazer login */
     public static void fazerLogin(PlataformaStreaming plat) {
         String userName, password;
 
-        System.out.printf("---------- Fazer Login ----------\n");
-        
-        System.out.printf("Insira o ID do usuário: ");
+        System.out.print("---------- Fazer Login ----------\n");
+
+        System.out.print("Insira o ID do usuário: ");
         userName = read.nextLine();
 
-        System.out.printf("Insira a SENHA do usuário: ");
+        System.out.print("Insira a SENHA do usuário: ");
         password = read.nextLine();
 
-        try{
+        try {
             plat.login(userName, password);
-        } catch(LoginInvalidoException e) {
-            System.out.printf(e.getMessage());
-        } 
+        } catch (LoginInvalidoException e) {
+            System.out.print(e.getMessage());
+        }
     }
 
     /*Método estatico para cadastrar cliente */
     public static void cadastrarCliente(PlataformaStreaming plat) {
         String userName, userId, userPassword;
 
-        System.out.printf("---------- Cadastrar Cliente ----------\n");
-        
-        System.out.printf("Nome do usuário: ");
+        System.out.print("---------- Cadastrar Cliente ----------\n");
+
+        System.out.print("Nome do usuário: ");
         userName = read.nextLine();
 
-        System.out.printf("ID do usuário: ");
+        System.out.print("ID do usuário: ");
         userId = read.nextLine();
 
-        System.out.printf("Senha do usuário: ");
+        System.out.print("Senha do usuário: ");
         userPassword = read.nextLine();
 
-        try{
+        try {
             plat.adicionarCliente(userName, userId, userPassword);
-            System.out.printf("Usuário cadastrado com sucesso.\n");
-        } catch(ElementoJaExisteException e) {
-            System.out.printf(e.getMessage());
+            System.out.print("Usuário cadastrado com sucesso.\n");
+        } catch (ElementoJaExisteException e) {
+            System.out.print(e.getMessage());
         }
     }
-    
+
     /*Método estatico para cadastrar nova midia */
     public static void cadastrarMidia(PlataformaStreaming plat) {
-        String midiaName, midiaGenre, midiaIdiom, midiaRelease, midiaType;
-        int midiaId;
+        String midiaId, midiaName, midiaGenre, midiaIdiom, midiaRelease, midiaType;
 
-        System.out.printf("---------- Cadastrar Midia ----------\n");
+        System.out.print("---------- Cadastrar Midia ----------\n");
 
-        System.out.printf("Nome: ");
+        System.out.print("Nome: ");
         midiaName = read.nextLine();
 
-        System.out.printf("ID: ");
-        midiaId = read.nextInt();
-        read.nextLine();
+        System.out.print("ID: ");
+        midiaId = read.nextLine();
 
-        System.out.printf("Gêneros disponíveis: Comédia, Ação, Terror, Drama, Romance, Aventura, Animação, Suspense\n");
-        System.out.printf("Gênero: ");
+        System.out.print("Gêneros disponíveis: Comédia, Ação, Terror, Drama, Romance, Aventura, Animação, Suspense\n");
+        System.out.print("Gênero: ");
         midiaGenre = read.nextLine();
 
-        System.out.printf("Idiomos disponíveis: Português, Inglês, Esperanto, Romeno\n");
-        System.out.printf("Idioma: ");
+        System.out.print("Idiomas disponíveis: Português, Inglês, Esperanto, Romeno\n");
+        System.out.print("Idioma: ");
         midiaIdiom = read.nextLine();
 
-        System.out.printf("Data de lançamento(aaaa-mm-dd): ");
+        System.out.print("Data de lançamento (dd-mm-aaaa): ");
         midiaRelease = read.nextLine();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
         Date midiaReleaseDate = null;
 
-        try{
+        try {
             midiaReleaseDate = dateFormat.parse(midiaRelease);
-        } catch(ParseException e) {
-            System.out.printf("Formato de data invalido\n");
+        } catch (ParseException e) {
+            System.out.print("Formato de data invalido! Utilize o formato dd-MM-yyyy\n");
         }
 
-        System.out.printf("""
-                            Selecione o tipo de mídia: 
-                            a. Série.
-                            b. Filme.
-                            """);
-        
+        System.out.print("""
+                Selecione o tipo de mídia:\s
+                    a. Série.
+                    b. Filme.
+                """);
+
         midiaType = read.nextLine();
 
-        switch(midiaType) {
+        switch (midiaType) {
             case "a" -> {
-                System.out.printf("Quantidade de episodios: ");
+                System.out.print("Quantidade de episodios: ");
                 int serieQtdEp = read.nextInt();
                 read.nextLine();
 
-                try{
-                    plat.adicionarSerie(midiaId, new Serie(midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, serieQtdEp));
-                    System.out.printf("Série cadastrada com sucesso!\n");
-                }catch(ElementoJaExisteException | NullPointerException e){
+                try {
+                    plat.adicionarSerie(Integer.valueOf(midiaId), new Serie(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, serieQtdEp));
+                    System.out.println("Série cadastrada com sucesso!\n");
+                } catch (ElementoJaExisteException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
-            } 
+            }
 
             case "b" -> {
-                System.out.printf("Duração do filme (min): ");
+                System.out.print("Duração do filme (min): ");
                 int filmLength = read.nextInt();
                 read.nextLine();
 
-                try{
-                    plat.adicionarFilme(midiaId, new Filme(midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, filmLength));
-                    System.out.printf("Filme cadastrado com sucesso!\n");
-                }catch(ElementoJaExisteException | NullPointerException e){
+                try {
+                    plat.adicionarFilme(Integer.valueOf(midiaId), new Filme(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, filmLength));
+                    System.out.print("Filme cadastrado com sucesso!\n");
+                } catch (ElementoJaExisteException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
-            } 
+            }
         }
     }
 
@@ -133,52 +131,74 @@ public class App {
         String midiaId;
         int midiaOption;
 
-        System.out.printf("---------- Assistir uma séire ----------\n");
-        
-        System.out.printf("Escolha o que assistir:\n1.Filme\n2.Série\n");
+        System.out.print("---------- Assistir uma série ----------\n");
+
+        System.out.print("Escolha o que assistir:\n1.Filme\n2.Série\n");
         midiaOption = read.nextInt();
         read.nextLine();
 
-        switch(midiaOption) {
+        switch (midiaOption) {
             case 1 -> {
-                System.out.printf("ID do filme: ");
+                System.out.print("ID do filme: ");
                 midiaId = read.nextLine();
 
-                if(plat.getFilmes().containsKey((Object)midiaId)) {
-                    plat.getFilmes().get((Object)midiaId).registrarAudiencia();
-                    System.out.printf("Filme assistido\n");
+                if (plat.getFilmes().containsKey((Object) midiaId)) {
+                    plat.getFilmes().get((Object) midiaId).registrarAudiencia();
+                    System.out.print("Filme assistido\n");
                 } else {
                     System.out.printf("O filme de id: %s não foi encontrado\n", midiaId);
                 }
             }
-            
+
             case 2 -> {
-                System.out.printf("ID da série: ");
+                System.out.print("ID da série: ");
                 midiaId = read.nextLine();
 
-                if(plat.getSeries().containsKey((Object)midiaId)) {
-                    plat.getSeries().get((Object)midiaId).registrarAudiencia();
-                    System.out.printf("Série assistida\n");
+                if (plat.getSeries().containsKey((Object) midiaId)) {
+                    plat.getSeries().get((Object) midiaId).registrarAudiencia();
+                    System.out.print("Série assistida\n");
                 } else {
-                    System.out.printf("A séirie de id: %s não foi encontrada\n", midiaId);
+                    System.out.printf("A série de id: %s não foi encontrada\n", midiaId);
                 }
             }
         }
     }
-  
+
     /*Método estatico para ver audiencia de uma mídia */
     public static void verAudiencia(PlataformaStreaming plat) {
     }
 
     /*Método estatico para exibir midias para ver */
     public static void midiasParaAssistir(PlataformaStreaming plat) {
-        plat.getClienteAtual().imprimirListaParaVer();
+        Lista<Serie> listaParaVer = plat.getClienteAtual().getListaParaVer();
+
+        Serie[] listaImprimir = new Serie[listaParaVer.size()];
+        listaImprimir = listaParaVer.allElements(listaImprimir);
+
+        for (Serie serie : listaImprimir) {
+            System.out.printf("%s\n", serie.getNome());
+        }
     }
 
-   /*Método estatico para exibir todas as midias assistidas pelo cliente atual*/
-   public static void midiasAssistidas(PlataformaStreaming plat) {
-        plat.getClienteAtual().imprimirListaJaVisto();
-   }
+    /*Método estatico para exibir todas as midias assistidas pelo cliente atual*/
+    public static void midiasAssistidas(PlataformaStreaming plat) {
+        Lista<Serie> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
+
+        Serie[] listaImprimir = new Serie[listaJaVistas.size()];
+        listaImprimir = listaJaVistas.allElements(listaImprimir);
+
+        for (Serie serie : listaImprimir) {
+            System.out.printf("%s\n", serie.getNome());
+        }
+    }
+
+    public static void imprimirMidias(PlataformaStreaming plat) {
+        System.out.println("\n---------- Filmes disponíveis ----------");
+        plat.getFilmes().forEach((key, value) -> System.out.println(value + "\n"));
+        System.out.println("\n---------- Séries disponíveis ----------");
+        plat.getSeries().forEach((key, value) -> System.out.println(value + "\n"));
+    }
+
     public static void main(String[] args) {
         /*Variaveis */
         Cliente clientePadrao = new Cliente("John Doe", "Jd123", "psswd456");
@@ -186,44 +206,45 @@ public class App {
         int option = 0;
 
         /*Carregar dados */
-        try{
-            plataform.carregarAudiencia();
+        try {
             plataform.carregarClientes();
             plataform.carregarFilmes();
             plataform.carregarSeries();
+            plataform.carregarAudiencia();
+            plataform.carregarAvaliacoes();
 
-        } catch(FileNotFoundException e) {
-            System.out.printf("Erro ao entrar na plataforma");
+        } catch (FileNotFoundException e) {
+            System.out.print("Erro ao carregar dados da plataforma!");
             read.close();
         }
 
-        while(option != 99) {
-            /*Criar menu */
-            System.out.printf("------- DEMO -------\n");
-            System.out.printf("Usuário: %s\n", plataform.getClienteAtual().getNomeUsuario());
-            System.out.printf("Menu: \n");
-            System.out.printf("""
-                                Escolha uma operação:
-                                --- Gerenciar Clientes ---
-                                1. Fazer login com outro usuário.
-                                2. Cadastrar novo cliente.
-                                --- Gerenciar Mídias ---
-                                3. Cadastrar nova mídia.
-                                4. Assistir mídia.
-                                5. Ver audiencia de uma midia.
-                                --- Outros ---
-                                6. Ver lista para assistir.
-                                7. Ver lista já visto.
-                                8. Fazer buscar a partir de um filtro.
-                                99. Salvar e sair.
-                                """);
-            System.out.printf("Opção: ");
-            option = read.nextInt();
-            read.nextLine(); /*Lê o \n que o nextInt não lê */
 
-            //Escolher opção
-            switch(option) {
-                case 1: 
+        while (option != 99) {
+            System.out.print("-------------- MENU --------------\n");
+            System.out.printf("Usuário logado: %s\n", plataform.getClienteAtual().getNomeUsuario());
+            System.out.print("""
+                    Escolha uma operação:
+                    \n--- Gerenciar Clientes ---
+                    1. Fazer login com outro usuário
+                    2. Cadastrar novo cliente
+                    \n--- Gerenciar Mídias ---
+                    3. Cadastrar nova mídia
+                    4. Assistir mídia
+                    5. Ver audiência de uma midia
+                    \n--- Outros ---
+                    6. Ver lista de séries para assistir
+                    7. Ver lista de séries já vistas
+                    8. Fazer busca a partir de um filtro
+                    9. Exibir todas as mídias
+                    99. Salvar e sair
+                    \n""");
+            System.out.print("Opção: ");
+            option = read.nextInt();
+            read.nextLine(); // Lê o \n que o nextInt não lê
+
+            // Escolher opção do menu
+            switch (option) {
+                case 1:
                     fazerLogin(plataform);
                     break;
                 case 2:
@@ -236,7 +257,7 @@ public class App {
                     assistirMidia(plataform);
                     break;
                 case 5:
-                    System.out.printf("Opção 05");
+                    System.out.print("Opção 05");
                     break;
                 case 6:
                     midiasParaAssistir(plataform);
@@ -244,20 +265,28 @@ public class App {
                 case 7:
                     midiasAssistidas(plataform);
                     break;
-                case 8:  
-                    System.out.printf("Opção 08");
-                case 98: 
-                    System.out.printf("Opção 98 selecionada\n");
+                case 8:
+                    System.out.print("Opção 08");
+                    break;
+                case 9:
+                    imprimirMidias(plataform);
+                    break;
+                case 98:
+                    System.out.print("Opção 98 selecionada\n");
                     break;
                 case 99:
-                    System.out.printf("Opção 99 selecionada\n");
+                    plataform.salvarFilmes();
+                    plataform.salvarSeries();
+                    plataform.salvarClientes();
+                    plataform.salvarAudiencia();
+                    // plataforma.salvarAvaliacoes();
                     break;
                 default:
                     System.out.printf("A opção %d é inválida\n", option);
-
+                    break;
             }
         }
 
         read.close();
-    }     
+    }
 }

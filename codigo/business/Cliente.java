@@ -186,6 +186,15 @@ public class Cliente {
         }
     }
 
+    public void imprimirListaJaVisto() {
+        Serie[] listaAssistidos = new Serie[listaJaVistas.size()];
+        listaAssistidos = listaJaVistas.allElements(listaAssistidos);
+
+        for(Serie serie : listaAssistidos) {
+            System.out.printf("%s\n", serie.getNome());
+        }
+    }
+
     /**
      * Contabiliza audiência de uma série. Caso a série selecionada já esteja presente na lista de séries para ver, a
      * operação não é realizada.

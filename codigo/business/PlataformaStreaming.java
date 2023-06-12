@@ -506,16 +506,15 @@ public class PlataformaStreaming {
                 maior = num; // Variável 'maior' recebe a maior avaliação da lista de series
             }
         }
-
+        Cliente c = null;
         for (Serie s : series.values()) {
             lista = s.getQtdAva();
             for (Avaliacao a : lista) {
                 if (a.getNota() == maior) {
-                    Cliente c = a.getCliente();
-                    return c;
+                    c = a.getCliente();
                 }
             }
         }
-
+        return c;
     }
 }

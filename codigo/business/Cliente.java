@@ -37,7 +37,8 @@ public class Cliente {
     // MÉTODOS
 
     /**
-     * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada já exista na lista, a operação não é
+     * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada
+     * já exista na lista, a operação não é
      * realizada
      *
      * @param nomeSerie Nome da série a ser adicionada
@@ -56,7 +57,8 @@ public class Cliente {
     }
 
     /**
-     * Retira uma série da lista de séries para ver, contanto que a série selecionada esteja presente na lista
+     * Retira uma série da lista de séries para ver, contanto que a série
+     * selecionada esteja presente na lista
      *
      * @param nomeSerie Nome da série a ser removida
      */
@@ -71,7 +73,8 @@ public class Cliente {
     }
 
     /**
-     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que correspondem ao gênero
+     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas
+     * que correspondem ao gênero
      * selecionado
      *
      * @param genero gênero selecionado.
@@ -101,7 +104,8 @@ public class Cliente {
     }
 
     /**
-     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que correspondem ao idioma
+     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas
+     * que correspondem ao idioma
      * selecionado
      *
      * @param idioma idioma selecionado.
@@ -131,7 +135,8 @@ public class Cliente {
     }
 
     /**
-     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que possuem quantidade de episódios
+     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas
+     * que possuem quantidade de episódios
      * igual à selecionada
      *
      * @param quantEpisodios quantidade de episódios selecionada
@@ -168,11 +173,9 @@ public class Cliente {
         return this.listaParaVer.size();
     }
 
-    public int tamanhoListaJaVistos(){
+    public int tamanhoListaJaVistos() {
         return this.listaJaVistas.size();
     }
-
-
 
     /**
      * Imprime na tela as séries existentes na lista de séries para ver
@@ -190,13 +193,14 @@ public class Cliente {
         Serie[] listaAssistidos = new Serie[listaJaVistas.size()];
         listaAssistidos = listaJaVistas.allElements(listaAssistidos);
 
-        for(Serie serie : listaAssistidos) {
+        for (Serie serie : listaAssistidos) {
             System.out.printf("%s\n", serie.getNome());
         }
     }
 
     /**
-     * Contabiliza audiência de uma série. Caso a série selecionada já esteja presente na lista de séries para ver, a
+     * Contabiliza audiência de uma série. Caso a série selecionada já esteja
+     * presente na lista de séries para ver, a
      * operação não é realizada.
      *
      * @param serie série selecionada
@@ -225,8 +229,9 @@ public class Cliente {
     /**
      * Categoriza o cliente com base no número de itens já vistos.
      *
-     * @return Uma instância de ICliente representando a categoria do cliente, ou null se o cliente tiver atingido
-     * critério para receber nova categoria.
+     * @return Uma instância de ICliente representando a categoria do cliente, ou
+     *         null se o cliente tiver atingido
+     *         critério para receber nova categoria.
      */
     private ICliente categorizarCliente() {
         if (listaJaVistas.size() >= 5)
@@ -234,28 +239,35 @@ public class Cliente {
         else
             return null;
     }
+
     /**
-     * Chama o método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
-     * avaliando a mídia em questão, bem como a nota a ser inserida na avaliação. Como parâmetro de comentário, passa o
+     * Chama o método criarAvaliacao(Cliente, int, String) de Midia, passando-o como
+     * parâmetro o cliente atual que está
+     * avaliando a mídia em questão, bem como a nota a ser inserida na avaliação.
+     * Como parâmetro de comentário, passa o
      * valor null, uma vez que clientes regulares não podem avaliar com comentários.
      *
      * @param midia Mídia a ser avaliada
      * @param nota  Nota a ser atribuída à mídia avaliada
-     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia previamente.
+     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma
+     *                               mídia previamente.
      */
     public void avaliarMidia(Midia midia, int nota) throws IllegalStateException {
         midia.criarAvaliacao(this, nota, null);
     }
 
     /**
-     * Verifica se o cliente que está avaliando possui modoAvaliador especialista. Se positivo, prossegue em chamar o
-     * método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
+     * Verifica se o cliente que está avaliando possui modoAvaliador especialista.
+     * Se positivo, prossegue em chamar o
+     * método criarAvaliacao(Cliente, int, String) de Midia, passando-o como
+     * parâmetro o cliente atual que está
      * avaliando a mídia, bem como a nota a ser inserida na avaliação.
      *
      * @param midia      Mídia a ser avaliada
      * @param nota       Nota a ser atribuída à mídia avaliada
      * @param comentario Comentário a ser atribuído na mídia avaliada
-     * @throws IllegalStateException Caso o cliente que está tentando avaliar não seja ClienteEspecialista
+     * @throws IllegalStateException Caso o cliente que está tentando avaliar não
+     *                               seja ClienteEspecialista
      */
     public void avaliarMidia(Midia midia, int nota, String comentario) throws IllegalStateException {
         if (modoAvaliacao instanceof ClienteEspecialista)
@@ -265,10 +277,12 @@ public class Cliente {
     }
 
     /**
-     * Sobrepoe o método toString() da classe Java Object a fim de modificar o resultado da impressão tela ao se passar
+     * Sobrepoe o método toString() da classe Java Object a fim de modificar o
+     * resultado da impressão tela ao se passar
      * um objeto da classe Cliente como parâmetro do método print().
      *
-     * @return string contendo nome de usuário, senha e modo de avaliação do objeto Cliente
+     * @return string contendo nome de usuário, senha e modo de avaliação do objeto
+     *         Cliente
      */
     @Override
     public String toString() {
@@ -286,9 +300,12 @@ public class Cliente {
     }
 
     /**
-     * Sobrepõe o método equals() da classe Java Object a fim de modificar o resultado da comparação entre dois objetos.
-     * Para isso, realiza downcast para Cliente, possibilitando comparar os ids de Cliente de ambos objetos. Caso os ids
-     * sejam iguais, o método assegura que os dois objetos se tratam de um mesmo cliente.
+     * Sobrepõe o método equals() da classe Java Object a fim de modificar o
+     * resultado da comparação entre dois objetos.
+     * Para isso, realiza downcast para Cliente, possibilitando comparar os ids de
+     * Cliente de ambos objetos. Caso os ids
+     * sejam iguais, o método assegura que os dois objetos se tratam de um mesmo
+     * cliente.
      *
      * @param o Objeto a ser comparado com this.
      * @return Se os ids de cliente são iguais.

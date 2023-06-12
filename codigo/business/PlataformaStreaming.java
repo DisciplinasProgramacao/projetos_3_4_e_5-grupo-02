@@ -54,13 +54,16 @@ public class PlataformaStreaming {
     // MÉTODOS
 
     /**
-     * Realiza operação de login a partir do nome de usuário e senha informados. Se um usuário correspondente for
-     * encontrado, o cliente atual será definido como o cliente conectado. Caso contrário, lança
+     * Realiza operação de login a partir do nome de usuário e senha informados. Se
+     * um usuário correspondente for
+     * encontrado, o cliente atual será definido como o cliente conectado. Caso
+     * contrário, lança
      * LoginInvalidoException.
      *
      * @param nomeUsuario Nome de usuário do cliente que tenta logar.
      * @param senha       Senha do cliente que tenta logar.
-     * @throws LoginInvalidoException Se o nome de usuário e a senha fornecidos não corresponderem a nenhum cliente na lista.
+     * @throws LoginInvalidoException Se o nome de usuário e a senha fornecidos não
+     *                                corresponderem a nenhum cliente na lista.
      */
     public void login(String nomeUsuario, String senha) throws LoginInvalidoException {
         for (Cliente cliente : this.clientes.values()) {
@@ -76,7 +79,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o arquivo "Espectadores.csv", ignorando a primeira linha do arquivo, instancia clientes a partir das
+     * Lê o arquivo "Espectadores.csv", ignorando a primeira linha do arquivo,
+     * instancia clientes a partir das
      * informações lidas e os adiciona à lista de clientes.
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
@@ -105,7 +109,7 @@ public class PlataformaStreaming {
         }
 
         // this.clientes.forEach((key, value) -> System.out.println(
-        // 		this.clientes.get(key) + "\nID: " + key + " \n"));
+        // this.clientes.get(key) + "\nID: " + key + " \n"));
 
         filereader.close();
     }
@@ -120,7 +124,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado já esteja previamente presente na
+     * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado
+     * já esteja previamente presente na
      * lista, a operação não é executada
      *
      * @param novoCliente cliente a ser adicionado
@@ -138,7 +143,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o hashmap clientes e registra no arquivo Filmes.csv os atributos de cada cliente presente.
+     * Lê o hashmap clientes e registra no arquivo Filmes.csv os atributos de cada
+     * cliente presente.
      */
     public void salvarClientes() {
         String csvFilename = "docs/database/Espectadores.csv";
@@ -167,8 +173,10 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv, sobrepondo o arquivo já existente de nome
-     * Espectadores.csv. O salvamento deve ser realizado após execução do programa a fim de registrar em arquivo todas
+     * Lê o conteúdo do HashMap clientes e os escreve em um arquvivo .csv,
+     * sobrepondo o arquivo já existente de nome
+     * Espectadores.csv. O salvamento deve ser realizado após execução do programa a
+     * fim de registrar em arquivo todas
      * as mudanças realizadas nos dados em memória
      */
     public void registrarAudiencia(Serie serie) throws NullPointerException {
@@ -204,7 +212,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Le o HashMap series e registra um arquivo contendo o nome, genero e quantidade de episodios de uma serie
+     * Le o HashMap series e registra um arquivo contendo o nome, genero e
+     * quantidade de episodios de uma serie
      */
     public void salvarSeries() {
         String arquivo = "docs/database/Series.csv";
@@ -234,7 +243,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o hashmap filmes e registra no arquivo Filmes.csv os atributos de cada filme presente.
+     * Lê o hashmap filmes e registra no arquivo Filmes.csv os atributos de cada
+     * filme presente.
      */
     public void salvarFilmes() {
         String arquivo = "docs/database/Filmes.csv";
@@ -266,7 +276,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o arquivo "Filmes.csv", ignorando a primeira linha do arquivo, instancia filmes a partir das informações lidas
+     * Lê o arquivo "Filmes.csv", ignorando a primeira linha do arquivo, instancia
+     * filmes a partir das informações lidas
      * e os adiciona à lista de filmes.
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
@@ -312,13 +323,15 @@ public class PlataformaStreaming {
         }
 
         // Imprimir lista
-//        this.filmes.forEach((key, value) -> System.out.println("\n" + this.filmes.get(key)));
+        // this.filmes.forEach((key, value) -> System.out.println("\n" +
+        // this.filmes.get(key)));
 
         filereader.close();
     }
 
     /**
-     * Lê o arquivo "Audiencia.csv" e, conforme lido no arquivo, adiciona série à lista para assistir ou registra
+     * Lê o arquivo "Audiencia.csv" e, conforme lido no arquivo, adiciona série à
+     * lista para assistir ou registra
      * audiência de série já assistida pelo cliente.
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
@@ -333,9 +346,13 @@ public class PlataformaStreaming {
             if (clientes.containsKey(dados[0]) && series.containsKey(Integer.valueOf(dados[2]))) {
 
                 if (dados[1].equals("F")) {
-                    clientes.get(dados[0]).adicionarNaLista(series.get(Integer.valueOf(dados[2]))); // Adiciona série à lista
+                    clientes.get(dados[0]).adicionarNaLista(series.get(Integer.valueOf(dados[2]))); // Adiciona série à
+                                                                                                    // lista
                 } else if (dados[1].equals("A")) {
-                    clientes.get(dados[0]).registrarAudiencia(series.get(Integer.valueOf(dados[2]))); // Registra +1 ponto de audiência na série
+                    clientes.get(dados[0]).registrarAudiencia(series.get(Integer.valueOf(dados[2]))); // Registra +1
+                                                                                                      // ponto de
+                                                                                                      // audiência na
+                                                                                                      // série
                 }
             }
         }
@@ -344,7 +361,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o arquivo "Series.csv", ignorando a primeira linha do arquivo, instancia séries a partir das informações lidas
+     * Lê o arquivo "Series.csv", ignorando a primeira linha do arquivo, instancia
+     * séries a partir das informações lidas
      * e as adiciona à lista de séries.
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
@@ -391,13 +409,15 @@ public class PlataformaStreaming {
         }
 
         // Imprimir lista
-//        this.series.forEach((key, value) -> System.out.println("\n" + this.series.get(key)));
+        // this.series.forEach((key, value) -> System.out.println("\n" +
+        // this.series.get(key)));
 
         filereader.close();
     }
 
     /**
-     * Invoca o método "filtrarPorGenero" do cliente atual, obtendo, assim, as séries das listas que correspondem ao
+     * Invoca o método "filtrarPorGenero" do cliente atual, obtendo, assim, as
+     * séries das listas que correspondem ao
      * gênero selecionado.
      *
      * @param genero Gênero selecionado
@@ -413,7 +433,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Invoca o método "filtrarPorIdioma" do cliente atual, obtendo, assim, as séries das listas que correspondem ao
+     * Invoca o método "filtrarPorIdioma" do cliente atual, obtendo, assim, as
+     * séries das listas que correspondem ao
      * idioma selecionado.
      *
      * @param idioma Idioma selecionado
@@ -429,7 +450,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Invoca o método "filtrarPorQtdEpisodios" do cliente atual, obtendo, assim, as séries das listas que possuem a
+     * Invoca o método "filtrarPorQtdEpisodios" do cliente atual, obtendo, assim, as
+     * séries das listas que possuem a
      * quantidade de episódios selecionada.
      *
      * @param quantEpisodios Quantidade de episódios selecionada
@@ -444,11 +466,18 @@ public class PlataformaStreaming {
         return clienteAtual.filtrarPorQtdEpisodios(quantEpisodios);
     }
 
-    public Cliente qualClienteAssistiuMaisMidias(){
-        
-        Cliente c =this.clientes.values().stream()
-        .max(Comparator.comparing(Cliente::tamanhoListaJaVistos)).get();
-        
+    /**
+     * Filta pela lista de clientes da plataforma de streaming e checa qual cliente
+     * tem
+     * a maior lista de séries ja vistas
+     * 
+     * @return Cliente que mais assistiu midia
+     */
+    public Cliente qualClienteAssistiuMaisMidias() {
+
+        Cliente c = this.clientes.values().stream()
+                .max(Comparator.comparing(Cliente::tamanhoListaJaVistos)).get();
+
         System.out.println(c);
 
         return c;

@@ -44,6 +44,10 @@ public class Cliente {
         return listaJaVistas;
     }
 
+    public ICliente getModoAvaliacao() {
+        return modoAvaliacao;
+    }
+
     // MÉTODOS
 
     /**
@@ -193,12 +197,6 @@ public class Cliente {
 
         Serie[] buscaJaVistas = new Serie[listaJaVistas.size()];
         buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
-
-        // Chamar a função de categorizar cliente
-        // meuTipo = meuTipo.veificarCategoria(listajaVistas);
-        // buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
-        // if(this.viu5NoMes())
-        // this.modoAvaliacao = new especialista
 
         for (Serie buscada : buscaJaVistas) {
             if (buscada.equals(serie))

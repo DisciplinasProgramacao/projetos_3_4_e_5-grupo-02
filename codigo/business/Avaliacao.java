@@ -20,13 +20,10 @@ public class Avaliacao {
 	}
 
 	public void setNota(int nota) {
-		if (nota >= 1 && nota <= 5) {
+		if (nota >= 1 && nota <= 5)
 			this.nota = nota;
-		}
-		
-		else {
+		else
 			throw new IllegalArgumentException("A nota da avalição não pode ser inferior a 1 ou superior a 5");
-		}
 	}
 
 	public Cliente getCliente() {

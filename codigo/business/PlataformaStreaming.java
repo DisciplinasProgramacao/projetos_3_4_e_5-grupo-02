@@ -6,6 +6,7 @@ import java.util.*;
 
 import business.exceptions.ElementoJaExisteException;
 import business.exceptions.LoginInvalidoException;
+import business.interfaces.ICliente;
 
 public class PlataformaStreaming {
 
@@ -383,6 +384,11 @@ public class PlataformaStreaming {
         }
     }
 
+    /**
+     * Lê as listas de séries assistidas e para ver e registra no arquivo Audiencia.csv a audiência de cada
+     * uma delas no formato idDoUsuario;F/A;idDaSerie, sendo que "F" significa que a série já foi assistida,
+     * e "A" significa que a série está na lista para ver.
+     */
     public void salvarAudiencia() {
         String arquivo = "docs/database/Audiencia.csv";
 
@@ -393,13 +399,13 @@ public class PlataformaStreaming {
                 Serie[] listaAssistidos = new Serie[value.getListaJaVistas().size()];
                 listaAssistidos = value.getListaJaVistas().allElements(listaAssistidos);
 
-                for (int i = 0; i < listaAssistidos.length; i++) {
+                for (Serie listaAssistido : listaAssistidos) {
                     try {
                         writer.append(value.getId());
                         writer.append(";");
                         writer.append("F");
                         writer.append(";");
-                        writer.append(listaAssistidos[i].getId());
+                        writer.append(listaAssistido.getId());
                         writer.append("\n");
                     } catch (IOException e) {
                         System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
@@ -410,13 +416,13 @@ public class PlataformaStreaming {
                 Serie[] listaParaVer = new Serie[value.getListaParaVer().size()];
                 listaParaVer = value.getListaParaVer().allElements(listaParaVer);
 
-                for (int i = 0; i < listaParaVer.length; i++) {
+                for (Serie serie : listaParaVer) {
                     try {
                         writer.append(value.getId());
                         writer.append(";");
                         writer.append("A");
                         writer.append(";");
-                        writer.append(listaParaVer[i].getId());
+                        writer.append(serie.getId());
                         writer.append("\n");
                     } catch (IOException e) {
                         System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
@@ -444,6 +450,46 @@ public class PlataformaStreaming {
         }
 
         clienteAtual.registrarAudiencia(serie);
+    }
+
+    /**
+     * Lê o arquivo "Avaliacoes.csv" e, conforme lido no arquivo, adiciona às midias as avaliações presentes,
+     * com nota e comentário. No entanto, caso o cliente avaliador não seja do tipo cliente especialista, se
+     * adiciona à avaliação apenas nota.
+     *
+     * @throws FileNotFoundException se o arquivo não for encontrado.
+     */
+    // Adiciona comentário somente se o cliente é avaliador. Senão, o ignora
+    public void carregarAvaliacoes() throws FileNotFoundException, NullPointerException {
+        File file = new File("docs/database/Avaliacoes.csv");
+        Scanner filereader = new Scanner(file);
+
+        filereader.nextLine();  // Pular primeira linha do arquivo
+
+        while (filereader.hasNextLine()) {
+            String[] dados = filereader.nextLine().split(";");
+
+            Midia midiaAvaliada = null;
+
+            // Verificar se mídia é filme, série ou se não existe na plataforma
+            if (this.series.containsKey(Integer.parseInt(dados[0])))
+                midiaAvaliada = this.series.get(Integer.parseInt(dados[0]));
+            else if (this.filmes.containsKey(Integer.parseInt(dados[0])))
+                midiaAvaliada = this.filmes.get(Integer.parseInt(dados[0]));
+            else throw new NullPointerException("Erro: A mídia a ser avaliada não existe");
+
+            Cliente avaliador = this.clientes.get(dados[1]);
+
+            if (avaliador.getModoAvaliacao() instanceof ClienteEspecialista) {
+                avaliador.avaliarMidia(midiaAvaliada, Integer.parseInt(dados[2]), dados[3]);
+            } else {
+                avaliador.avaliarMidia(midiaAvaliada, Integer.parseInt(dados[2]));
+            }
+        }
+    }
+
+    public void salvarAvaliacoes() {
+
     }
 
     /**

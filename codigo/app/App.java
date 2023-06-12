@@ -211,6 +211,7 @@ public class App {
             plataform.carregarFilmes();
             plataform.carregarSeries();
             plataform.carregarAudiencia();
+            plataform.carregarAvaliacoes();
 
         } catch (FileNotFoundException e) {
             System.out.print("Erro ao carregar dados da plataforma!");

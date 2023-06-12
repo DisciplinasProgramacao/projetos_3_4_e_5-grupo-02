@@ -10,7 +10,7 @@ public abstract class Midia {
     // ATRIBUTOS
     public static final String[] GENEROS = new String[]{"Comédia", "Ação", "Terror", "Drama", "Romance", "Aventura", "Animação", "Suspense"};
     public static final String[] IDIOMAS = new String[]{"Português", "Inglês", "Esperanto", "Romeno"};
-    private int id;
+    private String id;
     private String nome;
     private final String genero;
     private final String idioma;
@@ -19,7 +19,8 @@ public abstract class Midia {
     private final List<Avaliacao> avaliacoes;
 
     // CONSTRUTORES
-    public Midia(String nome, String genero, String idioma, Date lancamento) {
+    public Midia(String id, String nome, String genero, String idioma, Date lancamento) {
+        this.id = id;
         this.nome = nome;
         this.genero = genero;
         this.idioma = idioma;
@@ -33,6 +34,10 @@ public abstract class Midia {
         if (nome.length() > 0) {
             this.nome = nome;
         }
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getNome() {

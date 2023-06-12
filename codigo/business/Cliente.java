@@ -2,6 +2,8 @@ package business;
 
 import business.interfaces.*;
 
+import java.util.List;
+
 public class Cliente {
     // ATRIBUTOS
     private String nomeDeUsuario;
@@ -32,6 +34,14 @@ public class Cliente {
 
     public String getSenha() {
         return this.senha;
+    }
+
+    public Lista<Serie> getListaParaVer() {
+        return listaParaVer;
+    }
+
+    public Lista<Serie> getListaJaVistas() {
+        return listaJaVistas;
     }
 
     // MÉTODOS
@@ -74,7 +84,7 @@ public class Cliente {
      * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que correspondem ao gênero
      * selecionado
      *
-     * @param genero gênero selecionado.
+     * @param genero gênero selecionado
      * @return lista filtrada por gênero das séries encontradas
      */
     public Lista<Serie> filtrarPorGenero(String genero) {
@@ -170,29 +180,6 @@ public class Cliente {
 
     public int tamanhoListaJaVistos(){
         return this.listaJaVistas.size();
-    }
-
-
-
-    /**
-     * Imprime na tela as séries existentes na lista de séries para ver
-     */
-    public void imprimirListaParaVer() {
-        Serie[] listaImprimir = new Serie[listaParaVer.size()];
-        listaImprimir = listaParaVer.allElements(listaImprimir);
-
-        for (Serie serie : listaImprimir) {
-            System.out.println(serie);
-        }
-    }
-
-    public void imprimirListaJaVisto() {
-        Serie[] listaAssistidos = new Serie[listaJaVistas.size()];
-        listaAssistidos = listaJaVistas.allElements(listaAssistidos);
-
-        for(Serie serie : listaAssistidos) {
-            System.out.printf("%s\n", serie.getNome());
-        }
     }
 
     /**

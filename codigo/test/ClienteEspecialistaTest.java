@@ -19,7 +19,7 @@ public class ClienteEspecialistaTest {
     public void setUp() {
         c = new Cliente("Tester", "TT", "123");
         c.modoAvaliacao = new ClienteEspecialista();
-        s = new Serie("Breaking Bad", "Drama", "Português", new Date(), 25);
+        s = new Serie("9999", "Breaking Bad", "Drama", "Português", new Date(), 25);
     }
 
     /*

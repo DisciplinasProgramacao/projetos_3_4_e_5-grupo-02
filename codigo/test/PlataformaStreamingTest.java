@@ -26,26 +26,25 @@ class PlataformaStreamingTest {
 	
 	@BeforeEach
 	void iniciaTeste() {
-		cliente = new Cliente("Joao", "Joao123", "senha");
 		plataforma = new PlataformaStreaming("Xam OBH", cliente);
 		try {
-			plataforma.adicionarCliente(cliente);
+			plataforma.adicionarCliente("Joao", "Joao123", "senha");
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		} catch (ElementoJaExisteException e) {
 			System.out.println(e.getMessage());
 		}
-		serie = new Serie("Infinity Train", "Animação", "Inglês", new Date(), 10);
-		serie1 = new Serie("One Piece", "Animação", "Português", new Date(), 1060);
-		serie2 = new Serie("The Last of Us", "Suspense", "Português", new Date(), 9);
-		serie3 = new Serie("Brooklyn Nine-Nine", "Comédia", "Português", new Date(), 10);
-		filme = new Filme("Gato de Botas 2", "Animação", "Portugûes", new Date(), 6000);
-		
+		serie = new Serie("11111", "Infinity Train", "Animação", "Inglês", new Date(), 10);
+		serie1 = new Serie("22222", "One Piece", "Animação", "Português", new Date(), 1060);
+		serie2 = new Serie("33333", "The Last of Us", "Suspense", "Português", new Date(), 9);
+		serie3 = new Serie("44444", "Brooklyn Nine-Nine", "Comédia", "Português", new Date(), 10);
+		filme = new Filme("55555", "Gato de Botas 2", "Animação", "Portugûes", new Date(), 6000);
 	}
 	
 	@Test
 	void testLoginCliente() throws LoginInvalidoException {
-		assertEquals ("Usuário: Joao\n" + "Senha: senha", plataforma.login("Joao", "senha").toString());
+		plataforma.login("Joao", "Joao123");
+		assertEquals ("Usuário: Joao\n" + "Senha: senha", plataforma.getClienteAtual().toString());
 	}
 	
 	@Test
@@ -63,7 +62,7 @@ class PlataformaStreamingTest {
 	@Test
 	void testAdicionarClienteJaExistente() throws NullPointerException, ElementoJaExisteException {
 		Exception exception = assertThrows(ElementoJaExisteException.class, () -> {
-			plataforma.adicionarCliente(cliente);
+			plataforma.adicionarCliente("Joao", "Joao123", "senha");
 	    });
 		
 		String expectedMessage = "O objeto 'Joao' recebido ja existe na lista 'clientes'";
@@ -86,7 +85,7 @@ class PlataformaStreamingTest {
 		plataforma.adicionarFilme(1, filme);
 		assertEquals("{1=Nome: Gato de Botas 2\n"
 				+ "Gênero: Animação\n"
-				+ "Idioma: Portugûes\n"
+				+ "Idioma: Português\n"
 				+ "Duração: 6000 segundos}", plataforma.getFilmes().toString());
 	} 
 	

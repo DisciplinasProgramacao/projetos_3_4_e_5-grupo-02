@@ -20,7 +20,7 @@ public class AvaliacaoTest {
 
     @BeforeEach
     public void setUp() {
-        s = new Serie("Breaking Bad", "Drama", "Português", new Date(), 25);
+        s = new Serie("9999", "Breaking Bad", "Drama", "Português", new Date(), 25);
         c = new Cliente("xX_TesterCraft_Xx", "10", "teste123");
     }
 

@@ -21,7 +21,7 @@ class FilmeTest {
 	void iniciaTeste() {
 		c = new Cliente("Joao", "Joao123", "senha");
 		c1 = new Cliente("Jose", "Jose123", "password");
-		f = new Filme("Gato de Botas 2", "Animação", "Portugûes", new Date(), 6000);
+		f = new Filme("11111", "Gato de Botas 2", "Animação", "Portugûes", new Date(), 6000);
 	}
 	
 	@Test

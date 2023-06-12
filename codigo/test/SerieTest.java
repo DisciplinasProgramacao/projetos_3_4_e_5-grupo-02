@@ -21,7 +21,7 @@ class SerieTest {
 	void iniciaTeste() {
 		c = new Cliente("Joao", "Joao123", "senha");
 		c1 = new Cliente("Jose", "Jose123", "password");
-		s = new Serie("Wandinha", "Comédia", "Portugûes", new Date(), 6000);
+		s = new Serie("9999", "Wandinha", "Comédia", "Português", new Date(), 6000);
 	}
 	
 	@Test
@@ -39,7 +39,7 @@ class SerieTest {
 		int nota = 4;
 		s.criarAvaliacao(c, nota, comentario);
 		
-		String comentario1 = "Nao gostei";
+		String comentario1 = "Eita como é ruim";
 		int nota1 = 1;
 		s.criarAvaliacao(c1, nota1, comentario1);
 			

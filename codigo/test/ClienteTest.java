@@ -23,7 +23,7 @@ public class ClienteTest {
 
     @BeforeEach
     public void setUp() {
-        s = new Serie("Breaking Bad", "Drama", "Português", new Date(), 25);
+        s = new Serie("9999", "Breaking Bad", "Drama", "Português", new Date(), 25);
         c = new Cliente("xX_TesterCraft_Xx", "10", "teste123");
         c2 = new Cliente("Testerrr", "12", "teste321");
         l = new Lista<>(); // Cria uma lista secundária de Séries
@@ -34,7 +34,7 @@ public class ClienteTest {
 
     @Test
     public void filtrarPorGeneroTest() {
-        Serie s1 = new Serie("Breaking Good", "Suspense", "Portuguese", new Date(), 25);
+        Serie s1 = new Serie("9999", "Breaking Good", "Suspense", "Portuguese", new Date(), 25);
         c.adicionarNaLista(s1);
         l = c.filtrarPorGenero("Drama"); // A lista de séries recebe a serie filtrada pelo genero
 
@@ -43,7 +43,7 @@ public class ClienteTest {
 
     @Test
     public void filtrarPorIdiomaTest() {
-        Serie s1 = new Serie("Breaking Good", "Suspense", "Português", new Date(), 25);
+        Serie s1 = new Serie("9999","Breaking Good", "Suspense", "Português", new Date(), 25);
         c.adicionarNaLista(s1);
         l = c.filtrarPorIdioma("Português"); // A lista de séries recebe a serie filtrada pelo genero
 

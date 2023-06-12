@@ -227,12 +227,16 @@ public class PlataformaStreaming {
             writer.append("id; nome; lancamento; somaNotas; totalNotas\n");
 
             this.series.forEach((key, value) -> {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String lancamentoFormatted = dateFormat.format(value.getLancamento());
+
                 try {
                     writer.append(key.toString())
                             .append(";")
                             .append(value.getNome())
                             .append(";")
-                            .append(value.getLancamento().toString())
+                            .append(lancamentoFormatted)
+//                            .append(value.getLancamento().toString())
                             .append("\n");
                 } catch (IOException e) {
                     System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados da serie.");
@@ -323,12 +327,15 @@ public class PlataformaStreaming {
             writer.append("id; nome; lancamento; duracao; somaNotas; totalNotas\n");
 
             this.filmes.forEach((key, value) -> {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String lancamentoFormatted = dateFormat.format(value.getLancamento());
+
                 try {
                     writer.append(key.toString())
                             .append(";")
                             .append(value.getNome())
                             .append(";")
-                            .append(value.getLancamento().toString())
+                            .append(lancamentoFormatted)
                             .append(";")
                             .append(String.valueOf(value.getDuracao()))
                             .append("\n");

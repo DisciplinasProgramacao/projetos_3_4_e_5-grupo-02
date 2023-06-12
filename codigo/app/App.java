@@ -131,7 +131,7 @@ public class App {
         String midiaId;
         int midiaOption;
 
-        System.out.print("---------- Assistir uma séire ----------\n");
+        System.out.print("---------- Assistir uma série ----------\n");
 
         System.out.print("Escolha o que assistir:\n1.Filme\n2.Série\n");
         midiaOption = read.nextInt();
@@ -192,6 +192,13 @@ public class App {
         }
     }
 
+    public static void imprimirMidias(PlataformaStreaming plat) {
+        System.out.println("\n---------- Filmes disponíveis ----------");
+        plat.getFilmes().forEach((key, value) -> System.out.println(value + "\n"));
+        System.out.println("\n---------- Séries disponíveis ----------");
+        plat.getSeries().forEach((key, value) -> System.out.println(value + "\n"));
+    }
+
     public static void main(String[] args) {
         /*Variaveis */
         Cliente clientePadrao = new Cliente("John Doe", "Jd123", "psswd456");
@@ -224,9 +231,10 @@ public class App {
                     4. Assistir mídia
                     5. Ver audiência de uma midia
                     \n--- Outros ---
-                    6. Ver lista para assistir
-                    7. Ver lista já visto
+                    6. Ver lista de séries para assistir
+                    7. Ver lista de séries já vistas
                     8. Fazer busca a partir de um filtro
+                    9. Exibir todas as mídias
                     99. Salvar e sair
                     \n""");
             System.out.print("Opção: ");
@@ -258,6 +266,9 @@ public class App {
                     break;
                 case 8:
                     System.out.print("Opção 08");
+                    break;
+                case 9:
+                    imprimirMidias(plataform);
                     break;
                 case 98:
                     System.out.print("Opção 98 selecionada\n");

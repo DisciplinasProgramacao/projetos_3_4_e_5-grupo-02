@@ -118,6 +118,7 @@ public abstract class Midia {
     @Override
     public String toString() {
         return ("Nome: " + this.nome +
+                "\nId: " + this.id +
                 "\nGênero: " + this.genero +
                 "\nIdioma: " + this.idioma +
                 "\nAvaliação média: " + this.mediaAvaliacoes() +

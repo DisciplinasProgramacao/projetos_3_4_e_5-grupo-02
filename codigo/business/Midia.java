@@ -52,7 +52,7 @@ public abstract class Midia {
         return this.lancamento;
     }
 
-    public List<Avaliacao> getQtdAva() {
+    public List<Avaliacao> getAvaliacoes() {
         return avaliacoes;
     }
 

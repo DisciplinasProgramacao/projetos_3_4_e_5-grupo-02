@@ -30,7 +30,7 @@ class SerieTest {
 		int nota = 4;
 		s.criarAvaliacao(c, nota, comentario);
 		
-		assertEquals(4, s.getQtdAva().get(0).getNota());
+		assertEquals(4, s.getAvaliacoes().get(0).getNota());
 	}
 	
 	@Test 

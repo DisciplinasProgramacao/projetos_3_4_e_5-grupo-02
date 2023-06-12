@@ -30,7 +30,7 @@ class FilmeTest {
 		int nota = 5;
 		f.criarAvaliacao(c, nota, s);
 		
-		assertEquals(5, f.getQtdAva().get(0).getNota());
+		assertEquals(5, f.getAvaliacoes().get(0).getNota());
 	}
 	
 	@Test 

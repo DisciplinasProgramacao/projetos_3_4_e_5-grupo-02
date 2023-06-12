@@ -151,6 +151,14 @@ public class PlataformaStreaming {
         }
     }
 
+    /**
+     * Adiciona uma nova série ao catálogo.
+     *
+     * @param id        O identificador único da série
+     * @param novaSerie O objeto Série a ser adicionado
+     * @throws NullPointerException      Se o novoFilme for nulo
+     * @throws ElementoJaExisteException Se o filme com o mesmo id já existir na plataforma
+     */
     public void adicionarSerie(Integer id, Serie novaSerie) throws NullPointerException, ElementoJaExisteException {
         if (novaSerie == null) {
             throw new NullPointerException();
@@ -251,6 +259,14 @@ public class PlataformaStreaming {
         }
     }
 
+    /**
+     * Adiciona um novo filme ao catálogo.
+     *
+     * @param id        O identificador único do filme
+     * @param novoFilme O objeto Filme a ser adicionado
+     * @throws NullPointerException      Se o novoFilme for nulo
+     * @throws ElementoJaExisteException Se o filme com o mesmo id já existir na plataforma
+     */
     public void adicionarFilme(Integer id, Filme novoFilme) throws NullPointerException, ElementoJaExisteException {
         if (novoFilme == null) {
             throw new NullPointerException();
@@ -459,7 +475,6 @@ public class PlataformaStreaming {
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
      */
-    // Adiciona comentário somente se o cliente é avaliador. Senão, o ignora
     public void carregarAvaliacoes() throws FileNotFoundException, NullPointerException {
         File file = new File("docs/database/Avaliacoes.csv");
         Scanner filereader = new Scanner(file);
@@ -488,8 +503,54 @@ public class PlataformaStreaming {
         }
     }
 
+    // Se não houver comentário de avaliação, salva string " "
     public void salvarAvaliacoes() {
+        String arquivo = "docs/database/Avaliacoes.csv";
 
+        try (FileWriter writer = new FileWriter(arquivo)) {
+            // Avaliações de séries
+            this.series.forEach((key, value) -> {
+                value.getAvaliacoes().forEach(avaliacao -> {
+                    try {
+                        writer.append(value.getId());
+                        writer.append(";");
+                        writer.append(avaliacao.getCliente().getId());
+                        writer.append(";");
+                        if (avaliacao.getTexto() != null)
+                            writer.append(avaliacao.getTexto());
+                        else
+                            writer.append(" ");
+                        writer.append("\n");
+                    } catch (IOException e) {
+                        System.out.println("Erro: não foi possivel escrever no arquivo de avaliações.");
+                    }
+                });
+            });
+
+            // Avaliações de filmes
+            this.filmes.forEach((key, value) -> {
+                value.getAvaliacoes().forEach(avaliacao -> {
+                    try {
+                        writer.append(value.getId());
+                        writer.append(";");
+                        writer.append(avaliacao.getCliente().getId());
+                        writer.append(";");
+                        if (avaliacao.getTexto() != null)
+                            writer.append(avaliacao.getTexto());
+                        else
+                            writer.append(" ");
+                        writer.append("\n");
+                    } catch (IOException e) {
+                        System.out.println("Erro: não foi possivel escrever no arquivo de avaliações.");
+                    }
+                });
+            });
+
+        } catch (IOException e) {
+            System.out.println("Erro: não foi possível gerar arquivo para salvar avaliações.");
+        }
+
+        System.out.println("Avaliações salvas com sucesso!");
     }
 
     /**
@@ -568,7 +629,7 @@ public class PlataformaStreaming {
         List<Integer> l = new LinkedList<>();
 
         for (Serie s : series.values()) {
-            lista = s.getQtdAva(); // 'lista' recebe uma lista de avaliações da série no loop
+            lista = s.getAvaliacoes(); // 'lista' recebe uma lista de avaliações da série no loop
             l.add(lista.stream().mapToInt(Avaliacao::getNota).max().getAsInt()); // 'l' recebe a maior avaliação da
                                                                                  // midia no loop
         }
@@ -582,7 +643,7 @@ public class PlataformaStreaming {
         }
         Cliente c = null;
         for (Serie s : series.values()) {
-            lista = s.getQtdAva();
+            lista = s.getAvaliacoes();
             for (Avaliacao a : lista) {
                 if (a.getNota() == maior) {
                     c = a.getCliente();

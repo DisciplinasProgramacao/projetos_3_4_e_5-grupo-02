@@ -15,7 +15,7 @@ public class App {
     /*System.in implementa a interface Closable. Ver javadoc java.util.scanner -> Scanner.close*/
     public static Scanner read = new Scanner(System.in);
 
-    /*Método estatico para fazer login */
+    /*Método estático para fazer login */
     public static void fazerLogin(PlataformaStreaming plat) {
         String userName, password;
 
@@ -34,7 +34,7 @@ public class App {
         }
     }
 
-    /*Método estatico para cadastrar cliente */
+    /*Método estático para cadastrar cliente */
     public static void cadastrarCliente(PlataformaStreaming plat) {
         String userName, userId, userPassword;
 
@@ -57,7 +57,7 @@ public class App {
         }
     }
 
-    /*Método estatico para cadastrar nova midia */
+    /*Método estático para cadastrar nova mídia */
     public static void cadastrarMidia(PlataformaStreaming plat) {
         String midiaId, midiaName, midiaGenre, midiaIdiom, midiaRelease, midiaType;
 
@@ -126,7 +126,7 @@ public class App {
         }
     }
 
-    /*Método estatico para assistir midia */
+    /*Método estático para assistir midia */
     public static void assistirMidia(PlataformaStreaming plat) {
         String midiaId;
         int midiaOption;
@@ -164,11 +164,11 @@ public class App {
         }
     }
 
-    /*Método estatico para ver audiencia de uma mídia */
+    /*Método estático para ver audiencia de uma mídia */
     public static void verAudiencia(PlataformaStreaming plat) {
     }
 
-    /*Método estatico para exibir midias para ver */
+    /*Método estático para exibir midias para ver */
     public static void midiasParaAssistir(PlataformaStreaming plat) {
         Lista<Serie> listaParaVer = plat.getClienteAtual().getListaParaVer();
 
@@ -180,7 +180,7 @@ public class App {
         }
     }
 
-    /*Método estatico para exibir todas as midias assistidas pelo cliente atual*/
+    /*Método estático para exibir todas as midias assistidas pelo cliente atual*/
     public static void midiasAssistidas(PlataformaStreaming plat) {
         Lista<Serie> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
 
@@ -216,7 +216,6 @@ public class App {
             System.out.print("Erro ao carregar dados da plataforma!");
             read.close();
         }
-
 
         while (option != 99) {
             System.out.print("-------------- MENU --------------\n");
@@ -278,7 +277,7 @@ public class App {
                     plataform.salvarSeries();
                     plataform.salvarClientes();
                     plataform.salvarAudiencia();
-                    // plataforma.salvarAvaliacoes();
+                    plataform.salvarAvaliacoes();
                     break;
                 default:
                     System.out.printf("A opção %d é inválida\n", option);

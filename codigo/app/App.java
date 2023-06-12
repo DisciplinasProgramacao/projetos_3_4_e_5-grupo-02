@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -164,11 +165,24 @@ public class App {
             }
         }
     }
-   
-   
+  
+    /*Método estatico para ver audiencia de uma mídia */
+    public static void verAudiencia(PlataformaStreaming plat) {
+    }
+
+    /*Método estatico para exibir midias para ver */
+    public static void midiasParaAssistir(PlataformaStreaming plat) {
+        plat.getClienteAtual().imprimirListaParaVer();
+    }
+
+   /*Método estatico para exibir todas as midias assistidas pelo cliente atual*/
+   public static void midiasAssistidas(PlataformaStreaming plat) {
+        plat.getClienteAtual().imprimirListaJaVisto();
+   }
     public static void main(String[] args) {
         /*Variaveis */
-        PlataformaStreaming plataform = new PlataformaStreaming("Xam OBH", new Cliente("John Doe", "Jd123", "psswd456"));
+        Cliente clientePadrao = new Cliente("John Doe", "Jd123", "psswd456");
+        PlataformaStreaming plataform = new PlataformaStreaming("Xam OBH", clientePadrao);
         int option = 0;
 
         /*Carregar dados */
@@ -221,6 +235,17 @@ public class App {
                 case 4:
                     assistirMidia(plataform);
                     break;
+                case 5:
+                    System.out.printf("Opção 05");
+                    break;
+                case 6:
+                    midiasParaAssistir(plataform);
+                    break;
+                case 7:
+                    midiasAssistidas(plataform);
+                    break;
+                case 8:  
+                    System.out.printf("Opção 08");
                 case 98: 
                     System.out.printf("Opção 98 selecionada\n");
                     break;

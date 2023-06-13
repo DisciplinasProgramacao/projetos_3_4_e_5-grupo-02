@@ -629,31 +629,50 @@ public class PlataformaStreaming {
 
     public Cliente qualClienteTemMaisAvaliações() {
 
-        List<Avaliacao> lista = new LinkedList<>();
-        List<Integer> l = new LinkedList<>();
+        List<Avaliacao> listaA = new LinkedList<>();
+        List<Integer> listaI = new LinkedList<>();
 
         for (Serie s : series.values()) {
-            lista = s.getAvaliacoes(); // 'lista' recebe uma lista de avaliações da série no loop
-            l.add(lista.stream().mapToInt(Avaliacao::getNota).max().getAsInt()); // 'l' recebe a maior avaliação da
-                                                                                 // midia no loop
+            listaA = s.getAvaliacoes(); // 'lista' recebe uma lista de avaliações da série no loop
+            listaI.add(listaA.size());                                                                          
         }
 
-        int maior = Integer.MIN_VALUE;
+        int maior = Collections.max(listaI);
 
-        for (int num : l) {
-            if (num > maior) {
-                maior = num; // Variável 'maior' recebe a maior avaliação da lista de series
-            }
-        }
         Cliente c = null;
-        for (Serie s : series.values()) {
-            lista = s.getAvaliacoes();
-            for (Avaliacao a : lista) {
-                if (a.getNota() == maior) {
+
+
+        for(Serie s: series.values()){
+            listaA = s.getAvaliacoes();
+            for(Avaliacao a: listaA){
+                if(a.getNota() == maior){
                     c = a.getCliente();
                 }
             }
         }
+
+
+        for (Filme f : filmes.values()) {
+            listaA = f.getAvaliacoes(); // 'lista' recebe uma lista de avaliações da série no loop
+            listaI.add(listaA.size());                                                                          
+        }
+
+        int maior2 = Collections.max(listaI);
+
+        Cliente c2 = null;
+
+        for(Filme f: filmes.values()){
+            listaA = f.getAvaliacoes();
+            for(Avaliacao a: listaA){
+                if(a.getNota() == maior){
+                    c2 = a.getCliente();
+                }
+            }
+        }
+        
+
         return c;
+
+
     }
 }

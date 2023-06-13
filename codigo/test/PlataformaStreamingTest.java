@@ -43,8 +43,8 @@ class PlataformaStreamingTest {
 	
 	@Test
 	void testLoginCliente() throws LoginInvalidoException {
-		plataforma.login("Joao", "Joao123");
-		assertEquals ("Usuário: Joao\n" + "Senha: senha", plataforma.getClienteAtual().toString());
+		plataforma.login("Joao", "Joao123"); // Não funciona
+		assertEquals("Usuário: Joao\nSenha: Joao123\nModo de avaliação: Cliente Regular", plataforma.getClienteAtual().toString());
 	}
 	
 	@Test
@@ -78,7 +78,7 @@ class PlataformaStreamingTest {
 				+ "Gênero: Animação\n"
 				+ "Idioma: Inglês\n"
 				+ "Qtd de eps.: 10}", plataforma.getSeries().toString());
-	} 
+	}
 	
 	@Test
 	void testAdicionarFilme() throws NullPointerException, ElementoJaExisteException {

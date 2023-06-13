@@ -377,7 +377,6 @@ public class PlataformaStreaming {
     public void carregarAudiencia() throws FileNotFoundException {
         String arquivo = "docs/database/Audiencia.csv";
 
-
         try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -508,6 +507,8 @@ public class PlataformaStreaming {
         String arquivo = "docs/database/Avaliacoes.csv";
 
         try (FileWriter writer = new FileWriter(arquivo)) {
+            writer.append("id_midia;id_cliente;nota;comentario\n");
+
             // Avaliações de séries
             this.series.forEach((key, value) -> {
                 value.getAvaliacoes().forEach(avaliacao -> {
@@ -515,6 +516,8 @@ public class PlataformaStreaming {
                         writer.append(value.getId());
                         writer.append(";");
                         writer.append(avaliacao.getCliente().getId());
+                        writer.append(";");
+                        writer.append(String.valueOf(avaliacao.getNota()));
                         writer.append(";");
                         if (avaliacao.getTexto() != null)
                             writer.append(avaliacao.getTexto());

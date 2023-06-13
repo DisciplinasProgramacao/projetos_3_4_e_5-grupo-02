@@ -401,8 +401,8 @@ public class PlataformaStreaming {
 
     /**
      * Lê as listas de séries assistidas e para ver e registra no arquivo Audiencia.csv a audiência de cada
-     * uma delas no formato idDoUsuario;F/A;idDaSerie, sendo que "F" significa que a série já foi assistida,
-     * e "A" significa que a série está na lista para ver.
+     * uma delas no formato idDoUsuario;F/A;idDaSerie, sendo que "A" significa que a série já foi assistida,
+     * e "F" significa que a série está na lista para ver.
      */
     public void salvarAudiencia() {
         String arquivo = "docs/database/Audiencia.csv";
@@ -411,16 +411,18 @@ public class PlataformaStreaming {
             this.getClientes().forEach((key, value) -> {
 
                 // Séries assistidas
-                Serie[] listaAssistidos = new Serie[value.getListaJaVistas().size()];
-                listaAssistidos = value.getListaJaVistas().allElements(listaAssistidos);
+                Lista<Serie> listaJaVistas = value.getListaJaVistas();
 
-                for (Serie listaAssistido : listaAssistidos) {
+                Serie[] arrayAssistidas = new Serie[listaJaVistas.size()];
+                arrayAssistidas = listaJaVistas.allElements(arrayAssistidas);
+
+                for (Serie serieAssistida : arrayAssistidas) {
                     try {
                         writer.append(value.getId());
                         writer.append(";");
-                        writer.append("F");
+                        writer.append("A");
                         writer.append(";");
-                        writer.append(listaAssistido.getId());
+                        writer.append(serieAssistida.getId());
                         writer.append("\n");
                     } catch (IOException e) {
                         System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
@@ -435,7 +437,7 @@ public class PlataformaStreaming {
                     try {
                         writer.append(value.getId());
                         writer.append(";");
-                        writer.append("A");
+                        writer.append("F");
                         writer.append(";");
                         writer.append(serie.getId());
                         writer.append("\n");

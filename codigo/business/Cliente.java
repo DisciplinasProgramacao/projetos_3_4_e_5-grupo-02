@@ -13,6 +13,9 @@ public class Cliente {
     private Lista<Serie> listaJaVistas;
     public ICliente modoAvaliacao;
 
+    public static int registrouAudiencia = 0;
+    public static int adicionouNaLista = 0;
+
     // CONSTRUTORES
     public Cliente(String nomeDeUsuario, String id, String senha) {
         this.nomeDeUsuario = nomeDeUsuario;
@@ -68,6 +71,7 @@ public class Cliente {
         }
 
         this.listaParaVer.add(nomeSerie);
+        adicionouNaLista++;
     }
 
     /**
@@ -237,6 +241,7 @@ public class Cliente {
 
         listaJaVistas.add(serie);
         serie.registrarAudiencia();
+        registrouAudiencia++;
     }
 
     /**

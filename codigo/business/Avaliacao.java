@@ -57,4 +57,11 @@ public class Avaliacao {
 		Avaliacao outra = (Avaliacao) o;
 		return this.cliente.equals(outra.cliente);
 	}
+
+	@Override
+	public String toString() {
+		return "Avaliador: " + cliente.getNomeUsuario() +
+				"\n Nota: " + nota +
+				"\n Comentário: " + comentario;
+	}
 }

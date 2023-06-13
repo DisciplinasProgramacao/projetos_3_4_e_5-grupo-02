@@ -134,16 +134,14 @@ public class App {
         System.out.println("Digite o id da série que deseja assistir: ");
         String id = scan.nextLine();
 
-        plat.getSeries().forEach((key, value) -> {
-            if (plat.getSeries().containsKey(Integer.parseInt(id))) {
-                plat.getClienteAtual().registrarAudiencia(plat.getSeries().get(Integer.parseInt(id)));
-            }
-            else {
-                System.out.println("Não foi possível encontrar a série de id " + id);
-            }
-        });
+        if (plat.getSeries().containsKey(Integer.parseInt(id))) {
+            plat.getClienteAtual().registrarAudiencia(plat.getSeries().get(Integer.parseInt(id)));
+            System.out.println("A série " + plat.getSeries().get(Integer.parseInt(id)).getNome() + " foi assistida!");
+        }
+        else {
+            System.out.println("Não foi possível encontrar a série de id " + id);
+        }
 
-        System.out.println("A série " + plat.getSeries().get(Integer.parseInt(id)).getNome() + " foi assistida!");
     }
 
     /*Método estático para ver audiencia de uma mídia */
@@ -173,7 +171,7 @@ public class App {
 
         System.out.println("\n---------- Séries já vistas ----------");
         for (Serie serie : listaImprimir) {
-            System.out.printf("%s\n", serie.getNome());
+            System.out.printf(serie.getId() + " - " + serie.getNome() + "\n");
         }
     }
 
@@ -228,6 +226,38 @@ public class App {
         }
 
     }
+    
+    public static void avaliarMidia(PlataformaStreaming plat) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("\n---------- Avaliar mídia ----------");
+
+        System.out.println("Séries assistidas:");
+        midiasAssistidas(plat);
+
+        System.out.println("\nDigite o id da mídia que você deseja avaliar:");
+        String idMidia = scan.nextLine();
+
+        if (plat.getSeries().containsKey(Integer.parseInt(idMidia))) {
+
+            if (plat.getClienteAtual().getModoAvaliacao() instanceof ClienteEspecialista) {
+                System.out.println("Insira uma nota de 1 a 5: ");
+                String nota = scan.nextLine();
+                System.out.println("Insira um comentário: ");
+                String comentario = scan.nextLine();
+
+                plat.getClienteAtual().avaliarMidia(plat.getSeries().get(Integer.parseInt(idMidia)), Integer.parseInt(nota), comentario);
+                System.out.println("Mídia avaliada com sucesso!");
+            } else {
+                System.out.println("Insira uma nota de 1 a 5: ");
+                String nota = scan.nextLine();
+
+                plat.getClienteAtual().avaliarMidia(plat.getSeries().get(Integer.parseInt(idMidia)), Integer.parseInt(nota));
+                System.out.println("Mídia avaliada com sucesso!");
+            }
+        } else {
+            System.out.println("Não foi possível encontrar mídia de id " + idMidia);
+        }
+    }
 
     public static void main(String[] args) {
         /*Variaveis */
@@ -242,6 +272,7 @@ public class App {
             plataform.carregarSeries();
             plataform.carregarAudiencia();
             plataform.carregarAvaliacoes();
+            System.out.println("Reg: " + Cliente.registrouAudiencia + "List: " + Cliente.adicionouNaLista);
         } catch (FileNotFoundException e) {
             System.out.print("Erro ao carregar dados da plataforma!");
             read.close();
@@ -263,8 +294,10 @@ public class App {
                     7. Ver lista de séries já vistas
                     8. Filtrar séries
                     9. Exibir todas as mídias
+                    10. Avaliar mídia
                     \n--- Outros ---
                     99. Salvar e sair
+                    ----------------------------------
                     \n""");
             System.out.print("Opção: ");
             option = read.nextInt();
@@ -299,15 +332,18 @@ public class App {
                 case 9:
                     imprimirMidias(plataform);
                     break;
+                case 10:
+                    avaliarMidia(plataform);
+                    break;
                 case 98:
                     System.out.print("Opção 98 selecionada\n");
                     break;
                 case 99:
+                    plataform.salvarAvaliacoes();
+                    plataform.salvarAudiencia();
                     plataform.salvarFilmes();
                     plataform.salvarSeries();
                     plataform.salvarClientes();
-                    plataform.salvarAudiencia();
-                    plataform.salvarAvaliacoes();
                     break;
                 default:
                     System.out.printf("A opção %d é inválida\n", option);

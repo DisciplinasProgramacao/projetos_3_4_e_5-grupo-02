@@ -233,7 +233,7 @@ public class PlataformaStreaming {
         String arquivo = "docs/database/Series.csv";
 
         try (FileWriter writer = new FileWriter(arquivo)) {
-            writer.append("id; nome; lancamento; somaNotas; totalNotas\n");
+            writer.append("id; nome; lancamento\n");
 
             this.series.forEach((key, value) -> {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -307,7 +307,7 @@ public class PlataformaStreaming {
             try {
                 novaData = new SimpleDateFormat("dd/MM/yyyy").parse(dados[2]);
             } catch (Exception e) {
-                System.out.println("Erro: Formato inválido na leitura da data de lançamento de série");
+                System.out.println("Erro: Formato inválido na leitura da data de lançamento de filme");
             }
 
             // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero,
@@ -341,7 +341,7 @@ public class PlataformaStreaming {
         String arquivo = "docs/database/Filmes.csv";
 
         try (FileWriter writer = new FileWriter(arquivo)) {
-            writer.append("id; nome; lancamento; duracao; somaNotas; totalNotas\n");
+            writer.append("id; nome; lancamento; duracao;\n");
 
             this.filmes.forEach((key, value) -> {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -354,7 +354,7 @@ public class PlataformaStreaming {
                             .append(";")
                             .append(lancamentoFormatted)
                             .append(";")
-                            .append(String.valueOf(value.getDuracao()))
+                            .append(String.valueOf(value.getDuracao()/3600))
                             .append("\n");
                 } catch (IOException e) {
                     System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");

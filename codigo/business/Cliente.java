@@ -101,7 +101,9 @@ public class Cliente {
         series = listaParaVer.allElements(series);
 
         for (Serie serie : series) {
+            System.out.println("!");
             if (serie.getGenero().equals(genero)) {
+                System.out.println("!!");
                 seriesFiltradas.add(serie);
             }
         }
@@ -109,7 +111,9 @@ public class Cliente {
         series = listaJaVistas.allElements(series);
 
         for (Serie serie : series) {
+            System.out.println("!");
             if (serie.getGenero().equals(genero)) {
+                System.out.println("!!");
                 seriesFiltradas.add(serie);
             }
         }
@@ -175,6 +179,7 @@ public class Cliente {
                 filtrada.add(serie);
             }
         }
+
         return filtrada;
     }
 

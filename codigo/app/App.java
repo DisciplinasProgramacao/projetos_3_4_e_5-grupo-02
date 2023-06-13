@@ -133,13 +133,13 @@ public class App {
 
         System.out.print("---------- Assistir uma série ----------\n");
 
-        System.out.print("Escolha o que assistir:\n1.Filme\n2.Série\n");
+        System.out.print("Escolha o que assistir:\n1. Filme\n2. Série\n");
         midiaOption = read.nextInt();
         read.nextLine();
 
         switch (midiaOption) {
             case 1 -> {
-                System.out.print("ID do filme: ");
+                System.out.print("Id do filme: ");
                 midiaId = read.nextLine();
 
                 if (plat.getFilmes().containsKey((Object) midiaId)) {
@@ -151,7 +151,7 @@ public class App {
             }
 
             case 2 -> {
-                System.out.print("ID da série: ");
+                System.out.print("Id da série: ");
                 midiaId = read.nextLine();
 
                 if (plat.getSeries().containsKey((Object) midiaId)) {
@@ -197,6 +197,51 @@ public class App {
         plat.getFilmes().forEach((key, value) -> System.out.println(value + "\n"));
         System.out.println("\n---------- Séries disponíveis ----------");
         plat.getSeries().forEach((key, value) -> System.out.println(value + "\n"));
+    }
+
+    public static void filtrarMidias(PlataformaStreaming plat) {
+        Scanner scan = new Scanner(System.in);
+        Serie[] arrayFiltradas = new Serie[plat.getSeries().size()];
+
+        System.out.println("---------- Filtar mídias ----------\n");
+
+        System.out.println("""
+                Selecione o critério de busca:
+                    1. Gênero
+                    2. Idioma
+                    3. Quantidade de episódios
+                """);
+        String op = scan.nextLine();
+
+        switch (Integer.parseInt(op)) {
+            case 1:
+                System.out.print("Gêneros disponíveis: Comédia, Ação, Terror, Drama, Romance, Aventura, Animação, Suspense\n");
+                System.out.println("Digite um gênero para buscar: ");
+                String genero = scan.nextLine();
+                arrayFiltradas = plat.filtrarPorGenero(genero).allElements(arrayFiltradas);
+                break;
+            case 2:
+                System.out.print("Idiomas disponíveis: Português, Inglês, Esperanto, Romeno\n");
+                System.out.println("Digite um idioma para buscar: ");
+                String idioma = scan.nextLine();
+                arrayFiltradas = plat.filtrarPorIdioma(idioma).allElements(arrayFiltradas);
+                break;
+            case 3:
+                System.out.println("Digite uma quantidade de episódios para buscar: ");
+                String qtdEpisodios = scan.nextLine();
+                arrayFiltradas = plat.filtrarPorQtdEpisodios(Integer.parseInt(qtdEpisodios)).allElements(arrayFiltradas);
+                break;
+            default:
+                System.out.println("A opção escolhida é inválida");
+                break;
+        }
+
+        System.out.println("\"---------- Resultados encontrados ----------\\n\"");
+        for (int i = 0; i < arrayFiltradas.length; i++) {
+            if (arrayFiltradas[i] != null)
+                System.out.println(arrayFiltradas[i]);
+        }
+
     }
 
     public static void main(String[] args) {
@@ -264,7 +309,7 @@ public class App {
                     midiasAssistidas(plataform);
                     break;
                 case 8:
-                    System.out.print("Opção 08");
+                    filtrarMidias(plataform);
                     break;
                 case 9:
                     imprimirMidias(plataform);

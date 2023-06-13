@@ -1,8 +1,31 @@
-| Usuário      | Requisito | Motivação     |
-| :----:        |    :----:   |          :----: |
-| Como um XXXXXX, eu quero      | --requsito--       | para...    |
-| Como um XXXXXX, eu quero   | --requisito--         | para...      |
+| Requisito                                                                                               |     Tipo      | Implementado |           Responsavel           | Tester | Testado |
+| :------------------------------------------------------------------------------------------------------ | :-----------: | :----------: | :-----------------------------: | ------ | ------- |
+| Classe Cliente                                                                                          | Implementação |     Sim      |     Carlos, Leticia, Andre      |        |         |
+| Classe Serie                                                                                            | Implementação |     Sim      |         Andre, Leticia          |        |         |
+| Classe PlataformaStreaming                                                                              | Implementação |     Sim      |         Andre, Leticia          |        |         |
+| Métodos para carga de dados de séries, clientes e audiência                                             | Implementação |     Sim      |             Leticia             |        |         |
+| Lógica de carga de dados do catálogo de filmes;                                                         | Implementação |     Sim      |             Leticia             |        |         |
+| Cadastro de séries                                                                                      | Implementação |     Sim      |             Leticia             |        |         |
+| Cadastro de cliente                                                                                     | Implementação |     Sim      |             Leticia             |        |         |
+| Cadastro de filme                                                                                       | Implementação |     Sim      |             Leticia             |        |         |
+| Sistema de avaliação de mídias: uma mídia tem sua avaliação média;                                      | Implementação |     Sim      |               Yan               |        |         |
+| Um cliente não poder avaliar a mesma mídia duas vezes;                                                  | Implementação |     Sim      |               Yan               |        |         |
+| Protótipo do sistema cobrindo os requisitos;                                                            | Implementação |     Sim      |             Leticia             |        |         |
+| Salvar dados de clientes, filmes e séries em arquivo;                                                   | Implementação |     Sim      |             Leticia             |        |         |
+| Clientes podem ser regulares ou especialistas, e estes últimos podem adicionar comentários à avaliação; | Implementação |     Sim      |             Leticia             |        |         |
+| Garantir a robustez do sistema principal.                                                               | Implementação |     Não      |                                 |        |         |
+| Qual cliente assistiu mais mídias, e quantas mídias;                                                    | Implementação |     Não      |                                 |        |         |
+| Qual cliente tem mais avaliações, e quantas avaliações;                                                 | Implementação |     Sim      |              Andre              |        |         |
+| Qual a porcentagem dos clientes com pelo menos 15 avaliações;                                           | Implementação |     Não      |                                 |        |         |
+| Quais são as 10 mídias de melhor avaliação, com pelo menos 100 avaliações, em ordem decrescente;        | Implementação |     Não      |                                 |        |         |
+| Quais são as 10 mídias com mais visualizações, em ordem decrescente;                                    | Implementação |     Não      |                                 |        |         |
+| Estes mesmos dois últimos relatórios, porém com as mídias separadas por gênero.                         | Implementação |     Não      |                                 |        |         |
+| Criação e tratamento de exceções                                                                        | Implementação |     Sim      |               Yan               |        |         |
+| Diagrama original contempla o requisito de carga de dados;                                              |  Atualização  |     Sim      |         Carlos, Gustavo         |        |         |
+| Diagrama abrigando o novo tipo de mídia: Filme;                                                         |  Atualização  |     Sim      |         Carlos, Gustavo         |        |         |
+| Atualização em diagramas                                                                                |  Atualização  |     Sim      |         Carlos, Gustavo         |        |         |
+| Javadoc                                                                                                 |  Atualização  |     Sim      | Carlos, Gustavo, Andre, Leticia |        |         |
+
+    
 
 
-
-> Written with [StackEdit](https://stackedit.io/).

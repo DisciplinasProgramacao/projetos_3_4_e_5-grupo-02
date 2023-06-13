@@ -11,8 +11,6 @@ public class Cliente {
     private Lista<Serie> listaJaVistas;
     public ICliente modoAvaliacao;
 
-    public static int registrouAudiencia = 0;
-    public static int adicionouNaLista = 0;
 
     // CONSTRUTORES
     public Cliente(String nomeDeUsuario, String id, String senha) {

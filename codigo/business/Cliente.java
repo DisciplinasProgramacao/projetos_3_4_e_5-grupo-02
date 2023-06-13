@@ -67,7 +67,6 @@ public class Cliente {
         }
 
         this.listaParaVer.add(nomeSerie);
-        adicionouNaLista++;
     }
 
     /**
@@ -101,19 +100,7 @@ public class Cliente {
         series = listaParaVer.allElements(series);
 
         for (Serie serie : series) {
-            System.out.println("!");
             if (serie.getGenero().equals(genero)) {
-                System.out.println("!!");
-                seriesFiltradas.add(serie);
-            }
-        }
-
-        series = listaJaVistas.allElements(series);
-
-        for (Serie serie : series) {
-            System.out.println("!");
-            if (serie.getGenero().equals(genero)) {
-                System.out.println("!!");
                 seriesFiltradas.add(serie);
             }
         }
@@ -136,15 +123,7 @@ public class Cliente {
         series = listaParaVer.allElements(series);
 
         for (Serie serie : series) {
-            if (serie.getGenero().equals(idioma)) {
-                seriesFiltradas.add(serie);
-            }
-        }
-
-        series = listaJaVistas.allElements(series);
-
-        for (Serie serie : series) {
-            if (serie != null && serie.getGenero().equals(idioma)) {
+            if (serie.getIdioma().equals(idioma)) {
                 seriesFiltradas.add(serie);
             }
         }
@@ -237,7 +216,6 @@ public class Cliente {
 
         listaJaVistas.add(serie);
         serie.registrarAudiencia();
-        registrouAudiencia++;
     }
 
     /**

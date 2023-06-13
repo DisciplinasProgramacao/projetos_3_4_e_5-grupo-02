@@ -35,6 +35,10 @@ public abstract class Midia {
             this.nome = nome;
         }
     }
+    
+	public String getIdioma() {
+		return idioma;
+	}  
 
     public String getId() {
         return id;

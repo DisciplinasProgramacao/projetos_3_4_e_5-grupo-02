@@ -17,7 +17,7 @@ public class ClienteTest {
         assertTrue(1 + 1 == 2);
     }
 
-    Serie s, s1;
+    Serie s;
     Cliente c, c2;
     Lista<Serie> l;
 
@@ -34,8 +34,7 @@ public class ClienteTest {
 
     @Test
     public void filtrarPorGeneroTest() {
-        Serie s1 = new Serie("9999", "Breaking Good", "Suspense", "Portuguese", new Date(), 25);
-        c.adicionarNaLista(s1);
+        c.adicionarNaLista(s);
         l = c.filtrarPorGenero("Drama"); // A lista de séries recebe a serie filtrada pelo genero
 
         assertEquals(1, l.size());
@@ -43,11 +42,10 @@ public class ClienteTest {
 
     @Test
     public void filtrarPorIdiomaTest() {
-        Serie s1 = new Serie("9999","Breaking Good", "Suspense", "Português", new Date(), 25);
-        c.adicionarNaLista(s1);
+        c.adicionarNaLista(s);
         l = c.filtrarPorIdioma("Português"); // A lista de séries recebe a serie filtrada pelo genero
 
-        assertEquals(2, l.size());
+        assertEquals(1, l.size());
     }
 
     @Test

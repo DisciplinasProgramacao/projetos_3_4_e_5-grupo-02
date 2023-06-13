@@ -6,7 +6,6 @@ import java.util.*;
 
 import business.exceptions.ElementoJaExisteException;
 import business.exceptions.LoginInvalidoException;
-import business.interfaces.ICliente;
 
 public class PlataformaStreaming {
 

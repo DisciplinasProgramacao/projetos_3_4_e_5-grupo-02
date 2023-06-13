@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -272,7 +271,6 @@ public class App {
             plataform.carregarSeries();
             plataform.carregarAudiencia();
             plataform.carregarAvaliacoes();
-            System.out.println("Reg: " + Cliente.registrouAudiencia + "List: " + Cliente.adicionouNaLista);
         } catch (FileNotFoundException e) {
             System.out.print("Erro ao carregar dados da plataforma!");
             read.close();
@@ -282,7 +280,7 @@ public class App {
             System.out.print("\n-------------- MENU --------------\n");
             System.out.printf("Usuário logado: %s\n", plataform.getClienteAtual().getNomeUsuario());
             System.out.print("""
-                    Escolha uma operação:
+                    \nEscolha uma operação:
                     \n--- Gerenciar Clientes ---
                     1. Fazer login com outro usuário
                     2. Cadastrar novo cliente
@@ -292,9 +290,10 @@ public class App {
                     5. Ver audiência de uma midia
                     6. Ver lista de séries para assistir
                     7. Ver lista de séries já vistas
-                    8. Filtrar séries
+                    8. Filtrar minhas séries
                     9. Exibir todas as mídias
                     10. Avaliar mídia
+                    \n--- Relatórios ---
                     \n--- Outros ---
                     99. Salvar e sair
                     ----------------------------------

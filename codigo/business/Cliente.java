@@ -2,8 +2,6 @@ package business;
 
 import business.interfaces.*;
 
-import java.util.List;
-
 public class Cliente {
     // ATRIBUTOS
     private String nomeDeUsuario;

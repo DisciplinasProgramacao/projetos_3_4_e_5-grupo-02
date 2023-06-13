@@ -628,6 +628,8 @@ public class PlataformaStreaming {
     }
 
     public Cliente qualClienteTemMaisAvaliações() {
+    	
+    	
 
         List<Avaliacao> listaA = new LinkedList<>();
         List<Integer> listaI = new LinkedList<>();

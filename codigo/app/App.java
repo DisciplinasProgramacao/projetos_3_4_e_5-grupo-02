@@ -148,6 +148,7 @@ public class App {
 
     /*Método estático para ver audiencia de uma mídia */
     public static void verAudiencia(PlataformaStreaming plat) {
+
     }
 
     /*Método estático para exibir midias para ver */
@@ -157,6 +158,7 @@ public class App {
         Serie[] listaImprimir = new Serie[listaParaVer.size()];
         listaImprimir = listaParaVer.allElements(listaImprimir);
 
+        System.out.println("\n---------- Séries para assistir ----------");
         for (Serie serie : listaImprimir) {
             System.out.printf("%s\n", serie.getNome());
         }
@@ -169,6 +171,7 @@ public class App {
         Serie[] listaImprimir = new Serie[listaJaVistas.size()];
         listaImprimir = listaJaVistas.allElements(listaImprimir);
 
+        System.out.println("\n---------- Séries já vistas ----------");
         for (Serie serie : listaImprimir) {
             System.out.printf("%s\n", serie.getNome());
         }
@@ -256,11 +259,11 @@ public class App {
                     3. Cadastrar nova mídia
                     4. Assistir série
                     5. Ver audiência de uma midia
-                    \n--- Outros ---
                     6. Ver lista de séries para assistir
                     7. Ver lista de séries já vistas
-                    8. Fazer busca a partir de um filtro
+                    8. Filtrar séries
                     9. Exibir todas as mídias
+                    \n--- Outros ---
                     99. Salvar e sair
                     \n""");
             System.out.print("Opção: ");

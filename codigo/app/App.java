@@ -127,41 +127,23 @@ public class App {
     }
 
     /*Método estático para assistir midia */
-    public static void assistirMidia(PlataformaStreaming plat) {
-        String midiaId;
-        int midiaOption;
+    public static void assistirSerie(PlataformaStreaming plat) {
+        Scanner scan = new Scanner(System.in);
 
-        System.out.print("---------- Assistir uma série ----------\n");
+        System.out.println("\n---------- Assistir série ----------");
+        System.out.println("Digite o id da série que deseja assistir: ");
+        String id = scan.nextLine();
 
-        System.out.print("Escolha o que assistir:\n1. Filme\n2. Série\n");
-        midiaOption = read.nextInt();
-        read.nextLine();
-
-        switch (midiaOption) {
-            case 1 -> {
-                System.out.print("Id do filme: ");
-                midiaId = read.nextLine();
-
-                if (plat.getFilmes().containsKey((Object) midiaId)) {
-                    plat.getFilmes().get((Object) midiaId).registrarAudiencia();
-                    System.out.print("Filme assistido\n");
-                } else {
-                    System.out.printf("O filme de id: %s não foi encontrado\n", midiaId);
-                }
+        plat.getSeries().forEach((key, value) -> {
+            if (plat.getSeries().containsKey(Integer.parseInt(id))) {
+                plat.getClienteAtual().registrarAudiencia(plat.getSeries().get(Integer.parseInt(id)));
             }
-
-            case 2 -> {
-                System.out.print("Id da série: ");
-                midiaId = read.nextLine();
-
-                if (plat.getSeries().containsKey((Object) midiaId)) {
-                    plat.getSeries().get((Object) midiaId).registrarAudiencia();
-                    System.out.print("Série assistida\n");
-                } else {
-                    System.out.printf("A série de id: %s não foi encontrada\n", midiaId);
-                }
+            else {
+                System.out.println("Não foi possível encontrar a série de id " + id);
             }
-        }
+        });
+
+        System.out.println("A série " + plat.getSeries().get(Integer.parseInt(id)).getNome() + " foi assistida!");
     }
 
     /*Método estático para ver audiencia de uma mídia */
@@ -263,7 +245,7 @@ public class App {
         }
 
         while (option != 99) {
-            System.out.print("-------------- MENU --------------\n");
+            System.out.print("\n-------------- MENU --------------\n");
             System.out.printf("Usuário logado: %s\n", plataform.getClienteAtual().getNomeUsuario());
             System.out.print("""
                     Escolha uma operação:
@@ -272,7 +254,7 @@ public class App {
                     2. Cadastrar novo cliente
                     \n--- Gerenciar Mídias ---
                     3. Cadastrar nova mídia
-                    4. Assistir mídia
+                    4. Assistir série
                     5. Ver audiência de uma midia
                     \n--- Outros ---
                     6. Ver lista de séries para assistir
@@ -297,7 +279,7 @@ public class App {
                     cadastrarMidia(plataform);
                     break;
                 case 4:
-                    assistirMidia(plataform);
+                    assistirSerie(plataform);
                     break;
                 case 5:
                     System.out.print("Opção 05");

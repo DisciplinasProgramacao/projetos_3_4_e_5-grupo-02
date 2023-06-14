@@ -107,8 +107,8 @@ public class PlataformaStreaming {
      * Adiciona um novo cliente à lista de clientes. Caso o cliente a ser adicionado
      * já esteja previamente presente na lista, a operação não é executada
      *
-     * @param userId Id do novo cliente
-     * @param userName Nome do novo cliente
+     * @param userId       Id do novo cliente
+     * @param userName     Nome do novo cliente
      * @param userPassword Senha do novo cliente
      */
     public void adicionarCliente(String userName, String userId, String userPassword) throws ElementoJaExisteException {
@@ -156,7 +156,8 @@ public class PlataformaStreaming {
      * @param id        O identificador único da série
      * @param novaSerie O objeto Série a ser adicionado
      * @throws NullPointerException      Se o novoFilme for nulo
-     * @throws ElementoJaExisteException Se o filme com o mesmo id já existir na plataforma
+     * @throws ElementoJaExisteException Se o filme com o mesmo id já existir na
+     *                                   plataforma
      */
     public void adicionarSerie(Integer id, Serie novaSerie) throws NullPointerException, ElementoJaExisteException {
         if (novaSerie == null) {
@@ -204,7 +205,8 @@ public class PlataformaStreaming {
             // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e
             // idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios. Em
             // seguida, insere-se a nova série no hashmap
-            Serie novaSerie = new Serie(dados[0], dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
+            Serie novaSerie = new Serie(dados[0], dados[1], novoGenero, novoIdioma, novaData,
+                    (int) (Math.random() * 100));
 
             try {
                 adicionarSerie(Integer.valueOf(dados[0]), novaSerie);
@@ -244,7 +246,7 @@ public class PlataformaStreaming {
                             .append(value.getNome())
                             .append(";")
                             .append(lancamentoFormatted)
-//                            .append(value.getLancamento().toString())
+                            // .append(value.getLancamento().toString())
                             .append("\n");
                 } catch (IOException e) {
                     System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados da serie.");
@@ -264,7 +266,8 @@ public class PlataformaStreaming {
      * @param id        O identificador único do filme
      * @param novoFilme O objeto Filme a ser adicionado
      * @throws NullPointerException      Se o novoFilme for nulo
-     * @throws ElementoJaExisteException Se o filme com o mesmo id já existir na plataforma
+     * @throws ElementoJaExisteException Se o filme com o mesmo id já existir na
+     *                                   plataforma
      */
     public void adicionarFilme(Integer id, Filme novoFilme) throws NullPointerException, ElementoJaExisteException {
         if (novoFilme == null) {
@@ -312,7 +315,8 @@ public class PlataformaStreaming {
             // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero,
             // idioma, data de lançamento e duracao (dados[3]) em segundos. Em seguida,
             // insere-se o novo filme no hashmap
-            Filme novoFilme = new Filme(dados[0], dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
+            Filme novoFilme = new Filme(dados[0], dados[1], novoGenero, novoIdioma, novaData,
+                    Integer.parseInt(dados[3]) * 60);
 
             try {
                 adicionarFilme(Integer.valueOf(dados[0]), novoFilme);
@@ -353,7 +357,7 @@ public class PlataformaStreaming {
                             .append(";")
                             .append(lancamentoFormatted)
                             .append(";")
-                            .append(String.valueOf(value.getDuracao()/3600))
+                            .append(String.valueOf(value.getDuracao() / 3600))
                             .append("\n");
                 } catch (IOException e) {
                     System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");
@@ -369,7 +373,8 @@ public class PlataformaStreaming {
 
     /**
      * Lê o arquivo "Audiencia.csv" e, conforme lido no arquivo, adiciona série à
-     * lista para assistir (F) ou registra audiência de série já assistida pelo cliente (A).
+     * lista para assistir (F) ou registra audiência de série já assistida pelo
+     * cliente (A).
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
      */
@@ -399,8 +404,10 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê as listas de séries assistidas e para ver e registra no arquivo Audiencia.csv a audiência de cada
-     * uma delas no formato idDoUsuario;F/A;idDaSerie, sendo que "A" significa que a série já foi assistida,
+     * Lê as listas de séries assistidas e para ver e registra no arquivo
+     * Audiencia.csv a audiência de cada
+     * uma delas no formato idDoUsuario;F/A;idDaSerie, sendo que "A" significa que a
+     * série já foi assistida,
      * e "F" significa que a série está na lista para ver.
      */
     public void salvarAudiencia() {
@@ -424,7 +431,8 @@ public class PlataformaStreaming {
                         writer.append(serieAssistida.getId());
                         writer.append("\n");
                     } catch (IOException e) {
-                        System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
+                        System.out
+                                .println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
                     }
                 }
 
@@ -441,7 +449,8 @@ public class PlataformaStreaming {
                         writer.append(serie.getId());
                         writer.append("\n");
                     } catch (IOException e) {
-                        System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
+                        System.out
+                                .println("Erro: não foi possivel escrever no arquivo para salvar dados de audiência.");
                     }
                 }
             });
@@ -469,8 +478,10 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Lê o arquivo "Avaliacoes.csv" e, conforme lido no arquivo, adiciona às midias as avaliações presentes,
-     * com nota e comentário. No entanto, caso o cliente avaliador não seja do tipo cliente especialista, se
+     * Lê o arquivo "Avaliacoes.csv" e, conforme lido no arquivo, adiciona às midias
+     * as avaliações presentes,
+     * com nota e comentário. No entanto, caso o cliente avaliador não seja do tipo
+     * cliente especialista, se
      * adiciona à avaliação apenas nota.
      *
      * @throws FileNotFoundException se o arquivo não for encontrado.
@@ -479,7 +490,7 @@ public class PlataformaStreaming {
         File file = new File("docs/database/Avaliacoes.csv");
         Scanner filereader = new Scanner(file);
 
-        filereader.nextLine();  // Pular primeira linha do arquivo
+        filereader.nextLine(); // Pular primeira linha do arquivo
 
         while (filereader.hasNextLine()) {
             String[] dados = filereader.nextLine().split(";");
@@ -491,7 +502,8 @@ public class PlataformaStreaming {
                 midiaAvaliada = this.series.get(Integer.parseInt(dados[0]));
             else if (this.filmes.containsKey(Integer.parseInt(dados[0])))
                 midiaAvaliada = this.filmes.get(Integer.parseInt(dados[0]));
-            else throw new NullPointerException("Erro: A mídia a ser avaliada não existe");
+            else
+                throw new NullPointerException("Erro: A mídia a ser avaliada não existe");
 
             Cliente avaliador = this.clientes.get(dados[1]);
 
@@ -628,53 +640,39 @@ public class PlataformaStreaming {
     }
 
     public Cliente qualClienteTemMaisAvaliações() {
-    	
-    	
 
-        List<Avaliacao> listaA = new LinkedList<>();
-        List<Integer> listaI = new LinkedList<>();
+        List<Midia> listaSeriesFilmes = new LinkedList<>();
 
         for (Serie s : series.values()) {
-            listaA = s.getAvaliacoes(); // 'lista' recebe uma lista de avaliações da série no loop
-            listaI.add(listaA.size());                                                                          
+            listaSeriesFilmes.add(s);
         }
-
-        int maior = Collections.max(listaI);
-
-        Cliente c = null;
-
-
-        for(Serie s: series.values()){
-            listaA = s.getAvaliacoes();
-            for(Avaliacao a: listaA){
-                if(a.getNota() == maior){
-                    c = a.getCliente();
-                }
-            }
-        }
-
 
         for (Filme f : filmes.values()) {
-            listaA = f.getAvaliacoes(); // 'lista' recebe uma lista de avaliações da série no loop
-            listaI.add(listaA.size());                                                                          
+            listaSeriesFilmes.add(f);
         }
 
-        int maior2 = Collections.max(listaI);
+        List<Integer> listaDeAvaliacoes = new LinkedList<>();
 
-        Cliente c2 = null;
+        for (Midia m : listaSeriesFilmes) {
+            listaDeAvaliacoes.add(m.qtdAvaliacoes());
+        }
 
-        for(Filme f: filmes.values()){
-            listaA = f.getAvaliacoes();
-            for(Avaliacao a: listaA){
-                if(a.getNota() == maior){
-                    c2 = a.getCliente();
+        Integer valorMaximo = Collections.max(listaDeAvaliacoes);
+
+        Cliente clienteQueMaisAvaliou = null;
+
+        for (Midia m : listaSeriesFilmes) {
+            if (m.qtdAvaliacoes() == valorMaximo) {
+                List<Avaliacao> lista = null;
+                lista = m.getAvaliacoes();
+                for (Avaliacao a : lista) {
+                    clienteQueMaisAvaliou = a.getCliente();
                 }
+
             }
         }
-        
 
-        return c;
-
+        return clienteQueMaisAvaliou;
 
     }
 }

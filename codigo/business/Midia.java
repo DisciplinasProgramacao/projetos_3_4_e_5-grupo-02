@@ -8,8 +8,9 @@ import java.util.OptionalDouble;
 public abstract class Midia {
 
     // ATRIBUTOS
-    public static final String[] GENEROS = new String[]{"Comédia", "Ação", "Terror", "Drama", "Romance", "Aventura", "Animação", "Suspense"};
-    public static final String[] IDIOMAS = new String[]{"Português", "Inglês", "Esperanto", "Romeno"};
+    public static final String[] GENEROS = new String[] { "Comédia", "Ação", "Terror", "Drama", "Romance", "Aventura",
+            "Animação", "Suspense" };
+    public static final String[] IDIOMAS = new String[] { "Português", "Inglês", "Esperanto", "Romeno" };
     private String id;
     private String nome;
     private final String genero;
@@ -35,10 +36,10 @@ public abstract class Midia {
             this.nome = nome;
         }
     }
-    
-	public String getIdioma() {
-		return idioma;
-	}  
+
+    public String getIdioma() {
+        return idioma;
+    }
 
     public String getId() {
         return id;
@@ -60,6 +61,10 @@ public abstract class Midia {
         return avaliacoes;
     }
 
+    public int qtdAvaliacoes() {
+        return this.avaliacoes.size();
+    }
+
     // MÉTODOS
 
     /**
@@ -69,16 +74,18 @@ public abstract class Midia {
         this.audiencia++;
     }
 
-
     /**
-     * Verifica se, na lista de avaliações, já existe uma valiação feita pelo mesmo cliente anteriormente. Caso não
-     * exista, instancia uma nova avaliação contendo cliente avaliador, nota e comentário recebidos pela função que a
-     * chamou.  Em seguida, a adiciona à lista de avaliações da mídia.
+     * Verifica se, na lista de avaliações, já existe uma valiação feita pelo mesmo
+     * cliente anteriormente. Caso não
+     * exista, instancia uma nova avaliação contendo cliente avaliador, nota e
+     * comentário recebidos pela função que a
+     * chamou. Em seguida, a adiciona à lista de avaliações da mídia.
      *
      * @param cliente    Cliente que está avaliando
      * @param nota       Nota a ser atribuída à mídia avaliada
      * @param comentario Comentário a ser atribuído na mídia avaliada
-     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia anteriormente
+     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma
+     *                               mídia anteriormente
      */
     public void criarAvaliacao(Cliente cliente, int nota, String comentario) throws IllegalStateException {
         Avaliacao avaliacao = new Avaliacao(cliente, nota, comentario);
@@ -123,7 +130,8 @@ public abstract class Midia {
      * Verifica se um cliente é profissional e permite que ele assista a mídia.
      *
      * @param cliente O cliente que deseja assistir a mídia
-     * @return true se o cliente é profissional e pode assistir à mídia, false caso contrário
+     * @return true se o cliente é profissional e pode assistir à mídia, false caso
+     *         contrário
      */
     public boolean permitirAcesso(Cliente cliente) {
         return (cliente instanceof ClienteProfissional);
@@ -136,7 +144,6 @@ public abstract class Midia {
                 "\nGênero: " + this.genero +
                 "\nIdioma: " + this.idioma +
                 "\nAvaliação média: " + this.mediaAvaliacoes() +
-                "\nComentários: " + this.comentarios()
-        );
+                "\nComentários: " + this.comentarios());
     }
 }

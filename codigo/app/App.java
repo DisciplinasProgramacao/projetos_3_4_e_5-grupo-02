@@ -9,12 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-
 public class App {
-    /*System.in implementa a interface Closable. Ver javadoc java.util.scanner -> Scanner.close*/
+    /*
+     * System.in implementa a interface Closable. Ver javadoc java.util.scanner ->
+     * Scanner.close
+     */
     public static Scanner read = new Scanner(System.in);
 
-    /*Método estático para fazer login */
+    /* Método estático para fazer login */
     public static void fazerLogin(PlataformaStreaming plat) {
         String userName, password;
 
@@ -33,7 +35,7 @@ public class App {
         }
     }
 
-    /*Método estático para cadastrar cliente */
+    /* Método estático para cadastrar cliente */
     public static void cadastrarCliente(PlataformaStreaming plat) {
         String userName, userId, userPassword;
 
@@ -56,7 +58,7 @@ public class App {
         }
     }
 
-    /*Método estático para cadastrar nova mídia */
+    /* Método estático para cadastrar nova mídia */
     public static void cadastrarMidia(PlataformaStreaming plat) {
         String midiaId, midiaName, midiaGenre, midiaIdiom, midiaRelease, midiaType;
 
@@ -103,7 +105,8 @@ public class App {
                 read.nextLine();
 
                 try {
-                    plat.adicionarSerie(Integer.valueOf(midiaId), new Serie(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, serieQtdEp));
+                    plat.adicionarSerie(Integer.valueOf(midiaId),
+                            new Serie(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, serieQtdEp));
                     System.out.println("Série cadastrada com sucesso!\n");
                 } catch (ElementoJaExisteException | NullPointerException e) {
                     System.out.println(e.getMessage());
@@ -116,7 +119,8 @@ public class App {
                 read.nextLine();
 
                 try {
-                    plat.adicionarFilme(Integer.valueOf(midiaId), new Filme(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, filmLength));
+                    plat.adicionarFilme(Integer.valueOf(midiaId),
+                            new Filme(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, filmLength));
                     System.out.print("Filme cadastrado com sucesso!\n");
                 } catch (ElementoJaExisteException | NullPointerException e) {
                     System.out.println(e.getMessage());
@@ -125,7 +129,7 @@ public class App {
         }
     }
 
-    /*Método estático para assistir midia */
+    /* Método estático para assistir midia */
     public static void assistirSerie(PlataformaStreaming plat) {
         Scanner scan = new Scanner(System.in);
 
@@ -136,19 +140,18 @@ public class App {
         if (plat.getSeries().containsKey(Integer.parseInt(id))) {
             plat.getClienteAtual().registrarAudiencia(plat.getSeries().get(Integer.parseInt(id)));
             System.out.println("A série " + plat.getSeries().get(Integer.parseInt(id)).getNome() + " foi assistida!");
-        }
-        else {
+        } else {
             System.out.println("Não foi possível encontrar a série de id " + id);
         }
 
     }
 
-    /*Método estático para ver audiencia de uma mídia */
+    /* Método estático para ver audiencia de uma mídia */
     public static void verAudiencia(PlataformaStreaming plat) {
 
     }
 
-    /*Método estático para exibir midias para ver */
+    /* Método estático para exibir midias para ver */
     public static void midiasParaAssistir(PlataformaStreaming plat) {
         Lista<Serie> listaParaVer = plat.getClienteAtual().getListaParaVer();
 
@@ -161,7 +164,7 @@ public class App {
         }
     }
 
-    /*Método estático para exibir todas as midias assistidas pelo cliente atual*/
+    /* Método estático para exibir todas as midias assistidas pelo cliente atual */
     public static void midiasAssistidas(PlataformaStreaming plat) {
         Lista<Serie> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
 
@@ -197,7 +200,8 @@ public class App {
 
         switch (Integer.parseInt(op)) {
             case 1:
-                System.out.print("Gêneros disponíveis: Comédia, Ação, Terror, Drama, Romance, Aventura, Animação, Suspense\n");
+                System.out.print(
+                        "Gêneros disponíveis: Comédia, Ação, Terror, Drama, Romance, Aventura, Animação, Suspense\n");
                 System.out.println("Digite um gênero para buscar: ");
                 String genero = scan.nextLine();
                 arrayFiltradas = plat.filtrarPorGenero(genero).allElements(arrayFiltradas);
@@ -211,7 +215,8 @@ public class App {
             case 3:
                 System.out.println("Digite uma quantidade de episódios para buscar: ");
                 String qtdEpisodios = scan.nextLine();
-                arrayFiltradas = plat.filtrarPorQtdEpisodios(Integer.parseInt(qtdEpisodios)).allElements(arrayFiltradas);
+                arrayFiltradas = plat.filtrarPorQtdEpisodios(Integer.parseInt(qtdEpisodios))
+                        .allElements(arrayFiltradas);
                 break;
             default:
                 System.out.println("A opção escolhida é inválida");
@@ -225,7 +230,7 @@ public class App {
         }
 
     }
-    
+
     public static void avaliarMidia(PlataformaStreaming plat) {
         Scanner scan = new Scanner(System.in);
         System.out.println("\n---------- Avaliar mídia ----------");
@@ -244,13 +249,15 @@ public class App {
                 System.out.println("Insira um comentário: ");
                 String comentario = scan.nextLine();
 
-                plat.getClienteAtual().avaliarMidia(plat.getSeries().get(Integer.parseInt(idMidia)), Integer.parseInt(nota), comentario);
+                plat.getClienteAtual().avaliarMidia(plat.getSeries().get(Integer.parseInt(idMidia)),
+                        Integer.parseInt(nota), comentario);
                 System.out.println("Mídia avaliada com sucesso!");
             } else {
                 System.out.println("Insira uma nota de 1 a 5: ");
                 String nota = scan.nextLine();
 
-                plat.getClienteAtual().avaliarMidia(plat.getSeries().get(Integer.parseInt(idMidia)), Integer.parseInt(nota));
+                plat.getClienteAtual().avaliarMidia(plat.getSeries().get(Integer.parseInt(idMidia)),
+                        Integer.parseInt(nota));
                 System.out.println("Mídia avaliada com sucesso!");
             }
         } else {
@@ -259,12 +266,12 @@ public class App {
     }
 
     public static void main(String[] args) {
-        /*Variaveis */
+        /* Variaveis */
         Cliente clientePadrao = new Cliente("John Doe", "Jd123", "psswd456");
         PlataformaStreaming plataform = new PlataformaStreaming("Xam OBH", clientePadrao);
         int option = 0;
 
-        /*Carregar dados */
+        /* Carregar dados */
         try {
             plataform.carregarClientes();
             plataform.carregarFilmes();
@@ -281,7 +288,7 @@ public class App {
             System.out.printf("Usuário logado: %s\n", plataform.getClienteAtual().getNomeUsuario());
             System.out.print("""
                     \nEscolha uma operação:
-                    \n--- Gerenciar Clientes ---
+                    \n--- Gerenciar Clientes ---1
                     1. Fazer login com outro usuário
                     2. Cadastrar novo cliente
                     \n--- Gerenciar Mídias ---

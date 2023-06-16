@@ -1,3 +1,25 @@
+# Prioridades e pendências
+
+| Requisito                                                                                               |     Tipo      | Implementado |           Responsavel           | Tester              | Passou no Teste? | Funciona no App? |
+| :------------------------------------------------------------------------------------------------------ | :-----------: | :----------: | :-----------------------------: | ------------------- | :--------------: | :--------------: |
+| Garantir a robustez do sistema principal.                                                               | Implementação |     Não      |             Andre               |                     |                  |                  |
+| Testar tudo no app e completar menus.                                                                   | Implementação |     Não      |             Andre               |                     |                  |                  |
+| Adicionar série na lista para assistir (pelo nome)                                                      | Implementação |     Não      |             Andre               |                     |                  |                  |
+| Adicionar série nas lista de assistidas (pelo nome)                                                     | Implementação |     Não      |             Andre               |                     |                  |                  |
+| Procurar e tentar melhorar problemas de modularidade/polimorfismo:<br> - situações com get de get de get (getCliente().getAssistidas().get(x))<br> - situações que quebram LSP ou OCP (tipicamente, instanceof ou métodos com nomes diferentes entre classe mãe e filhas. <br> - construtores sem validação.                                  | Implementação |     Não      |             Yan                 |                     |                  |                  |
+| Pause no main antes de chamar o menu novamente                                                          | Implementação |     Não      |             Lott                |                     |       Sim        |                  |
+| Buscar mídia por nome na lista geral                                                                    | Implementação |     Não      |             Lott                |                   |       Sim        |                  |
+| Cliente profissional e lançamentos                                                                      | Implementação |     Não      |           Gustavo               |                     |                  |                  |
+| Quais são as 10 mídias de melhor avaliação, com pelo menos 100 avaliações, em ordem decrescente;        | Implementação |     Não      |           Gustavo               |                     |                  |                  |
+| Quais são as 10 mídias com mais visualizações, em ordem decrescente;                                    | Implementação |     Não      |           Gustavo               |                     |                  |                  |
+| Estes mesmos dois últimos relatórios, porém com as mídias separadas por gênero.                         | Implementação |     Não      |           Gustavo               |                     |                  |                  |
+| Conferir registro de audiência                                                                          | Implementação |     Não      |           Carlos                |                     |                  |                  |
+| Conferir média de notas da mídia                                                                        | Implementação |     Não      |           Carlos                |                     |                  |                  |
+! Qual cliente assistiu mais mídias, e quantas mídias;                                                    | Implementação |     Não      |           Carlos                |                     |                  |                  |
+| Qual a porcentagem dos clientes com pelo menos 15 avaliações;                                           | Implementação |     Não      |           Carlos                |                     |                  |                  |
+
+## Backlog antigo
+
 | Requisito                                                                                               |     Tipo      | Implementado |           Responsavel           | Tester              | Passou no Teste? | Funciona no App? |
 | :------------------------------------------------------------------------------------------------------ | :-----------: | :----------: | :-----------------------------: | ------------------- | :--------------: | :--------------: |
 | Classe Cliente                                                                                          | Implementação |     Sim      |     Carlos, Leticia, Andre      | Leticia, Andre, Yan |       Sim        |                  |
@@ -13,7 +35,6 @@
 | Protótipo do sistema cobrindo os requisitos;                                                            | Implementação |     Sim      |             Leticia             |                     |                  |                  |
 | Salvar dados de clientes, filmes e séries em arquivo;                                                   | Implementação |     Sim      |             Leticia             |                     |                  |                  |
 | Clientes podem ser regulares ou especialistas, e estes últimos podem adicionar comentários à avaliação; | Implementação |     Sim      |             Leticia             |                     |                  |                  |
-| Garantir a robustez do sistema principal.                                                               | Implementação |     Não      |                                 |                     |                  |                  |
 | Qual cliente assistiu mais mídias, e quantas mídias;                                                    | Implementação |     Não      |                                 |                     |                  |                  |
 | Qual cliente tem mais avaliações, e quantas avaliações;                                                 | Implementação |     Sim      |              Andre              |                     |                  |                  |
 | Qual a porcentagem dos clientes com pelo menos 15 avaliações;                                           | Implementação |     Não      |                                 |                     |                  |                  |

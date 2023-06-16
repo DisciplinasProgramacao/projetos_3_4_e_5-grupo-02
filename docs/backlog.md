@@ -1,5 +1,7 @@
 # Prioridades e pendências
 
+## **Importante e muito grave:** Estão criando código à toa porque não estão usando modularidade, por exemplo, um método para assistirSerie e outro para assistirFilme. Isso quebra o OCP. Procurem por isso nas classes. Também estão com gets em excesso. O app, por exemplo, não tem que dar get de nada. Ele só pede para a plataforma.
+
 | Requisito                                                                                               |     Tipo      | Implementado |           Responsavel           | Tester              | Passou no Teste? | Funciona no App? |
 | :------------------------------------------------------------------------------------------------------ | :-----------: | :----------: | :-----------------------------: | ------------------- | :--------------: | :--------------: |
 | Garantir a robustez do sistema principal.                                                               | Implementação |     Não      |             Andre               |                     |                  |                  |

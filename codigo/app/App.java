@@ -505,6 +505,8 @@ public class App {
      */
     public static void avaliarMidia(PlataformaStreaming plat) {
         Scanner scan = new Scanner(System.in);
+        Lista<Midia> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
+
         System.out.println("\n---------- Avaliar mídia ----------");
 
         System.out.println("Midias assistidas:");
@@ -513,7 +515,8 @@ public class App {
         System.out.println("\nDigite o id da mídia que você deseja avaliar:");
         String idMidia = scan.nextLine();
 
-        if (plat.getMidiasMap().containsKey(Integer.parseInt(idMidia))) {
+        if (plat.getMidiasMap().containsKey(Integer.parseInt(idMidia))
+                && listaJaVistas.contains(plat.findMidiaById(Integer.parseInt(idMidia)))) {
 
             System.out.println("Insira uma nota de 1 a 5: ");
             String nota = scan.nextLine();
@@ -537,7 +540,7 @@ public class App {
             }
 
         } else {
-            System.out.println("Não foi possível encontrar mídia de id " + idMidia);
+            System.out.println("Não foi possível encontrar a mídia de id " + idMidia);
         }
     }
 

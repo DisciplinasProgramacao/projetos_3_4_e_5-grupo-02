@@ -1,10 +1,9 @@
 package business.interfaces;
 
-import business.Cliente;
-import business.Lista;
-import business.Midia;
-import business.Serie;
-import business.exceptions.ElementoJaExisteException;
+import business.entidades.Cliente;
+import business.entidades.Midia;
+import business.entidades.fracas.Serie;
+import utils.Lista;
 
 public interface ICliente {
 

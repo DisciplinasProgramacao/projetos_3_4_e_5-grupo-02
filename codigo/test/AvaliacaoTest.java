@@ -3,6 +3,9 @@ package test;
 import org.junit.Test;
 
 import business.*;
+import business.entidades.Avaliacao;
+import business.entidades.Cliente;
+import business.entidades.fracas.Serie;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;

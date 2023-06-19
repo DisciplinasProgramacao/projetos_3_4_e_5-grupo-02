@@ -1,6 +1,8 @@
-package business;
+package business.entidades.fracas;
 
 import java.util.Date;
+
+import business.entidades.Midia;
 
 public class Filme extends Midia {
 
@@ -26,5 +28,5 @@ public class Filme extends Midia {
     @Override
     public String toString(){
         return (super.toString() + "\nDuração: " + this.duracao + " segundos");
-    }   
+    }
 }

@@ -9,6 +9,9 @@ import static org.junit.Assert.assertThrows;
 import java.util.Date;
 
 import business.*;
+import business.entidades.Cliente;
+import business.entidades.fracas.ClienteEspecialista;
+import business.entidades.fracas.Serie;
 
 public class ClienteEspecialistaTest {
 

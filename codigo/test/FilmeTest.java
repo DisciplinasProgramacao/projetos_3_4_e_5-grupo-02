@@ -7,9 +7,9 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import business.Avaliacao;
-import business.Cliente;
-import business.Filme;
+import business.entidades.Avaliacao;
+import business.entidades.Cliente;
+import business.entidades.fracas.Filme;
 
 class FilmeTest {
 

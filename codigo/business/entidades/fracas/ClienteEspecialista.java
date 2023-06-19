@@ -1,6 +1,9 @@
-package business;
+package business.entidades.fracas;
 
+import business.entidades.Cliente;
+import business.entidades.Midia;
 import business.interfaces.ICliente;
+import utils.Lista;
 
 public class ClienteEspecialista implements ICliente {
 

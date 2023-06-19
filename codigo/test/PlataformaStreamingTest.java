@@ -7,10 +7,10 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import business.Cliente;
-import business.Filme;
 import business.PlataformaStreaming;
-import business.Serie;
+import business.entidades.Cliente;
+import business.entidades.fracas.Filme;
+import business.entidades.fracas.Serie;
 import business.exceptions.ElementoJaExisteException;
 import business.exceptions.LoginInvalidoException;
 

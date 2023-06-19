@@ -1,4 +1,4 @@
-package business;
+package business.entidades;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,8 +8,7 @@ import java.util.OptionalDouble;
 public abstract class Midia {
 
     // ATRIBUTOS
-    public static final String[] GENEROS = new String[] { "Comédia", "Ação", "Terror", "Drama", "Romance", "Aventura",
-            "Animação", "Suspense" };
+    public static final String[] GENEROS = new String[] { "Comédia", "Ação", "Terror", "Drama", "Romance", "Aventura", "Animação", "Suspense" };
     public static final String[] IDIOMAS = new String[] { "Português", "Inglês", "Esperanto", "Romeno" };
     private String id;
     private String nome;
@@ -18,7 +17,7 @@ public abstract class Midia {
     private final Date lancamento;
     private int audiencia;
     private final List<Avaliacao> avaliacoes;
-
+    
     // CONSTRUTORES
     public Midia(String id, String nome, String genero, String idioma, Date lancamento) {
         this.id = id;
@@ -35,6 +34,10 @@ public abstract class Midia {
         if (nome.length() > 0) {
             this.nome = nome;
         }
+    }
+    
+    public int getAudiencia() {
+    	return this.audiencia;
     }
 
     public String getIdioma() {
@@ -133,10 +136,10 @@ public abstract class Midia {
      * @return true se o cliente é profissional e pode assistir à mídia, false caso
      *         contrário
      */
-    public boolean permitirAcesso(Cliente cliente) {
-        return (cliente instanceof ClienteProfissional);
-    }
-
+//    public boolean permitirAcesso(Cliente cliente) {
+//        return (cliente instanceof ClienteProfissional);
+//    }
+    
     @Override
     public String toString() {
         return ("Nome: " + this.nome +

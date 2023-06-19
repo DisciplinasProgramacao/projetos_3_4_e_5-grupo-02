@@ -1,4 +1,4 @@
-package business;
+package business.entidades;
 
 public class Avaliacao {
 	// ATRIBUTOS

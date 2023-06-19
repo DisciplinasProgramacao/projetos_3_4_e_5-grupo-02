@@ -1,6 +1,8 @@
-package business;
+package business.entidades.fracas;
 
 import java.util.Date;
+
+import business.entidades.Midia;
 
 public class Serie extends Midia {
 
@@ -29,6 +31,5 @@ public class Serie extends Midia {
     public String toString(){
         return (super.toString() + "\nQtd de eps.: " + this.quantidadeEpisodios);
     }
-
 }
 

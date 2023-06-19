@@ -1,4 +1,4 @@
-package business;
+package utils;
 import java.util.LinkedList;
 /** 
  * MIT License
@@ -44,6 +44,10 @@ public class Lista<T> {
     public boolean add(T newElement) {
         return this.data.add(newElement);
     }
+    
+    public T get(int i) {
+    	return this.data.get(i);
+    }
 
     /**
      * Retorna, em um vetor/array, todos os elementos da lista. O vetor passado
@@ -54,6 +58,10 @@ public class Lista<T> {
     public T[] allElements(T[] array) {
         T[] allData = this.data.toArray(array);
         return allData;
+    }
+    
+    public boolean contains(T element) {
+    	return this.data.contains(element);
     }
 
     /**

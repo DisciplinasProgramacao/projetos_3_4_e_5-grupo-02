@@ -1,14 +1,18 @@
-package business;
+package business.entidades;
 
+import business.entidades.fracas.ClienteEspecialista;
+import business.entidades.fracas.Serie;
+import business.exceptions.MidiaNaoEncontradaException;
 import business.interfaces.*;
+import utils.Lista;
 
 public class Cliente {
     // ATRIBUTOS
     private String nomeDeUsuario;
     private String id;
     private String senha;
-    private Lista<Serie> listaParaVer;
-    private Lista<Serie> listaJaVistas;
+    private Lista<Midia> listaParaVer;
+    private Lista<Midia> listaJaVistas;
     public ICliente modoAvaliacao;
 
 
@@ -17,8 +21,8 @@ public class Cliente {
         this.nomeDeUsuario = nomeDeUsuario;
         this.id = id;
         this.senha = senha;
-        this.listaParaVer = new Lista<Serie>();
-        this.listaJaVistas = new Lista<Serie>();
+        this.listaParaVer = new Lista<Midia>();
+        this.listaJaVistas = new Lista<Midia>();
         this.modoAvaliacao = null;
     }
 
@@ -35,11 +39,11 @@ public class Cliente {
         return this.senha;
     }
 
-    public Lista<Serie> getListaParaVer() {
+    public Lista<Midia> getListaParaVer() {
         return listaParaVer;
     }
 
-    public Lista<Serie> getListaJaVistas() {
+    public Lista<Midia> getListaJaVistas() {
         return listaJaVistas;
     }
 
@@ -56,11 +60,11 @@ public class Cliente {
      *
      * @param nomeSerie Nome da série a ser adicionada
      */
-    public void adicionarNaLista(Serie nomeSerie) {
-        Serie[] listaJaVistasArray = new Serie[listaParaVer.size()];
+    public void adicionarNaListaParaVer(Midia nomeSerie) {
+        Midia[] listaJaVistasArray = new Midia[listaParaVer.size()];
         listaJaVistasArray = this.listaParaVer.allElements(listaJaVistasArray);
 
-        for (Serie serieDaLista : listaJaVistasArray) {
+        for (Midia serieDaLista : listaJaVistasArray) {
             if (serieDaLista.equals(nomeSerie)) {
                 return;
             }
@@ -75,12 +79,12 @@ public class Cliente {
      *
      * @param nomeSerie Nome da série a ser removida
      */
-    public void retirarDaLista(String nomeSerie) {
-        Serie[] series = new Serie[listaParaVer.size()];
-        series = listaParaVer.allElements(series);
+    public void retirarDaListaParaVer(String nomeMidia) {
+        Midia[] midias = new Midia[listaParaVer.size()];
+        midias = listaParaVer.allElements(midias);
 
-        for (int i = 0; i < series.length; i++) {
-            if (series[i].getNome().equals(nomeSerie))
+        for (int i = 0; i < midias.length; i++) {
+            if (midias[i].getNome().equals(midias))
                 listaParaVer.remove(i);
         }
     }
@@ -93,19 +97,19 @@ public class Cliente {
      * @param genero gênero selecionado
      * @return lista filtrada por gênero das séries encontradas
      */
-    public Lista<Serie> filtrarPorGenero(String genero) {
-        Lista<Serie> seriesFiltradas = new Lista<Serie>();
+    public Lista<Midia> filtrarPorGenero(String genero) {
+        Lista<Midia> midiasFiltradas = new Lista<Midia>();
 
-        Serie[] series = new Serie[listaParaVer.size()];
-        series = listaParaVer.allElements(series);
+        Midia[] midias = new Midia[listaParaVer.size()];
+        midias = listaParaVer.allElements(midias);
 
-        for (Serie serie : series) {
-            if (serie.getGenero().equals(genero)) {
-                seriesFiltradas.add(serie);
+        for (Midia midia : midias) {
+            if (midia.getGenero().equals(genero)) {
+            	midiasFiltradas.add(midia);
             }
         }
 
-        return seriesFiltradas;
+        return midiasFiltradas;
     }
 
     /**
@@ -116,19 +120,19 @@ public class Cliente {
      * @param idioma idioma selecionado.
      * @return lista filtrada por idioma das séries encontradas
      */
-    public Lista<Serie> filtrarPorIdioma(String idioma) {
-        Lista<Serie> seriesFiltradas = new Lista<Serie>();
+    public Lista<Midia> filtrarPorIdioma(String idioma) {
+        Lista<Midia> midiasFiltradas = new Lista<Midia>();
 
-        Serie[] series = new Serie[listaParaVer.size()];
-        series = listaParaVer.allElements(series);
+        Midia[] midias = new Midia[listaParaVer.size()];
+        midias = listaParaVer.allElements(midias);
 
-        for (Serie serie : series) {
-            if (serie.getIdioma().equals(idioma)) {
-                seriesFiltradas.add(serie);
+        for (Midia midia : midias) {
+            if (midia.getIdioma().equals(idioma)) {
+            	midiasFiltradas.add(midia);
             }
         }
 
-        return seriesFiltradas;
+        return midiasFiltradas;
     }
 
     /**
@@ -139,23 +143,17 @@ public class Cliente {
      * @param quantEpisodios quantidade de episódios selecionada
      * @return lista filtrada por qtd. de episódios das séries encontradas
      */
-    public Lista<Serie> filtrarPorQtdEpisodios(int quantEpisodios) {
-        Lista<Serie> filtrada = new Lista<Serie>();
+    public Lista<Midia> filtrarPorQtdEpisodios(int quantEpisodios) {
+        Lista<Midia> filtrada = new Lista<Midia>();
 
-        Serie[] series = new Serie[listaParaVer.size()];
-        series = listaParaVer.allElements(series);
+        Midia[] midias = new Midia[listaParaVer.size()];
+        midias = listaParaVer.allElements(midias);
 
-        for (Serie serie : series) {
-            if (serie.getQuantidadeEpisodios() == quantEpisodios) {
-                filtrada.add(serie);
-            }
-        }
-
-        series = listaJaVistas.allElements(series);
-
-        for (Serie serie : series) {
-            if (serie.getQuantidadeEpisodios() == quantEpisodios) {
-                filtrada.add(serie);
+        for (Midia serie : midias) {
+        	if (serie instanceof Serie) {
+        		if (((Serie) serie).getQuantidadeEpisodios() == quantEpisodios) {
+                	filtrada.add((Serie) serie);
+            	}
             }
         }
 
@@ -179,20 +177,20 @@ public class Cliente {
      * Imprime na tela as séries existentes na lista de séries para ver
      */
     public void imprimirListaParaVer() {
-        Serie[] listaImprimir = new Serie[listaParaVer.size()];
+        Midia[] listaImprimir = new Midia[listaParaVer.size()];
         listaImprimir = listaParaVer.allElements(listaImprimir);
 
-        for (Serie serie : listaImprimir) {
-            System.out.println(serie);
+        for (Midia midia : listaImprimir) {
+            System.out.println(midia);
         }
     }
 
     public void imprimirListaJaVisto() {
-        Serie[] listaAssistidos = new Serie[listaJaVistas.size()];
+    	Midia[] listaAssistidos = new Midia[listaJaVistas.size()];
         listaAssistidos = listaJaVistas.allElements(listaAssistidos);
 
-        for (Serie serie : listaAssistidos) {
-            System.out.printf("%s\n", serie.getNome());
+        for (Midia midia : listaAssistidos) {
+            System.out.printf("%s\n", midia.getNome());
         }
     }
 
@@ -203,19 +201,30 @@ public class Cliente {
      *
      * @param serie série selecionada
      */
-    public void registrarAudiencia(Serie serie) {
+    public void registrarAudiencia(Midia midia) throws MidiaNaoEncontradaException {
         this.modoAvaliacao = categorizarCliente();
 
-        Serie[] buscaJaVistas = new Serie[listaJaVistas.size()];
+        Midia[] buscaJaVistas = new Midia[listaJaVistas.size()];
         buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
-
-        for (Serie buscada : buscaJaVistas) {
-            if (buscada.equals(serie))
-                return;
+        
+        if (midia == null) {
+        	throw new MidiaNaoEncontradaException();
         }
+        
+        // Se está na lista de "jaVistas" é porque o cliente ja viu e não pode contabilizar mais
+        // uma audiencia
+        if (listaJaVistas.contains(midia)) {
+        	return;
+        }
+        
+//        for (Serie buscada : buscaJaVistas) {
+//            if (buscada.equals(serie))
+//                return;
+//        }
 
-        listaJaVistas.add(serie);
-        serie.registrarAudiencia();
+        listaJaVistas.add(midia);
+        
+        midia.registrarAudiencia();
     }
 
     /**

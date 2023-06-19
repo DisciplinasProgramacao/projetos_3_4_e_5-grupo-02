@@ -1,6 +1,9 @@
 package test;
 
 import business.*;
+import business.entidades.Cliente;
+import business.entidades.fracas.Serie;
+import utils.Lista;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

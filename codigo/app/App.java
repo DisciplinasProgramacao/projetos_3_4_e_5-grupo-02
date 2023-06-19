@@ -378,21 +378,25 @@ public class App {
 
         if (plat.getMidiasMap().containsKey(Integer.parseInt(idMidia))) {
 
-            if (plat.getClienteAtual().getModoAvaliacao() instanceof ClienteEspecialista) {
-                System.out.println("Insira uma nota de 1 a 5: ");
-                String nota = scan.nextLine();
-                System.out.println("Insira um comentário: ");
-                String comentario = scan.nextLine();
+            System.out.println("Insira uma nota de 1 a 5: ");
+            String nota = scan.nextLine();
 
-                plat.getClienteAtual().avaliarMidia(plat.findMidiaById(Integer.parseInt(idMidia)), Integer.parseInt(nota), comentario);
-                System.out.println("Mídia avaliada com sucesso!");
-            } else {
-                System.out.println("Insira uma nota de 1 a 5: ");
-                String nota = scan.nextLine();
+            try {
+                if (plat.getClienteAtual().getModoAvaliacao() != null) {
+                    System.out.println("Insira um comentário: ");
+                    String comentario = scan.nextLine();
 
-                plat.getClienteAtual().avaliarMidia(plat.findMidiaById(Integer.parseInt(idMidia)), Integer.parseInt(nota));
+                    plat.getClienteAtual().avaliarMidia(plat.findMidiaById(Integer.parseInt(idMidia)), Integer.parseInt(nota), comentario);
+                } else {
+                    plat.getClienteAtual().avaliarMidia(plat.findMidiaById(Integer.parseInt(idMidia)), Integer.parseInt(nota));
+                }
+
                 System.out.println("Mídia avaliada com sucesso!");
+
+            } catch (IllegalStateException e) {
+                System.out.println("Erro: " + e.getMessage());
             }
+
         } else {
             System.out.println("Não foi possível encontrar mídia de id " + idMidia);
         }

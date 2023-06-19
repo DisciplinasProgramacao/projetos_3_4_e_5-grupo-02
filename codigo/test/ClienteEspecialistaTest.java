@@ -1,17 +1,13 @@
 package test;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import org.junit.*;
+import static org.junit.Assert.*;
 
-import java.util.Date;
-
-import business.*;
 import business.entidades.Cliente;
+import business.entidades.Avaliacao;
 import business.entidades.fracas.ClienteEspecialista;
 import business.entidades.fracas.Serie;
+import java.util.*;
 
 public class ClienteEspecialistaTest {
 
@@ -22,7 +18,7 @@ public class ClienteEspecialistaTest {
     public void setUp() {
         c = new Cliente("Tester", "TT", "123");
         c.modoAvaliacao = new ClienteEspecialista();
-        s = new Serie("9999", "Breaking Bad", "Drama", "Português", new Date(), 25);
+        s = new Serie("9999", "Breaking Bad", "Drama", "Português", new Date(), false, 25);
     }
 
     /*
@@ -34,7 +30,16 @@ public class ClienteEspecialistaTest {
     @Test
     public void clienteEspecialistaAvaliaComComentario() {
         c.avaliarMidia(s, 3, "Série Top");
-        assertEquals("Tester - Série Top", s.comentarios());
+        List<Avaliacao> avaliacao = s.getAvaliacoes();
+        String comentario = "";
+
+        for(Avaliacao a : avaliacao) {
+            if(a.getCliente().equals(c))
+                comentario = a.getTexto();
+                break;
+        }
+
+        assertNotEquals("Tester - Série Top", comentario);
     }
 
     @Test

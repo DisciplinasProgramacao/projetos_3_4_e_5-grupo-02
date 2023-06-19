@@ -1,12 +1,10 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Date;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
 import business.PlataformaStreaming;
 import business.entidades.Cliente;
 import business.entidades.fracas.Filme;

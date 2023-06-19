@@ -55,6 +55,7 @@ public class App {
                     9. Buscar mídia por nome
                     10. Ver catálogo completo
                     11. Adicionar série na sua lista para assistir
+                    12. Adicionar série na sua lista dos assistidos
                     \n--- Gerenciar avaliações ---
                     13. Avaliar mídia
                     14. Ver minhas avaliações

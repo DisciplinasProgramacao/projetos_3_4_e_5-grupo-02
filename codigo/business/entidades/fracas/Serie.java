@@ -1,8 +1,7 @@
 package business.entidades.fracas;
+import business.entidades.*;
 
 import java.util.Date;
-
-import business.entidades.Midia;
 
 public class Serie extends Midia {
 
@@ -21,12 +20,20 @@ public class Serie extends Midia {
     }
 
     public void setQuantidadeEpisodios(int quantidadeEpisodios){
-        if(quantidadeEpisodios > 0){
+        if (quantidadeEpisodios > 0)
             this.quantidadeEpisodios = quantidadeEpisodios;
-        }
+        else
+            throw new IllegalArgumentException("A quantidade de episódios da série deve ser superior a 0");
     }
 
     // MÉTODOS
+
+    /**
+     * Extende o método toString() da classe Midia a fim de modificar o resultado da impressão tela ao se passar
+     * um objeto da classe Serie como parâmetro do método print().
+     *
+     * @return string atualizada com o conteúdo de toString() de mídia e quantidade de episódios da série
+     */
     @Override
     public String toString(){
         return (super.toString() + "\nQtd de eps.: " + this.quantidadeEpisodios);

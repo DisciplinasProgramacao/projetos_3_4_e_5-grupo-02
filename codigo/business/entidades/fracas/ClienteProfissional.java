@@ -10,7 +10,4 @@ public class ClienteProfissional extends Cliente {
 		super(nomeDeUsuario, id, senha);
 		this.profissao = profissao;
 	}
-
-	
-
 }

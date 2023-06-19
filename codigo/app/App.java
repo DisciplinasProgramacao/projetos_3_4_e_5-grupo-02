@@ -4,12 +4,12 @@ import business.*;
 import business.entidades.*;
 import business.entidades.fracas.*;
 import business.exceptions.*;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import utils.Lista;
 
 public class App {
@@ -17,18 +17,18 @@ public class App {
      * System.in implementa a interface Closable. Ver javadoc java.util.scanner -> Scanner.close
      */
     public static Scanner read = new Scanner(System.in);
-    
+
     public static void main(String[] args) {
-        /* Variaveis */
+        /* Variáveis */
         Cliente clientePadrao = new Cliente("Lei108163", "Leia D V Brum", "LAus15911");
         PlataformaStreaming ps = new PlataformaStreaming("Xam OBH");
-        
+
         try {
-			ps.login(clientePadrao.getNomeUsuario(), clientePadrao.getSenha());
-		} catch (LoginInvalidoException e) {
-			e.printStackTrace();
-		}
-        
+            ps.login(clientePadrao.getNomeUsuario(), clientePadrao.getSenha());
+        } catch (LoginInvalidoException e) {
+            e.printStackTrace();
+        }
+
         int option = 0;
 
         while (option != 99) {
@@ -102,7 +102,7 @@ public class App {
                     System.out.print("Opção 98 selecionada\n");
                     break;
                 case 99:
-                	ps.salvar();
+                    ps.salvar();
                     break;
                 default:
                     System.out.printf("A opção %d é inválida\n", option);
@@ -121,6 +121,7 @@ public class App {
 
     /**
      * Método estático para fazer login com um usuário existente na plataforma
+     *
      * @param plat Plataforma streaming
      */
     public static void fazerLogin(PlataformaStreaming plat) {
@@ -143,6 +144,7 @@ public class App {
 
     /**
      * Método estático para cadastrar novo cliente à plataforma
+     *
      * @param plat Plataforma streaming
      */
     public static void cadastrarCliente(PlataformaStreaming plat) {
@@ -169,6 +171,7 @@ public class App {
 
     /**
      * Método estático para cadastrar uma nova mídia ao catálogo
+     *
      * @param plat Plataforma streaming
      */
     public static void cadastrarMidia(PlataformaStreaming plat) {
@@ -196,7 +199,7 @@ public class App {
         Date midiaReleaseDate = null;
 
         try {
-        	midiaReleaseDate = new SimpleDateFormat("dd-MM-yyyy").parse(midiaRelease);
+            midiaReleaseDate = new SimpleDateFormat("dd-MM-yyyy").parse(midiaRelease);
         } catch (ParseException e) {
             System.out.print("Formato de data invalido! Utilize o formato dd-MM-yyyy\n");
         }
@@ -211,7 +214,7 @@ public class App {
 
         switch (midiaType) {
             case "A":
-            	System.out.println("Série selecionada!");
+                System.out.println("Série selecionada!");
                 System.out.println("Digite a quantidade de episodios existentes: ");
                 int serieQtdEp = read.nextInt();
                 read.nextLine();
@@ -225,7 +228,7 @@ public class App {
                 break;
 
             case "B":
-            	System.out.println("Filme selecionado!");
+                System.out.println("Filme selecionado!");
                 System.out.print("Duração do filme (min): ");
                 int filmLength = read.nextInt();
                 read.nextLine();
@@ -239,13 +242,14 @@ public class App {
                 break;
 
             default:
-            	System.out.println("Opção invalida");
-            	break;
+                System.out.println("Opção invalida");
+                break;
         }
     }
 
     /**
      * Método estático para assistir uma mídia disponível no catálogo
+     *
      * @param plat Plataforma streaming
      */
     public static void assistirMidia(PlataformaStreaming plat) {
@@ -256,9 +260,9 @@ public class App {
         String id = scan.nextLine();
 
         try {
-        	plat.getClienteAtual().registrarAudiencia(plat.findMidiaById(Integer.parseInt(id)));
+            plat.getClienteAtual().registrarAudiencia(plat.findMidiaById(Integer.parseInt(id)));
         } catch (MidiaNaoEncontradaException e) {
-        	System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
 
         System.out.println("A mídia " + plat.findMidiaById(Integer.parseInt(id)).getNome() + " foi assistida!");
@@ -266,10 +270,11 @@ public class App {
 
     /**
      * Método estático para imprimir a audiência de uma mídia
+     *
      * @param plat Plataforma streaming
      */
     public static void verAudiencia(PlataformaStreaming plat) {
-    	Scanner scan = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
 
         System.out.println("\n---------- Ver Audiência ----------");
         System.out.println("Digite o id da mídia que deseja ver a audiência: ");
@@ -278,14 +283,15 @@ public class App {
         Midia midia = plat.findMidiaById(Integer.parseInt(id));
 
         if (midia != null) {
-        	System.out.println("Midia: " + midia.getNome() + " \nAudiência: " + midia.getAudiencia());
+            System.out.println("Midia: " + midia.getNome() + " \nAudiência: " + midia.getAudiencia());
         } else {
-        	System.out.println("Midia não encontrada");
+            System.out.println("Midia não encontrada");
         }
     }
 
     /**
      * Método estático para imprimir as mídias da lista para ver do cliente logado
+     *
      * @param plat Plataforma streaming
      */
     public static void midiasParaAssistir(PlataformaStreaming plat) {
@@ -302,6 +308,7 @@ public class App {
 
     /**
      * Método estático para exibir todas as mídias já assistidas pelo cliente logado
+     *
      * @param plat Plataforma streaming
      */
     public static void midiasAssistidas(PlataformaStreaming plat) {
@@ -318,6 +325,7 @@ public class App {
 
     /**
      * Método estático para filtrar mídias por gênero, idioma ou quantidade de episódios
+     *
      * @param plat Plataforma streaming
      */
     public static void filtrarMidias(PlataformaStreaming plat) {
@@ -360,26 +368,25 @@ public class App {
 
         System.out.println("\"---------- Resultados encontrados ----------\\n\"");
         for (int i = 0; i < arrayFiltradas.size(); i++) {
-            if (arrayFiltradas.get(i) != null)
-                System.out.println(arrayFiltradas.get(i).getNome());
+            if (arrayFiltradas.get(i) != null) System.out.println(arrayFiltradas.get(i).getNome());
         }
     }
 
     /**
      * Método estático para exibir todas as midias disponíveis no catálogo
+     *
      * @param plat Plataforma streaming
      */
     public static void imprimirMidias(PlataformaStreaming plat) {
         plat.getMidiasMap().forEach((key, value) -> {
-            if (value instanceof Filme)
-                System.out.println(value.getId() + " - " + value.getNome() + " - Filme" );
-            else if (value instanceof Serie)
-                System.out.println(value.getId() + " - " + value.getNome() + " - Série");
+            if (value instanceof Filme) System.out.println(value.getId() + " - " + value.getNome() + " - Filme");
+            else if (value instanceof Serie) System.out.println(value.getId() + " - " + value.getNome() + " - Série");
         });
     }
 
     /**
      * Método estático para pesquisar mídia por nome
+     *
      * @param plat Plataforma streaming
      */
     private static void buscarMidia(PlataformaStreaming plat) {
@@ -397,12 +404,12 @@ public class App {
             }
         });
 
-        if (!midiaEncontrada.get())
-            System.out.println("Não foi possível encontrar a mídia de nome " + searchedName);
+        if (!midiaEncontrada.get()) System.out.println("Não foi possível encontrar a mídia de nome " + searchedName);
     }
 
     /**
      * Método estático para avaliar uma mídia
+     *
      * @param plat Plataforma streaming
      */
     public static void avaliarMidia(PlataformaStreaming plat) {
@@ -443,6 +450,7 @@ public class App {
 
     /**
      * Método estático para visualizar avaliações do cliente
+     *
      * @param plat Plataforma streaming
      */
     public static void midiasAvaliadas(PlataformaStreaming plat) {

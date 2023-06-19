@@ -1,16 +1,20 @@
 package business.interfaces;
-
 import business.entidades.Cliente;
 import business.entidades.Midia;
+import business.entidades.fracas.ClienteEspecialista;
 import business.entidades.fracas.Serie;
+
 import utils.Lista;
 
 public interface ICliente {
 
-	// Atributo com a qtd de filmes assistidos
-	// Atributo com a qtd de listas
+	public static ICliente verificarCategoria(Lista<Serie> assistidas) {
+		if (assistidas.size() >= 5)
+			return new ClienteEspecialista();
+		else
+			return null;
+	}
 
-	public ICliente verificarCategoria(Lista<Serie> assistidas);	// deve ser static
 	public void avaliarMidia(Midia midia, Cliente avaliador, int nota, String comentario) throws IllegalStateException;
 
 }

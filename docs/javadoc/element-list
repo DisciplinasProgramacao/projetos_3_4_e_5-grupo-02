@@ -1,4 +1,7 @@
 app
 business
+business.entidades
+business.entidades.fracas
 business.exceptions
 business.interfaces
+utils

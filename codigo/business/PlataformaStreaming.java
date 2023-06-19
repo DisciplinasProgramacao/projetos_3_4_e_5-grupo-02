@@ -282,10 +282,11 @@ public class PlataformaStreaming {
 
     /**
      * Lê o arquivo "Audiencia.csv" e, conforme lido no arquivo, adiciona série à lista para assistir (F) ou registra
-     * audiência de série já assistida pelo cliente (A).
+     * audiência de série já assistida pelo cliente (A). Caso exista registro de audiência de uma mídia lançamento para
+     * um cliente não profissional, é capturada uma exceção IllegalStateException.
      *
      * @throws FileNotFoundException       se o arquivo não for encontrado.
-     * @throws MidiaNaoEncontradaException
+     * @throws MidiaNaoEncontradaException se não for possível encontrar no catálogo mídia com id informado.
      */
     public void carregarAudiencia() throws FileNotFoundException, MidiaNaoEncontradaException {
         String arquivo = "docs/database/Audiencia.csv";

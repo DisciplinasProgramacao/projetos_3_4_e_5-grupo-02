@@ -34,31 +34,34 @@ public class App {
         int option = 0;
 
         while (option != 99) {
-            System.out.print("\n-------------- MENU --------------\n");
+            System.out.print("\n--------------------------------------------------\n");
+            System.out.print("---------------------- MENU ----------------------\n");
             System.out.printf("Usuário logado: %s\n", ps.getClienteAtual().getNomeUsuario());
             System.out.print("""
                     \nEscolha uma operação:
                     \n--- Gerenciar Clientes ---
                     1. Fazer login com outro usuário
                     2. Cadastrar novo cliente
+                    3. Tornar-se cliente profissional
                     \n--- Gerenciar Mídias ---
-                    3. Cadastrar nova mídia
-                    4. Assistir midia
-                    5. Ver audiência de uma midia
-                    6. Ver minha lista de midias para assistir
-                    7. Ver minha lista de midias já vistas
-                    8. Filtrar minhas midias
-                    9. Buscar mídia por nome
-                    10. Ver catálogo completo
-                    11. Adicionar série na sua lista para assistir
-                    12. Adicionar série na sua lista dos assistidos
+                    4. Cadastrar nova mídia
+                    5. Assistir midia
+                    6. Ver audiência de uma midia
+                    7. Ver minha lista de midias para assistir
+                    8. Ver minha lista de midias já vistas
+                    9. Filtrar minhas midias
+                    10. Buscar mídia por nome
+                    11. Ver catálogo completo
+                    12. Adicionar série na sua lista para assistir
+                    13. Adicionar série na sua lista dos assistidos
                     \n--- Gerenciar avaliações ---
-                    13. Avaliar mídia
-                    14. Ver minhas avaliações
+                    14. Avaliar mídia
+                    15. Ver minhas avaliações
                     \n--- Relatórios ---
                     \n--- Outros ---
                     99. Salvar e sair
-                    ----------------------------------
+                    ------------------------------------------------
+                    ------------------------------------------------
                     \n""");
             System.out.print("Opção: ");
             option = read.nextInt();
@@ -73,43 +76,43 @@ public class App {
                     cadastrarCliente(ps);
                     break;
                 case 3:
-                    cadastrarMidia(ps);
+                    tornarProfissional(ps);
                     break;
                 case 4:
-                    assistirMidia(ps);
+                    cadastrarMidia(ps);
                     break;
                 case 5:
-                    verAudiencia(ps);
+                    assistirMidia(ps);
                     break;
                 case 6:
-                    midiasParaAssistir(ps);
+                    verAudiencia(ps);
                     break;
                 case 7:
-                    midiasAssistidas(ps);
+                    midiasParaAssistir(ps);
                     break;
                 case 8:
-                    filtrarMidias(ps);
+                    midiasAssistidas(ps);
                     break;
                 case 9:
-                    buscarMidia(ps);
+                    filtrarMidias(ps);
                     break;
                 case 10:
-                    imprimirMidias(ps);
+                    buscarMidia(ps);
                     break;
                 case 11:
-                    addSerieListaParaAssistir(ps);
+                    imprimirMidias(ps);
                     break;
                 case 12:
-                    addSerieListaAssistidos(ps);
+                    addSerieListaParaAssistir(ps);
                     break;
                 case 13:
-                    avaliarMidia(ps);
+                    addSerieListaAssistidos(ps);
                     break;
                 case 14:
-                    midiasAvaliadas(ps);
+                    avaliarMidia(ps);
                     break;
-                case 98:
-                    System.out.print("Opção 98 selecionada\n");
+                case 15:
+                    midiasAvaliadas(ps);
                     break;
                 case 99:
                     ps.salvar();
@@ -224,6 +227,11 @@ public class App {
         } catch (ClienteJaExisteException e) {
             System.out.print(e.getMessage());
         }
+    }
+
+    public static void tornarProfissional(PlataformaStreaming plat) {
+        plat.getClienteAtual().tornarProfissional();
+        System.out.println("Agora você tem permissão para assistir lançamentos!");
     }
 
     /**

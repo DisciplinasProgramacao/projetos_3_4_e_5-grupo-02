@@ -1,6 +1,7 @@
 package business.entidades;
 
 import business.entidades.fracas.ClienteEspecialista;
+import business.entidades.fracas.ClienteProfissional;
 import business.entidades.fracas.Serie;
 import business.exceptions.MidiaNaoEncontradaException;
 import business.interfaces.*;
@@ -143,37 +144,17 @@ public class Cliente {
         return this.listaJaVistas.size();
     }
 
-//    /**
-//     * Contabiliza audiência de uma mídia e a adiciona na lista de já vistas. Caso a mídia selecionada já esteja
-//     * presente na lista para ver, a operação não é realizada.
-//     *
-//     * @param midia mídia selecionada
-//     */
-//    public void assistirMidia(Midia midia) throws MidiaNaoEncontradaException {
-//        this.modoAvaliacao = categorizarCliente();
-//
-//        if (midia == null)
-//            throw new MidiaNaoEncontradaException();
-//
-//        Midia[] buscaJaVistas = new Midia[listaJaVistas.size()];
-//        buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
-//
-//        // Se está na lista de "jaVistas" é porque o cliente já viu e não pode contabilizar mais audiencia
-//        if (listaJaVistas.contains(midia))
-//            return;
-//
-//        if (!midia.isLancamento()) {
-//            listaJaVistas.add(midia);
-//            midia.registrarAudiencia();
-//        } else {
-//            if (getAcessoAosLancamentos() != null) {
-//                listaJaVistas.add(midia);
-//                midia.registrarAudiencia();
-//            }
-//        }
-//    }
+    public void tornarProfissional() {
+        this.acessoAosLancamentos = new ClienteProfissional();
+    }
 
-    public void assistirMidia(Midia midia) throws MidiaNaoEncontradaException {
+    /**
+     * Contabiliza a audiência de uma mídia e a adiciona na lista de já vistas.
+     * @param midia Mídia a ser assistida.
+     * @throws MidiaNaoEncontradaException caso não seja encontrada no catálogo a mídia a ser assistida.
+     * @throws IllegalStateException Caso a mídia seja um lançamento e o cliente não seja ClienteProfissional.
+     */
+    public void assistirMidia(Midia midia) throws MidiaNaoEncontradaException, IllegalStateException {
         this.modoAvaliacao = categorizarCliente();
 
         if (midia == null)

@@ -9,9 +9,9 @@ public class Serie extends Midia {
     private int quantidadeEpisodios;
 
     // CONSTRUTORES
-    public Serie(String id, String nome, String genero, String idioma, Date lancamento, int quantidadeEpisodios){
-        super(id, nome, genero, idioma, lancamento);
-        this.quantidadeEpisodios = quantidadeEpisodios;
+    public Serie(String id, String nome, String genero, String idioma, Date lancamento, boolean isLancamento, int quantidadeEpisodios){
+        super(id, nome, genero, idioma, lancamento, isLancamento);
+        setQuantidadeEpisodios(quantidadeEpisodios);
     }
 
     // GETTERS E SETTERS

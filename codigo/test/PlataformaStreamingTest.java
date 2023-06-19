@@ -36,11 +36,11 @@ class PlataformaStreamingTest {
 			System.out.println(e.getMessage());
 		}
 
-		serie = new Serie("11111", "Infinity Train", "Animação", "Inglês", new Date(), 10);
-		serie1 = new Serie("22222", "One Piece", "Animação", "Português", new Date(), 1060);
-		serie2 = new Serie("33333", "The Last of Us", "Suspense", "Português", new Date(), 9);
-		serie3 = new Serie("44444", "Brooklyn Nine-Nine", "Comédia", "Português", new Date(), 10);
-		filme = new Filme("55555", "Gato de Botas 2", "Animação", "Portugûes", new Date(), 6000);
+		serie = new Serie("11111", "Infinity Train", "Animação", "Inglês", new Date(), false, 10);
+		serie1 = new Serie("22222", "One Piece", "Animação", "Português", new Date(), false, 1060);
+		serie2 = new Serie("33333", "The Last of Us", "Suspense", "Português", new Date(), false, 9);
+		serie3 = new Serie("44444", "Brooklyn Nine-Nine", "Comédia", "Português", new Date(), false, 10);
+		filme = new Filme("55555", "Gato de Botas 2", "Animação", "Portugûes", new Date(), false, 6000);
 	}
 
 	@Test

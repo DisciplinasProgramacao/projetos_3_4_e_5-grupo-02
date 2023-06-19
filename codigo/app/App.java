@@ -237,6 +237,7 @@ public class App {
      */
     public static void cadastrarMidia(PlataformaStreaming plat) {
         String midiaId, midiaName, midiaGenre, midiaIdiom, midiaRelease, midiaType;
+        boolean isLancamento;
 
         System.out.print("---------- Cadastrar Midia ----------\n");
 
@@ -254,11 +255,27 @@ public class App {
         System.out.print("Idioma: ");
         midiaIdiom = read.nextLine();
 
-        System.out.println(
-                "Obs.: caso inserida uma data inválida em relação ao calendário, será atribuída a data mais próxima.");
+        System.out.println("Obs.: caso inserida uma data inválida em relação ao calendário, será atribuída a data mais próxima.");
         System.out.print("Data de lançamento (dd-mm-aaaa): ");
         midiaRelease = read.nextLine();
 
+        System.out.print("""
+                A mídia é regular ou lançamento? \s
+                    Digite (A) para mídia regular
+                    Digite (B) para lançamento
+                """);
+
+        midiaType = read.nextLine();
+
+        switch (midiaType) {
+            case "A":
+                isLancamento = false;
+                break;
+            case "B":
+                isLancamento = true;
+                break;
+        }
+        
         Date midiaReleaseDate = null;
 
         try {
@@ -273,7 +290,7 @@ public class App {
                     Digite (B) para Filme
                 """);
 
-        midiaType = read.nextLine();
+        midiaType = read.nextLine().toUpperCase();
 
         switch (midiaType) {
             case "A":
@@ -284,7 +301,7 @@ public class App {
 
                 try {
                     plat.adicionarMidia(Integer.valueOf(midiaId),
-                            new Serie(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, serieQtdEp));
+                            new Serie(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, false, serieQtdEp));
                     System.out.println("Série cadastrada com sucesso!\n");
                 } catch (MidiaJaExisteException | NullPointerException e) {
                     System.out.println(e.getMessage());
@@ -299,7 +316,7 @@ public class App {
 
                 try {
                     plat.adicionarMidia(Integer.valueOf(midiaId),
-                            new Filme(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, filmLength));
+                            new Filme(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, false, filmLength));
                     System.out.print("Filme cadastrado com sucesso!\n");
                 } catch (MidiaJaExisteException | NullPointerException e) {
                     System.out.println(e.getMessage());

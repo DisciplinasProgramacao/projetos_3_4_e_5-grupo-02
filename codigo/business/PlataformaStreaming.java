@@ -5,17 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import business.entidades.Avaliacao;
-import business.entidades.Cliente;
-import business.entidades.Midia;
-import business.entidades.fracas.ClienteEspecialista;
-import business.entidades.fracas.Filme;
-import business.entidades.fracas.Serie;
-import business.exceptions.ClienteJaExisteException;
-import business.exceptions.LoginInvalidoException;
-import business.exceptions.MidiaJaExisteException;
-import business.exceptions.MidiaNaoEncontradaException;
-import utils.Lista;
+import business.entidades.*;
+import business.entidades.fracas.*;
+import business.exceptions.*;
+import utils.*;
 
 public class PlataformaStreaming {
 
@@ -259,23 +252,23 @@ public class PlataformaStreaming {
                 switch (mt) {
                     case FILMES:
                         // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero,
-                        // idioma, data de lançamento e duracao (dados[3]) em segundos. Em seguida,
-                        // insere-se o novo filme no hashmap
-                        midia = new Filme(dados[0], dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
+                        // idioma, data de lançamento (dados[2]), se é lancamento (dados[3]) e duracao (dados[4])
+                        // em segundos. Em seguida, insere-se o novo filme no hashmap
+                        midia = new Filme(dados[0], dados[1], novoGenero, novoIdioma, novaData, Boolean.parseBoolean(dados[3]), Integer.parseInt(dados[4]) * 60);
                         break;
 
                     case SERIES:
                         // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e
-                        // idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios. Em
-                        // seguida, insere-se a nova série no hashmap
-                        midia = new Serie(dados[0], dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
+                        // idioma gerados aleatóriamente, novaData e qtd de episódios. Em seguida, insere-se a nova
+                        // série no hashmap
+                        midia = new Serie(dados[0], dados[1], novoGenero, novoIdioma, novaData, Boolean.parseBoolean(dados[3]), Integer.parseInt(dados[4]));
                         break;
                 }
 
                 try {
                     adicionarMidia(Integer.valueOf(dados[0]), midia);
                 } catch (NumberFormatException | NullPointerException e) {
-                    System.out.println(linha + ":" + dados);
+                    System.out.println(linha + ": " + dados);
                 } catch (MidiaJaExisteException e) {
                     System.out.println(e.getMessage());
                 }
@@ -285,113 +278,6 @@ public class PlataformaStreaming {
 
             sc.close();
         }
-    }
-
-    /**
-     * Lê o arquivo "Series.csv", ignorando a primeira linha do arquivo, instancia séries a partir das informações lidas
-     * e as adiciona à lista de séries.
-     *
-     * @throws FileNotFoundException se o arquivo não for encontrado.
-     */
-    public void carregarSeries() throws FileNotFoundException {
-        File file = new File("docs/database/Series.csv");
-        Scanner filereader = new Scanner(file);
-
-        filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
-
-        int linha = 0;
-
-        while (filereader.hasNextLine()) {
-            String[] dados = filereader.nextLine().split(";");
-
-            // Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas,
-            // como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
-            String novoGenero = Midia.GENEROS[(int) (Math.random() * (Midia.GENEROS.length))];
-            String novoIdioma = Midia.IDIOMAS[(int) (Math.random() * (Midia.IDIOMAS.length))];
-
-            // Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string
-            // não apresente formato válido, é lançada uma exceção
-            Date novaData = null;
-            try {
-                novaData = new SimpleDateFormat("dd/MM/yyyy").parse(dados[2]);
-            } catch (Exception e) {
-                System.out.println("Erro: Formato inválido na leitura da data de lançamento de série");
-            }
-
-            // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e
-            // idioma gerados aleatóriamente, novaData e uma qtd aleatória de episódios. Em
-            // seguida, insere-se a nova série no hashmap
-            Serie novaSerie = new Serie(dados[0], dados[1], novoGenero, novoIdioma, novaData, (int) (Math.random() * 100));
-
-            try {
-                adicionarMidia(Integer.valueOf(dados[0]), novaSerie);
-            } catch (NumberFormatException | NullPointerException e) {
-                System.out.println(linha + ":" + dados);
-            } catch (MidiaJaExisteException e) {
-                System.out.println(e.getMessage());
-            }
-
-            linha++;
-        }
-
-        // Imprimir lista
-        // this.series.forEach((key, value) -> System.out.println("\n" +
-        // this.series.get(key)));
-
-        filereader.close();
-    }
-
-    /**
-     * Lê o arquivo "Filmes.csv", ignorando a primeira linha do arquivo, instancia filmes a partir das informações lidas
-     * e os adiciona à lista de filmes.
-     *
-     * @throws FileNotFoundException se o arquivo não for encontrado.
-     */
-    public void carregarFilmes() throws FileNotFoundException {
-        File file = new File("docs/database/Filmes.csv");
-        Scanner filereader = new Scanner(file);
-
-        filereader.nextLine(); // Artifício para ignorar primeira linha do arquivo .csv
-
-        int linha = 0;
-        while (filereader.hasNextLine()) {
-            String[] dados = filereader.nextLine().split(";");
-
-            // Gera um número aleatório, limitado pelo tamanho do vetor de gêneros/idiomas,
-            // como índice a fim de selecionar algum dos gêneros/idiomas disponíveis
-            String novoGenero = Midia.GENEROS[(int) (Math.random() * (Midia.GENEROS.length))];
-            String novoIdioma = Midia.IDIOMAS[(int) (Math.random() * (Midia.IDIOMAS.length))];
-
-            // Atribui a uma data os valores de dia/mes/ano lidos no arquivo. Caso a string
-            // não apresente formato válido, é lançada uma exceção
-            Date novaData = null;
-            try {
-                novaData = new SimpleDateFormat("dd/MM/yyyy").parse(dados[2]);
-            } catch (Exception e) {
-                System.out.println("Erro: Formato inválido na leitura da data de lançamento de filme");
-            }
-
-            // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero,
-            // idioma, data de lançamento e duracao (dados[3]) em segundos. Em seguida,
-            // insere-se o novo filme no hashmap
-            Filme novoFilme = new Filme(dados[0], dados[1], novoGenero, novoIdioma, novaData, Integer.parseInt(dados[3]) * 60);
-
-            try {
-                adicionarMidia(Integer.valueOf(dados[0]), novoFilme);
-            } catch (NumberFormatException | NullPointerException e) {
-                System.out.println(linha + ":" + dados);
-            } catch (MidiaJaExisteException e) {
-                System.out.println(e.getMessage());
-            }
-
-            linha++;
-        }
-
-        // Imprimir lista
-        // this.filmes.forEach((key, value) -> System.out.println("\n" +
-        // this.filmes.get(key)));
-
-        filereader.close();
     }
 
     /**
@@ -491,17 +377,21 @@ public class PlataformaStreaming {
         for (MidiaType mt : MidiaType.values()) {
             try (FileWriter writer = new FileWriter("docs/database/" + mt.name().substring(0, 1).toUpperCase() + mt.name().substring(1).toLowerCase() + ".csv")) {
 
-                writer.append("id; nome; lancamento;");
+                writer.append("id; nome; data_lancamento; is_lancamento; ");
 
                 switch (mt) {
                     case FILMES:
-                        writer.append("duracao;");
+                        writer.append("duracao;\n");
 
                         for (Midia filme : getFilmes()) {
                             String lancamentoFormatted = new SimpleDateFormat("dd/MM/yyyy").format(filme.getLancamento());
 
                             try {
-                                writer.append(filme.getId()).append(";").append(filme.getNome()).append(";").append(lancamentoFormatted).append(";").append(String.valueOf(((Filme) filme).getDuracao() / 3600));
+                                writer.append(filme.getId()).append(";")
+                                        .append(filme.getNome()).append(";")
+                                        .append(lancamentoFormatted).append(";")
+                                        .append(String.valueOf(filme.isLancamento())).append(";")
+                                        .append(String.valueOf(((Filme) filme).getDuracao() / 3600));
                             } catch (IOException e) {
                                 System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");
                             }
@@ -511,11 +401,17 @@ public class PlataformaStreaming {
                         break;
 
                     case SERIES:
+                        writer.append("qtd_eps;\n");
+
                         for (Midia serie : getSeries()) {
                             String lancamentoFormatted = new SimpleDateFormat("dd/MM/yyyy").format(serie.getLancamento());
 
                             try {
-                                writer.append(serie.getId()).append(";").append(serie.getNome()).append(";").append(lancamentoFormatted);
+                                writer.append(serie.getId()).append(";")
+                                        .append(serie.getNome()).append(";")
+                                        .append(lancamentoFormatted).append(";")
+                                        .append(String.valueOf(serie.isLancamento())).append(";")
+                                        .append(String.valueOf(((Serie) serie).getQuantidadeEpisodios()));
                             } catch (IOException e) {
                                 System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");
                             }

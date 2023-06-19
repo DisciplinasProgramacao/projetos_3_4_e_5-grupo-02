@@ -259,14 +259,13 @@ public class App {
         System.out.println("\n---------- Assistir mídia ----------");
         System.out.println("Digite o id da mídia que deseja assistir: ");
         String id = scan.nextLine();
-
+        
         try {
             plat.getClienteAtual().registrarAudiencia(plat.findMidiaById(Integer.parseInt(id)));
+            System.out.println("A mídia " + plat.findMidiaById(Integer.parseInt(id)).getNome() + " foi assistida!");
         } catch (MidiaNaoEncontradaException e) {
             System.out.println(e.getMessage());
         }
-
-        System.out.println("A mídia " + plat.findMidiaById(Integer.parseInt(id)).getNome() + " foi assistida!");
     }
 
     /**

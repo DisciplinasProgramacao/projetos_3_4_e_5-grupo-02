@@ -77,12 +77,14 @@ public class Cliente {
      *
      * @param nomeMidia Nome da série a ser removida
      */
-    public void retirarDaListaParaVer(String nomeMidia) {
+    
+    // TODO: PRECISA DE CORREÇÃO
+    public void retirarDaListaParaVer(Midia midia) {
         Midia[] midias = new Midia[listaParaVer.size()];
         midias = listaParaVer.allElements(midias);
-
+        
         for (int i = 0; i < midias.length; i++) {
-            if (midias[i].getNome().equals(midias))
+            if (midias[i].getNome().equals(midia.getNome()))
                 listaParaVer.remove(i);
         }
     }

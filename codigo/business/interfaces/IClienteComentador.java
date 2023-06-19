@@ -6,9 +6,9 @@ import business.entidades.fracas.Serie;
 
 import utils.Lista;
 
-public interface ICliente {
+public interface IClienteComentador {
 
-	public static ICliente verificarCategoria(Lista<Serie> assistidas) {
+	public static IClienteComentador verificarCategoria(Lista<Serie> assistidas) {
 		if (assistidas.size() >= 5)
 			return new ClienteEspecialista();
 		else

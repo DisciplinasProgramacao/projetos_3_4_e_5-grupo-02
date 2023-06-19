@@ -1,9 +1,9 @@
 package business.entidades.fracas;
 import business.entidades.Cliente;
 import business.entidades.Midia;
-import business.interfaces.ICliente;
+import business.interfaces.IClienteComentador;
 
-public class ClienteEspecialista implements ICliente {
+public class ClienteEspecialista implements IClienteComentador {
 
     /**
      * Chama o método criarAvaliacao(Cliente, int, String) de mídia.

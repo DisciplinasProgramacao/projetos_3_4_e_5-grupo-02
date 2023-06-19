@@ -30,7 +30,7 @@ public abstract class Midia {
         this.lancamento = lancamento;
         this.audiencia = 0;
         this.avaliacoes = new ArrayList<>();
-        this.isLancamento = false;
+        this.isLancamento = isLancamento;
     }
 
     // GETTERS E SETTERS
@@ -124,6 +124,7 @@ public abstract class Midia {
                 "\nId: " + this.id +
                 "\nGênero: " + this.genero +
                 "\nIdioma: " + this.idioma +
+                "\nÉ lançamento: " + this.isLancamento +
                 "\nNota média: " + this.mediaAvaliacoes() +
                 "\nAvaliações: " + this.avaliacoes);
     }

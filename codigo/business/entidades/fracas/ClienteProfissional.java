@@ -1,12 +1,19 @@
 package business.entidades.fracas;
 import business.entidades.Cliente;
 import business.entidades.Midia;
-import business.interfaces.ICliente;
+import business.exceptions.MidiaNaoEncontradaException;
+import business.interfaces.IClienteComentador;
+import business.interfaces.IClienteProfissional;
 
-public class ClienteProfissional implements ICliente {
+public class ClienteProfissional implements IClienteComentador, IClienteProfissional {
+
+	@Override
+	public void assistirMidia(Midia midia, Cliente watcher) throws MidiaNaoEncontradaException {
+		watcher.assistirMidia(midia);
+	}
 
     /**
-     * Chama o método criarAvaliacao(Cliente, int, String) de mídia.
+     * Cria uma nova avaliação de uma mídia ao chamar o método criarAvaliacao(Cliente, int, String) da classe Midia.
      *
      * @param midia Mídia a ser avaliada
      * @param avaliador Cliente que está avaliando

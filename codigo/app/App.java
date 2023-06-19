@@ -8,12 +8,8 @@ import business.exceptions.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import utils.Lista;
 
@@ -275,7 +271,7 @@ public class App {
                 isLancamento = true;
                 break;
         }
-        
+
         Date midiaReleaseDate = null;
 
         try {
@@ -342,7 +338,7 @@ public class App {
         String id = scan.nextLine();
 
         try {
-            plat.getClienteAtual().registrarAudiencia(plat.findMidiaById(Integer.parseInt(id)));
+            plat.getClienteAtual().assistirMidia(plat.findMidiaById(Integer.parseInt(id)));
             System.out.println("A mídia " + plat.findMidiaById(Integer.parseInt(id)).getNome() + " foi assistida!");
         } catch (MidiaNaoEncontradaException e) {
             System.out.println(e.getMessage());

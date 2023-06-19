@@ -9,12 +9,13 @@ import utils.Lista;
 
 public class Cliente {
     // ATRIBUTOS
-    private String nomeDeUsuario;
-    private String id;
-    private String senha;
-    private Lista<Midia> listaParaVer;
-    private Lista<Midia> listaJaVistas;
-    public ICliente modoAvaliacao;
+    private final String nomeDeUsuario;
+    private final String id;
+    private final String senha;
+    private final Lista<Midia> listaParaVer;
+    private final Lista<Midia> listaJaVistas;
+    public IClienteComentador modoAvaliacao;
+    public IClienteProfissional acessoAosLancamentos;
 
     // CONSTRUTORES
     public Cliente(String nomeDeUsuario, String id, String senha) {
@@ -24,6 +25,7 @@ public class Cliente {
         this.listaParaVer = new Lista<Midia>();
         this.listaJaVistas = new Lista<Midia>();
         this.modoAvaliacao = null;
+        this.acessoAosLancamentos = null;
     }
 
     // GETTERS E SETTERS
@@ -47,15 +49,18 @@ public class Cliente {
         return listaJaVistas;
     }
 
-    public ICliente getModoAvaliacao() {
+    public IClienteComentador getModoAvaliacao() {
         return modoAvaliacao;
+    }
+
+    public IClienteProfissional getAcessoAosLancamentos() {
+        return acessoAosLancamentos;
     }
 
     // MÉTODOS
 
     /**
-     * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada
-     * já exista na lista, a operação não é
+     * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada já exista na lista, a operação não é
      * realizada
      *
      * @param nomeSerie Nome da série a ser adicionada
@@ -87,8 +92,7 @@ public class Cliente {
     }
 
     /**
-     * Retira uma série da lista de séries para ver, contanto que a série
-     * selecionada esteja presente na lista
+     * Retira uma série da lista de séries para ver, contanto que a série selecionada esteja presente na lista
      *
      * @param nomeMidia Nome da série a ser removida
      */
@@ -102,90 +106,6 @@ public class Cliente {
             if (midias[i].getNome().equals(midia.getNome()))
                 listaParaVer.remove(i);
         }
-    }
-
-    /**
-     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas
-     * que correspondem ao gênero
-     * selecionado
-     *
-     * @param genero gênero selecionado
-     * @return lista filtrada por gênero das séries encontradas
-     */
-    public Lista<Midia> filtrarPorGenero(String genero) {
-        Lista<Midia> midiasFiltradas = new Lista<Midia>();
-
-        Midia[] midias = new Midia[listaParaVer.size()];
-        midias = listaParaVer.allElements(midias);
-
-        for (Midia midia : midias) {
-            if (midia.getGenero().equals(genero)) {
-                midiasFiltradas.add(midia);
-            }
-        }
-
-        return midiasFiltradas;
-    }
-
-    /**
-     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas
-     * que correspondem ao idioma
-     * selecionado
-     *
-     * @param idioma idioma selecionado.
-     * @return lista filtrada por idioma das séries encontradas
-     */
-    public Lista<Midia> filtrarPorIdioma(String idioma) {
-        Lista<Midia> midiasFiltradas = new Lista<Midia>();
-
-        Midia[] midias = new Midia[listaParaVer.size()];
-        midias = listaParaVer.allElements(midias);
-
-        for (Midia midia : midias) {
-            if (midia.getIdioma().equals(idioma)) {
-                midiasFiltradas.add(midia);
-            }
-        }
-
-        return midiasFiltradas;
-    }
-
-    /**
-     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas
-     * que possuem quantidade de episódios
-     * igual à selecionada
-     *
-     * @param quantEpisodios quantidade de episódios selecionada
-     * @return lista filtrada por qtd. de episódios das séries encontradas
-     */
-    public Lista<Midia> filtrarPorQtdEpisodios(int quantEpisodios) {
-        Lista<Midia> filtrada = new Lista<Midia>();
-
-        Midia[] midias = new Midia[listaParaVer.size()];
-        midias = listaParaVer.allElements(midias);
-
-        for (Midia serie : midias) {
-            if (serie instanceof Serie) {
-                if (((Serie) serie).getQuantidadeEpisodios() == quantEpisodios) {
-                    filtrada.add((Serie) serie);
-                }
-            }
-        }
-
-        return filtrada;
-    }
-
-    /**
-     * Retorna o tamanho da lista de séries para ver
-     *
-     * @return o tamanho de listaParaVer
-     */
-    public int tamanhoListaParaVer() {
-        return this.listaParaVer.size();
-    }
-
-    public int tamanhoListaJaVistos() {
-        return this.listaJaVistas.size();
     }
 
     /**
@@ -210,47 +130,140 @@ public class Cliente {
     }
 
     /**
-     * Contabiliza audiência de uma série. Caso a série selecionada já esteja
-     * presente na lista de séries para ver, a
-     * operação não é realizada.
-     *
-     * @param midia série selecionada
+     * @return o tamanho de listaParaVer
      */
-    public void registrarAudiencia(Midia midia) throws MidiaNaoEncontradaException {
+    public int tamanhoListaParaVer() {
+        return this.listaParaVer.size();
+    }
+
+    /**
+     * @return o tamanho de listaJaVistas
+     */
+    public int tamanhoListaJaVistos() {
+        return this.listaJaVistas.size();
+    }
+
+//    /**
+//     * Contabiliza audiência de uma mídia e a adiciona na lista de já vistas. Caso a mídia selecionada já esteja
+//     * presente na lista para ver, a operação não é realizada.
+//     *
+//     * @param midia mídia selecionada
+//     */
+//    public void assistirMidia(Midia midia) throws MidiaNaoEncontradaException {
+//        this.modoAvaliacao = categorizarCliente();
+//
+//        if (midia == null)
+//            throw new MidiaNaoEncontradaException();
+//
+//        Midia[] buscaJaVistas = new Midia[listaJaVistas.size()];
+//        buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
+//
+//        // Se está na lista de "jaVistas" é porque o cliente já viu e não pode contabilizar mais audiencia
+//        if (listaJaVistas.contains(midia))
+//            return;
+//
+//        if (!midia.isLancamento()) {
+//            listaJaVistas.add(midia);
+//            midia.registrarAudiencia();
+//        } else {
+//            if (getAcessoAosLancamentos() != null) {
+//                listaJaVistas.add(midia);
+//                midia.registrarAudiencia();
+//            }
+//        }
+//    }
+
+    public void assistirMidia(Midia midia) throws MidiaNaoEncontradaException {
         this.modoAvaliacao = categorizarCliente();
 
-        Midia[] buscaJaVistas = new Midia[listaJaVistas.size()];
-        buscaJaVistas = listaJaVistas.allElements(buscaJaVistas);
-
-        if (midia == null) {
+        if (midia == null)
             throw new MidiaNaoEncontradaException();
+
+        if (midia.isLancamento() && getAcessoAosLancamentos() == null) {
+            throw new IllegalStateException("O cliente não possui permissão para assistir lançamentos.");
         }
 
-        // Se está na lista de "jaVistas" é porque o cliente ja viu e não pode
-        // contabilizar mais
-        // uma audiencia
-        if (listaJaVistas.contains(midia)) {
-            return;
+        if (!listaJaVistas.contains(midia)) {
+            listaJaVistas.add(midia);
+            midia.registrarAudiencia();
+        }
+    }
+
+    /**
+     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que correspondem ao gênero
+     * selecionado
+     *
+     * @param genero gênero selecionado
+     * @return lista filtrada por gênero das séries encontradas
+     */
+    public Lista<Midia> filtrarPorGenero(String genero) {
+        Lista<Midia> midiasFiltradas = new Lista<Midia>();
+
+        Midia[] midias = new Midia[listaParaVer.size()];
+        midias = listaParaVer.allElements(midias);
+
+        for (Midia midia : midias) {
+            if (midia.getGenero().equals(genero)) {
+                midiasFiltradas.add(midia);
+            }
         }
 
-        // for (Serie buscada : buscaJaVistas) {
-        // if (buscada.equals(serie))
-        // return;
-        // }
+        return midiasFiltradas;
+    }
 
-        listaJaVistas.add(midia);
+    /**
+     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que correspondem ao idioma
+     * selecionado
+     *
+     * @param idioma idioma selecionado.
+     * @return lista filtrada por idioma das séries encontradas
+     */
+    public Lista<Midia> filtrarPorIdioma(String idioma) {
+        Lista<Midia> midiasFiltradas = new Lista<Midia>();
 
-        midia.registrarAudiencia();
+        Midia[] midias = new Midia[listaParaVer.size()];
+        midias = listaParaVer.allElements(midias);
+
+        for (Midia midia : midias) {
+            if (midia.getIdioma().equals(idioma)) {
+                midiasFiltradas.add(midia);
+            }
+        }
+
+        return midiasFiltradas;
+    }
+
+    /**
+     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que possuem quantidade de episódios
+     * igual à selecionada
+     *
+     * @param quantEpisodios quantidade de episódios selecionada
+     * @return lista filtrada por qtd. de episódios das séries encontradas
+     */
+    public Lista<Midia> filtrarPorQtdEpisodios(int quantEpisodios) {
+        Lista<Midia> filtrada = new Lista<Midia>();
+
+        Midia[] midias = new Midia[listaParaVer.size()];
+        midias = listaParaVer.allElements(midias);
+
+        for (Midia serie : midias) {
+            if (serie instanceof Serie) {
+                if (((Serie) serie).getQuantidadeEpisodios() == quantEpisodios) {
+                    filtrada.add(serie);
+                }
+            }
+        }
+
+        return filtrada;
     }
 
     /**
      * Categoriza o cliente com base no número de itens já vistos.
      *
-     * @return Uma instância de ICliente representando a categoria do cliente, ou
-     *         null se o cliente tiver atingido
-     *         critério para receber nova categoria.
+     * @return Uma instância de ICliente representando a categoria do cliente, ou null se o cliente tiver atingido
+     * critério para receber nova categoria.
      */
-    private ICliente categorizarCliente() {
+    private IClienteComentador categorizarCliente() {
         if (listaJaVistas.size() >= 5)
             return new ClienteEspecialista();
         else
@@ -258,48 +271,40 @@ public class Cliente {
     }
 
     /**
-     * Chama o método criarAvaliacao(Cliente, int, String) de Midia, passando-o como
-     * parâmetro o cliente atual que está
-     * avaliando a mídia em questão, bem como a nota a ser inserida na avaliação.
-     * Como parâmetro de comentário, passa o
+     * Chama o método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
+     * avaliando a mídia em questão, bem como a nota a ser inserida na avaliação. Como parâmetro de comentário, passa o
      * valor null, uma vez que clientes regulares não podem avaliar com comentários.
      *
      * @param midia Mídia a ser avaliada
      * @param nota  Nota a ser atribuída à mídia avaliada
-     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma
-     *                               mídia previamente.
+     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia previamente.
      */
     public void avaliarMidia(Midia midia, int nota) throws IllegalStateException {
         midia.criarAvaliacao(this, nota, null);
     }
 
     /**
-     * Verifica se o cliente que está avaliando possui modoAvaliador especialista.
-     * Se positivo, prossegue em chamar o
-     * método criarAvaliacao(Cliente, int, String) de Midia, passando-o como
-     * parâmetro o cliente atual que está
+     * Verifica se o cliente que está avaliando possui modoAvaliador especialista. Se positivo, prossegue em chamar o
+     * método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
      * avaliando a mídia, bem como a nota a ser inserida na avaliação.
      *
      * @param midia      Mídia a ser avaliada
      * @param nota       Nota a ser atribuída à mídia avaliada
      * @param comentario Comentário a ser atribuído na mídia avaliada
-     * @throws IllegalStateException Caso o cliente que está tentando avaliar não
-     *                               seja ClienteEspecialista
+     * @throws IllegalStateException Caso o cliente que está tentando avaliar não seja ClienteEspecialista
      */
     public void avaliarMidia(Midia midia, int nota, String comentario) throws IllegalStateException {
-        if (modoAvaliacao instanceof ClienteEspecialista)
+        if (modoAvaliacao != null)
             modoAvaliacao.avaliarMidia(midia, this, nota, comentario);
         else
             throw new IllegalStateException("O cliente não possui modo avaliador de especialista.");
     }
 
     /**
-     * Sobrepoe o método toString() da classe Java Object a fim de modificar o
-     * resultado da impressão tela ao se passar
+     * Sobrepoe o método toString() da classe Java Object a fim de modificar o resultado da impressão tela ao se passar
      * um objeto da classe Cliente como parâmetro do método print().
      *
-     * @return string contendo nome de usuário, senha e modo de avaliação do objeto
-     *         Cliente
+     * @return string contendo nome de usuário, senha e modo de avaliação do objeto Cliente
      */
     @Override
     public String toString() {
@@ -317,12 +322,9 @@ public class Cliente {
     }
 
     /**
-     * Sobrepõe o método equals() da classe Java Object a fim de modificar o
-     * resultado da comparação entre dois objetos.
-     * Para isso, realiza downcast para Cliente, possibilitando comparar os ids de
-     * Cliente de ambos objetos. Caso os ids
-     * sejam iguais, o método assegura que os dois objetos se tratam de um mesmo
-     * cliente.
+     * Sobrepõe o método equals() da classe Java Object a fim de modificar o resultado da comparação entre dois objetos.
+     * Para isso, realiza downcast para Cliente, possibilitando comparar os ids de Cliente de ambos objetos. Caso os ids
+     * sejam iguais, o método assegura que os dois objetos se tratam de um mesmo cliente.
      *
      * @param o Objeto a ser comparado com this.
      * @return Se os ids de cliente são iguais.

@@ -137,7 +137,7 @@ public class PlataformaStreaming {
             throw new NullPointerException();
         }
 
-        clienteAtual.registrarAudiencia(midia);
+        clienteAtual.assistirMidia(midia);
     }
 
     /**
@@ -254,14 +254,14 @@ public class PlataformaStreaming {
                         // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero,
                         // idioma, data de lançamento (dados[2]), se é lancamento (dados[3]) e duracao (dados[4])
                         // em segundos. Em seguida, insere-se o novo filme no hashmap
-                        midia = new Filme(dados[0], dados[1], novoGenero, novoIdioma, novaData, Boolean.parseBoolean(dados[3]), Integer.parseInt(dados[4]) * 60);
+                        midia = new Filme(dados[0], dados[1], novoGenero, novoIdioma, novaData, BooleanParser.parseBooleanValue(dados[3]), Integer.parseInt(dados[4]) * 60);
                         break;
 
                     case SERIES:
                         // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e
                         // idioma gerados aleatóriamente, novaData e qtd de episódios. Em seguida, insere-se a nova
                         // série no hashmap
-                        midia = new Serie(dados[0], dados[1], novoGenero, novoIdioma, novaData, Boolean.parseBoolean(dados[3]), Integer.parseInt(dados[4]));
+                        midia = new Serie(dados[0], dados[1], novoGenero, novoIdioma, novaData, BooleanParser.parseBooleanValue(dados[3]), Integer.parseInt(dados[4]));
                         break;
                 }
 
@@ -303,7 +303,12 @@ public class PlataformaStreaming {
                     if (status.equals("F")) {
                         clientes.get(userId).adicionarNaListaParaVer(midias.get(mediaId));
                     } else if (status.equals("A")) {
-                        clientes.get(userId).registrarAudiencia(midias.get(mediaId));
+                        try {
+                            clientes.get(userId).assistirMidia(midias.get(mediaId));
+                        }
+                        catch (IllegalStateException e) {
+                            System.out.println("Erro: " + e.getMessage());
+                        }
                     }
                 }
             }

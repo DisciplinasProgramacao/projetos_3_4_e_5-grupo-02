@@ -113,16 +113,6 @@ public abstract class Midia {
     }
 
     /**
-     * Verifica se um cliente é profissional e permite que ele assista a mídia.
-     *
-     * @param cliente O cliente que deseja assistir a mídia
-     * @return true se o cliente é profissional e pode assistir à mídia, false caso contrário
-     */
-    public boolean permitirAcesso(Cliente cliente) {
-        return (cliente instanceof ClienteProfissional);
-    }
-
-    /**
      * Sobrepoe o método toString() da classe Java Object a fim de modificar o resultado da impressão tela ao se passar
      * um objeto da classe Midia como parâmetro do método print().
      *

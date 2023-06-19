@@ -127,20 +127,22 @@ public class App {
     private static void addSerieListaParaAssistir(PlataformaStreaming ps, Cliente clienteAtual) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Qual serie você deseja assistir?");
-        String nomeSerie = sc.nextLine();
+        ps.
 
-        clienteAtual.adicionarNaListaParaVer(nomeSerie);
+                clienteAtual.adicionarNaListaParaVer((Midia) nomeSerie);
 
     }
 
-    *
-
-    Método estático
-    para fazer
-    login com
-    um usuário
-    existente na plataforma**
-    @param plat Plataforma streaming*/
+    /*
+     * 
+     * Método estático
+     * para fazer
+     * login com
+     * um usuário
+     * existente na plataforma**
+     * 
+     * @param plat Plataforma streaming
+     */
 
     public static void fazerLogin(PlataformaStreaming plat) {
         String userName, password;

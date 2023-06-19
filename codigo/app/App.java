@@ -14,7 +14,8 @@ import utils.Lista;
 
 public class App {
     /*
-     * System.in implementa a interface Closable. Ver javadoc java.util.scanner -> Scanner.close
+     * System.in implementa a interface Closable. Ver javadoc java.util.scanner ->
+     * Scanner.close
      */
     public static Scanner read = new Scanner(System.in);
 
@@ -48,9 +49,10 @@ public class App {
                     8. Filtrar minhas midias
                     9. Buscar mídia por nome
                     10. Ver catálogo completo
+                    11. Adicionar série na sua lista para assistir
                     \n--- Gerenciar avaliações ---
-                    11. Avaliar mídia
-                    12. Ver minhas avaliações
+                    12. Avaliar mídia
+                    13. Ver minhas avaliações
                     \n--- Relatórios ---
                     \n--- Outros ---
                     99. Salvar e sair
@@ -93,9 +95,12 @@ public class App {
                     imprimirMidias(ps);
                     break;
                 case 11:
-                    avaliarMidia(ps);
+                    addSerieListaParaAssistir(ps, ps.getClienteAtual());
                     break;
                 case 12:
+                    avaliarMidia(ps);
+                    break;
+                case 13:
                     midiasAvaliadas(ps);
                     break;
                 case 98:
@@ -119,11 +124,24 @@ public class App {
         read.close();
     }
 
-    /**
-     * Método estático para fazer login com um usuário existente na plataforma
-     *
-     * @param plat Plataforma streaming
-     */
+    private static void addSerieListaParaAssistir(PlataformaStreaming ps, Cliente clienteAtual) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Qual serie você deseja assistir?");
+        String nomeSerie = sc.nextLine();
+
+        clienteAtual.adicionarNaListaParaVer(nomeSerie);
+
+    }
+
+    *
+
+    Método estático
+    para fazer
+    login com
+    um usuário
+    existente na plataforma**
+    @param plat Plataforma streaming*/
+
     public static void fazerLogin(PlataformaStreaming plat) {
         String userName, password;
 
@@ -193,7 +211,8 @@ public class App {
         System.out.print("Idioma: ");
         midiaIdiom = read.nextLine();
 
-        System.out.println("Obs.: caso inserida uma data inválida em relação ao calendário, será atribuída a data mais próxima.");
+        System.out.println(
+                "Obs.: caso inserida uma data inválida em relação ao calendário, será atribuída a data mais próxima.");
         System.out.print("Data de lançamento (dd-mm-aaaa): ");
         midiaRelease = read.nextLine();
 
@@ -221,7 +240,8 @@ public class App {
                 read.nextLine();
 
                 try {
-                    plat.adicionarMidia(Integer.valueOf(midiaId), new Serie(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, serieQtdEp));
+                    plat.adicionarMidia(Integer.valueOf(midiaId),
+                            new Serie(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, serieQtdEp));
                     System.out.println("Série cadastrada com sucesso!\n");
                 } catch (MidiaJaExisteException | NullPointerException e) {
                     System.out.println(e.getMessage());
@@ -235,7 +255,8 @@ public class App {
                 read.nextLine();
 
                 try {
-                    plat.adicionarMidia(Integer.valueOf(midiaId), new Filme(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, filmLength));
+                    plat.adicionarMidia(Integer.valueOf(midiaId),
+                            new Filme(midiaId, midiaName, midiaGenre, midiaIdiom, midiaReleaseDate, filmLength));
                     System.out.print("Filme cadastrado com sucesso!\n");
                 } catch (MidiaJaExisteException | NullPointerException e) {
                     System.out.println(e.getMessage());
@@ -259,7 +280,7 @@ public class App {
         System.out.println("\n---------- Assistir mídia ----------");
         System.out.println("Digite o id da mídia que deseja assistir: ");
         String id = scan.nextLine();
-        
+
         try {
             plat.getClienteAtual().registrarAudiencia(plat.findMidiaById(Integer.parseInt(id)));
             System.out.println("A mídia " + plat.findMidiaById(Integer.parseInt(id)).getNome() + " foi assistida!");
@@ -324,7 +345,8 @@ public class App {
     }
 
     /**
-     * Método estático para filtrar mídias por gênero, idioma ou quantidade de episódios
+     * Método estático para filtrar mídias por gênero, idioma ou quantidade de
+     * episódios
      *
      * @param plat Plataforma streaming
      */
@@ -345,7 +367,8 @@ public class App {
 
         switch (Integer.parseInt(op)) {
             case 1:
-                System.out.print("Gêneros disponíveis: Comédia, Ação, Terror, Drama, Romance, Aventura, Animação, Suspense\n");
+                System.out.print(
+                        "Gêneros disponíveis: Comédia, Ação, Terror, Drama, Romance, Aventura, Animação, Suspense\n");
                 System.out.println("Digite um gênero para buscar: ");
                 String genero = scan.nextLine();
                 arrayFiltradas = plat.filtrarPorGenero(genero);
@@ -368,7 +391,8 @@ public class App {
 
         System.out.println("\"---------- Resultados encontrados ----------\\n\"");
         for (int i = 0; i < arrayFiltradas.size(); i++) {
-            if (arrayFiltradas.get(i) != null) System.out.println(arrayFiltradas.get(i).getNome());
+            if (arrayFiltradas.get(i) != null)
+                System.out.println(arrayFiltradas.get(i).getNome());
         }
     }
 
@@ -379,8 +403,10 @@ public class App {
      */
     public static void imprimirMidias(PlataformaStreaming plat) {
         plat.getMidiasMap().forEach((key, value) -> {
-            if (value instanceof Filme) System.out.println(value.getId() + " - " + value.getNome() + " - Filme");
-            else if (value instanceof Serie) System.out.println(value.getId() + " - " + value.getNome() + " - Série");
+            if (value instanceof Filme)
+                System.out.println(value.getId() + " - " + value.getNome() + " - Filme");
+            else if (value instanceof Serie)
+                System.out.println(value.getId() + " - " + value.getNome() + " - Série");
         });
     }
 
@@ -404,7 +430,8 @@ public class App {
             }
         });
 
-        if (!midiaEncontrada.get()) System.out.println("Não foi possível encontrar a mídia de nome " + searchedName);
+        if (!midiaEncontrada.get())
+            System.out.println("Não foi possível encontrar a mídia de nome " + searchedName);
     }
 
     /**
@@ -432,9 +459,11 @@ public class App {
                     System.out.println("Insira um comentário: ");
                     String comentario = scan.nextLine();
 
-                    plat.getClienteAtual().avaliarMidia(plat.findMidiaById(Integer.parseInt(idMidia)), Integer.parseInt(nota), comentario);
+                    plat.getClienteAtual().avaliarMidia(plat.findMidiaById(Integer.parseInt(idMidia)),
+                            Integer.parseInt(nota), comentario);
                 } else {
-                    plat.getClienteAtual().avaliarMidia(plat.findMidiaById(Integer.parseInt(idMidia)), Integer.parseInt(nota));
+                    plat.getClienteAtual().avaliarMidia(plat.findMidiaById(Integer.parseInt(idMidia)),
+                            Integer.parseInt(nota));
                 }
 
                 System.out.println("Mídia avaliada com sucesso!");
@@ -472,4 +501,5 @@ public class App {
             }
         }
     }
+
 }

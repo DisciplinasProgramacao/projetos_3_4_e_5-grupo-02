@@ -14,8 +14,7 @@ import utils.Lista;
 
 public class App {
     /*
-     * System.in implementa a interface Closable. Ver javadoc java.util.scanner ->
-     * Scanner.close
+     * System.in implementa a interface Closable. Ver javadoc java.util.scanner -> Scanner.close
      */
     public static Scanner read = new Scanner(System.in);
     
@@ -120,7 +119,10 @@ public class App {
         read.close();
     }
 
-    /* Método estático para fazer login */
+    /**
+     * Método estático para fazer login com um usuário existente na plataforma
+     * @param plat Plataforma streaming
+     */
     public static void fazerLogin(PlataformaStreaming plat) {
         String userName, password;
 
@@ -139,7 +141,10 @@ public class App {
         }
     }
 
-    /* Método estático para cadastrar cliente */
+    /**
+     * Método estático para cadastrar novo cliente à plataforma
+     * @param plat Plataforma streaming
+     */
     public static void cadastrarCliente(PlataformaStreaming plat) {
         String userName, userId, userPassword;
 
@@ -162,7 +167,10 @@ public class App {
         }
     }
 
-    /* Método estático para cadastrar nova mídia */
+    /**
+     * Método estático para cadastrar uma nova mídia ao catálogo
+     * @param plat Plataforma streaming
+     */
     public static void cadastrarMidia(PlataformaStreaming plat) {
         String midiaId, midiaName, midiaGenre, midiaIdiom, midiaRelease, midiaType;
 
@@ -236,7 +244,10 @@ public class App {
         }
     }
 
-    /* Método estático para assistir midia */
+    /**
+     * Método estático para assistir uma mídia disponível no catálogo
+     * @param plat Plataforma streaming
+     */
     public static void assistirMidia(PlataformaStreaming plat) {
         Scanner scan = new Scanner(System.in);
 
@@ -253,7 +264,10 @@ public class App {
         System.out.println("A mídia " + plat.findMidiaById(Integer.parseInt(id)).getNome() + " foi assistida!");
     }
 
-    /* Método estático para ver audiencia de uma mídia */
+    /**
+     * Método estático para imprimir a audiência de uma mídia
+     * @param plat Plataforma streaming
+     */
     public static void verAudiencia(PlataformaStreaming plat) {
     	Scanner scan = new Scanner(System.in);
 
@@ -270,7 +284,10 @@ public class App {
         }
     }
 
-    /* Método estático para exibir midias para ver */
+    /**
+     * Método estático para imprimir as mídias da lista para ver do cliente logado
+     * @param plat Plataforma streaming
+     */
     public static void midiasParaAssistir(PlataformaStreaming plat) {
         Lista<Midia> listaParaVer = plat.getClienteAtual().getListaParaVer();
 
@@ -283,7 +300,10 @@ public class App {
         }
     }
 
-    /* Método estático para exibir todas as midias assistidas pelo cliente atual */
+    /**
+     * Método estático para exibir todas as mídias já assistidas pelo cliente logado
+     * @param plat Plataforma streaming
+     */
     public static void midiasAssistidas(PlataformaStreaming plat) {
         Lista<Midia> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
 
@@ -296,7 +316,10 @@ public class App {
         }
     }
 
-    /* Método estático para filtrar mídias por gênero, idioma ou quantidade de episódios */
+    /**
+     * Método estático para filtrar mídias por gênero, idioma ou quantidade de episódios
+     * @param plat Plataforma streaming
+     */
     public static void filtrarMidias(PlataformaStreaming plat) {
         Scanner scan = new Scanner(System.in);
 
@@ -342,7 +365,10 @@ public class App {
         }
     }
 
-    /* Método estático para exibir todas as midias disponíveis no catálogo */
+    /**
+     * Método estático para exibir todas as midias disponíveis no catálogo
+     * @param plat Plataforma streaming
+     */
     public static void imprimirMidias(PlataformaStreaming plat) {
         plat.getMidiasMap().forEach((key, value) -> {
             if (value instanceof Filme)
@@ -352,7 +378,10 @@ public class App {
         });
     }
 
-    /* Método estático para pesquisar mídia por nome */
+    /**
+     * Método estático para pesquisar mídia por nome
+     * @param plat Plataforma streaming
+     */
     private static void buscarMidia(PlataformaStreaming plat) {
         AtomicBoolean midiaEncontrada = new AtomicBoolean(false);
         Scanner scan = new Scanner(System.in);
@@ -372,7 +401,10 @@ public class App {
             System.out.println("Não foi possível encontrar a mídia de nome " + searchedName);
     }
 
-    /* Método estático para avaliar uma mídia */
+    /**
+     * Método estático para avaliar uma mídia
+     * @param plat Plataforma streaming
+     */
     public static void avaliarMidia(PlataformaStreaming plat) {
         Scanner scan = new Scanner(System.in);
         System.out.println("\n---------- Avaliar mídia ----------");
@@ -409,7 +441,10 @@ public class App {
         }
     }
 
-    /* Método estático para visualizar avaliações do cliente */
+    /**
+     * Método estático para visualizar avaliações do cliente
+     * @param plat Plataforma streaming
+     */
     public static void midiasAvaliadas(PlataformaStreaming plat) {
         Lista<Midia> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
 

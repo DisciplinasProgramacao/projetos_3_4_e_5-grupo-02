@@ -641,9 +641,6 @@ public class PlataformaStreaming {
 
         Cliente c = this.clientes.values().stream().max(Comparator.comparing(Cliente::tamanhoListaJaVistos)).get();
 
-        System.out.println(c);
-        int quantidadeDeMidiasAssistidas = c.tamanhoListaJaVistos();
-        System.out.println(quantidadeDeMidiasAssistidas);
         return c;
 
     }
@@ -672,5 +669,36 @@ public class PlataformaStreaming {
         }
 
         return clienteQueMaisAvaliou;
+    }
+
+    public int clientesComQuinzeAvaliacoes () {
+        int qtdAvaliacoes;
+        int clientesQuinze = 0;
+
+        Collection<Cliente> listaClientes = this.clientes.values();
+
+        for(Cliente cliente : listaClientes) {
+            qtdAvaliacoes = 0;
+            Lista<Midia> listaJaVistas = cliente.getListaJaVistas();
+
+            Midia[] midiasVistas = new Midia[listaJaVistas.size()];
+            midiasVistas = listaJaVistas.allElements(midiasVistas);
+
+            for(Midia midia : midiasVistas) {
+                List<Avaliacao> avaliacoes = midia.getAvaliacoes();
+
+                for(Avaliacao avaliacao : avaliacoes) {
+                    if(avaliacao.getCliente().equals(cliente)) {
+                        qtdAvaliacoes++;
+                    }
+                }
+            }
+
+            if(qtdAvaliacoes >= 15) {
+                clientesQuinze++;
+            }
+        }
+
+        return (clientesQuinze / listaClientes.size()) * 100;
     }
 }

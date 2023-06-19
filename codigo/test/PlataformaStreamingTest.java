@@ -11,7 +11,8 @@ import business.PlataformaStreaming;
 import business.entidades.Cliente;
 import business.entidades.fracas.Filme;
 import business.entidades.fracas.Serie;
-import business.exceptions.ElementoJaExisteException;
+import business.exceptions.ClienteJaExisteException;
+import business.exceptions.MidiaJaExisteException;
 import business.exceptions.LoginInvalidoException;
 
 class PlataformaStreamingTest {
@@ -26,14 +27,15 @@ class PlataformaStreamingTest {
 
 	@BeforeEach
 	void iniciaTeste() {
-		plataforma = new PlataformaStreaming("Xam OBH", cliente);
+		PlataformaStreaming plataforma = new PlataformaStreaming("Xam OBH");
 		try {
 			plataforma.adicionarCliente("Joao", "Joao123", "senha");
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-		} catch (ElementoJaExisteException e) {
+		} catch (ClienteJaExisteException e) {
 			System.out.println(e.getMessage());
 		}
+
 		serie = new Serie("11111", "Infinity Train", "Animação", "Inglês", new Date(), 10);
 		serie1 = new Serie("22222", "One Piece", "Animação", "Português", new Date(), 1060);
 		serie2 = new Serie("33333", "The Last of Us", "Suspense", "Português", new Date(), 9);
@@ -61,8 +63,8 @@ class PlataformaStreamingTest {
 	}
 
 	@Test
-	void testAdicionarClienteJaExistente() throws NullPointerException, ElementoJaExisteException {
-		Exception exception = assertThrows(ElementoJaExisteException.class, () -> {
+	void testAdicionarClienteJaExistente() throws NullPointerException, ClienteJaExisteException {
+		Exception exception = assertThrows(ClienteJaExisteException.class, () -> {
 			plataforma.adicionarCliente("Joao", "Joao123", "senha");
 		});
 
@@ -73,8 +75,8 @@ class PlataformaStreamingTest {
 	}
 
 	@Test
-	void testAdicionarSerie() throws NullPointerException, ElementoJaExisteException {
-		plataforma.adicionarSerie(1, serie);
+	void testAdicionarSerie() throws NullPointerException, MidiaJaExisteException {
+		plataforma.adicionarMidia(1, serie);
 		assertEquals("{1=Nome: Infinity Train\n"
 				+ "Gênero: Animação\n"
 				+ "Idioma: Inglês\n"
@@ -82,8 +84,8 @@ class PlataformaStreamingTest {
 	}
 
 	@Test
-	void testAdicionarFilme() throws NullPointerException, ElementoJaExisteException {
-		plataforma.adicionarFilme(1, filme);
+	void testAdicionarFilme() throws NullPointerException, MidiaJaExisteException {
+		plataforma.adicionarMidia(1, filme);
 		assertEquals("{1=Nome: Gato de Botas 2\n"
 				+ "Gênero: Animação\n"
 				+ "Idioma: Português\n"
@@ -91,10 +93,10 @@ class PlataformaStreamingTest {
 	}
 
 	@Test
-	void testAdicionarSerieJaExistente() throws NullPointerException, ElementoJaExisteException {
-		Exception exception = assertThrows(ElementoJaExisteException.class, () -> {
-			plataforma.adicionarSerie(1, serie);
-			plataforma.adicionarSerie(1, serie);
+	void testAdicionarSerieJaExistente() throws NullPointerException, MidiaJaExisteException {
+		Exception exception = assertThrows(MidiaJaExisteException.class, () -> {
+			plataforma.adicionarMidia(1, serie);
+			plataforma.adicionarMidia(1, serie);
 		});
 
 		String expectedMessage = "O objeto '1' recebido ja existe na lista 'series'";
@@ -104,10 +106,10 @@ class PlataformaStreamingTest {
 	}
 
 	@Test
-	void testAdicionarFilmeJaExistente() throws NullPointerException, ElementoJaExisteException {
-		Exception exception = assertThrows(ElementoJaExisteException.class, () -> {
-			plataforma.adicionarFilme(1, filme);
-			plataforma.adicionarFilme(1, filme);
+	void testAdicionarFilmeJaExistente() throws NullPointerException, MidiaJaExisteException {
+		Exception exception = assertThrows(MidiaJaExisteException.class, () -> {
+			plataforma.adicionarMidia(1, filme);
+			plataforma.adicionarMidia(1, filme);
 		});
 
 		String expectedMessage = "O objeto '1' recebido ja existe na lista 'filmes'";
@@ -115,5 +117,7 @@ class PlataformaStreamingTest {
 
 		assertTrue(actualMessage.contains(expectedMessage));
 	}
+
+
 
 }

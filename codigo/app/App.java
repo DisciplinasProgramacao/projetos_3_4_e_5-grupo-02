@@ -344,10 +344,12 @@ public class App {
 
     /* Método estático para exibir todas as midias disponíveis no catálogo */
     public static void imprimirMidias(PlataformaStreaming plat) {
-        System.out.println("\n---------- Filmes disponíveis ----------");
-        plat.getFilmes().forEach(filme -> System.out.println(filme.getId() + " - " + filme.getNome()));
-        System.out.println("\n---------- Séries disponíveis ----------");
-        plat.getSeries().forEach(serie -> System.out.println(serie.getId() + " - " + serie.getNome()));
+        plat.getMidiasMap().forEach((key, value) -> {
+            if (value instanceof Filme)
+                System.out.println(value.getId() + " - " + value.getNome() + " - Filme" );
+            else if (value instanceof Serie)
+                System.out.println(value.getId() + " - " + value.getNome() + " - Série");
+        });
     }
 
     /* Método estático para pesquisar mídia por nome */

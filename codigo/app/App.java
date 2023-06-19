@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import utils.Lista;
 
 public class App {
@@ -42,11 +44,12 @@ public class App {
                     3. Cadastrar nova mídia
                     4. Assistir midia
                     5. Ver audiência de uma midia
-                    6. Ver lista de midias para assistir
-                    7. Ver lista de midias já vistas
+                    6. Ver minha lista de midias para assistir
+                    7. Ver minha lista de midias já vistas
                     8. Filtrar minhas midias
-                    9. Exibir todas as mídias
-                    10. Avaliar mídia
+                    9. Buscar mídia por nome
+                    10. Ver catálogo completo
+                    11. Avaliar mídia
                     \n--- Relatórios ---
                     \n--- Outros ---
                     99. Salvar e sair
@@ -83,9 +86,12 @@ public class App {
                     filtrarMidias(ps);
                     break;
                 case 9:
-                    imprimirMidias(ps);
+                    buscarMidia(ps);
                     break;
                 case 10:
+                    imprimirMidias(ps);
+                    break;
+                case 11:
                     avaliarMidia(ps);
                     break;
                 case 98:
@@ -109,7 +115,6 @@ public class App {
         read.close();
     }
 
-    // OK!!!
     /* Método estático para fazer login */
     public static void fazerLogin(PlataformaStreaming plat) {
         String userName, password;
@@ -129,7 +134,6 @@ public class App {
         }
     }
 
-    // OK!!!
     /* Método estático para cadastrar cliente */
     public static void cadastrarCliente(PlataformaStreaming plat) {
         String userName, userId, userPassword;
@@ -153,7 +157,6 @@ public class App {
         }
     }
 
-    // OK!!!
     /* Método estático para cadastrar nova mídia */
     public static void cadastrarMidia(PlataformaStreaming plat) {
         String midiaId, midiaName, midiaGenre, midiaIdiom, midiaRelease, midiaType;
@@ -176,9 +179,9 @@ public class App {
 
         System.out.print("Data de lançamento (dd-mm-aaaa): ");
         midiaRelease = read.nextLine();
-        
+
         Date midiaReleaseDate = null;
-        
+
         try {
         	midiaReleaseDate = new SimpleDateFormat("dd-MM-yyyy").parse(midiaRelease);
         } catch (ParseException e) {
@@ -192,7 +195,7 @@ public class App {
                 """);
 
         midiaType = read.nextLine();
-        
+
         switch (midiaType) {
             case "A":
             	System.out.println("Série selecionada!");
@@ -221,14 +224,13 @@ public class App {
                     System.out.println(e.getMessage());
                 }
                 break;
-            
+
             default:
             	System.out.println("Opção invalida");
             	break;
         }
     }
 
-    // OK!!!
     /* Método estático para assistir midia */
     public static void assistirMidia(PlataformaStreaming plat) {
         Scanner scan = new Scanner(System.in);
@@ -236,26 +238,26 @@ public class App {
         System.out.println("\n---------- Assistir mídia ----------");
         System.out.println("Digite o id da mídia que deseja assistir: ");
         String id = scan.nextLine();
-        
+
         try {
         	plat.getClienteAtual().registrarAudiencia(plat.findMidiaById(Integer.parseInt(id)));
         } catch (MidiaNaoEncontradaException e) {
         	System.out.println(e.getMessage());
         }
-        
+
         System.out.println("A mídia " + plat.findMidiaById(Integer.parseInt(id)).getNome() + " foi assistida!");
     }
 
     /* Método estático para ver audiencia de uma mídia */
     public static void verAudiencia(PlataformaStreaming plat) {
     	Scanner scan = new Scanner(System.in);
-    	
+
         System.out.println("\n---------- Ver Audiência ----------");
         System.out.println("Digite o id da mídia que deseja ver a audiência: ");
         String id = scan.nextLine();
-        
+
         Midia midia = plat.findMidiaById(Integer.parseInt(id));
-        
+
         if (midia != null) {
         	System.out.println("Midia: " + midia.getNome() + " \nAudiência: " + midia.getAudiencia());
         } else {
@@ -263,7 +265,6 @@ public class App {
         }
     }
 
-    // OK!!!
     /* Método estático para exibir midias para ver */
     public static void midiasParaAssistir(PlataformaStreaming plat) {
         Lista<Midia> listaParaVer = plat.getClienteAtual().getListaParaVer();
@@ -277,7 +278,6 @@ public class App {
         }
     }
 
-    // OK!!!
     /* Método estático para exibir todas as midias assistidas pelo cliente atual */
     public static void midiasAssistidas(PlataformaStreaming plat) {
         Lista<Midia> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
@@ -291,18 +291,10 @@ public class App {
         }
     }
 
-    // OK!!!
-    public static void imprimirMidias(PlataformaStreaming plat) {
-        System.out.println("\n---------- Filmes disponíveis ----------");
-        plat.getFilmes().forEach(filme -> System.out.println(filme.getNome() + "\n"));
-        System.out.println("\n---------- Séries disponíveis ----------");
-        plat.getSeries().forEach(serie -> System.out.println(serie.getNome() + "\n"));
-    }
-
-    // OK!!!
+    /* Método estático para filtrar mídias por gênero, idioma ou quantidade de episódios */
     public static void filtrarMidias(PlataformaStreaming plat) {
         Scanner scan = new Scanner(System.in);
-        
+
         Lista<Midia> arrayFiltradas = new Lista<>();
 
         System.out.println("---------- Filtar mídias ----------\n");
@@ -345,7 +337,35 @@ public class App {
         }
     }
 
-    // OK!!!
+    /* Método estático para exibir todas as midias disponíveis no catálogo */
+    public static void imprimirMidias(PlataformaStreaming plat) {
+        System.out.println("\n---------- Filmes disponíveis ----------");
+        plat.getFilmes().forEach(filme -> System.out.println(filme.getId() + " - " + filme.getNome()));
+        System.out.println("\n---------- Séries disponíveis ----------");
+        plat.getSeries().forEach(serie -> System.out.println(serie.getId() + " - " + serie.getNome()));
+    }
+
+    /* Método estático para pesquisar mídia por nome */
+    private static void buscarMidia(PlataformaStreaming plat) {
+        AtomicBoolean midiaEncontrada = new AtomicBoolean(false);
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Nome da mídia: ");
+        String searchedName = scan.nextLine();
+
+        plat.getMidiasMap().forEach((key, value) -> {
+            if (value.getNome().equalsIgnoreCase(searchedName)) {
+                System.out.println("A seguinte mídia foi encontrada:\n");
+                System.out.println(value);
+                midiaEncontrada.set(true);
+            }
+        });
+
+        if (!midiaEncontrada.get())
+            System.out.println("Não foi possível encontrar a mídia de nome " + searchedName);
+    }
+
+    /* Método estático para avaliar uma mídia */
     public static void avaliarMidia(PlataformaStreaming plat) {
         Scanner scan = new Scanner(System.in);
         System.out.println("\n---------- Avaliar mídia ----------");
@@ -355,7 +375,7 @@ public class App {
 
         System.out.println("\nDigite o id da mídia que você deseja avaliar:");
         String idMidia = scan.nextLine();
-        
+
         if (plat.getMidiasMap().containsKey(Integer.parseInt(idMidia))) {
 
             if (plat.getClienteAtual().getModoAvaliacao() instanceof ClienteEspecialista) {

@@ -75,7 +75,7 @@ public class Cliente {
     /**
      * Retira uma série da lista de séries para ver, contanto que a série selecionada esteja presente na lista
      *
-     * @param nomeSerie Nome da série a ser removida
+     * @param nomeMidia Nome da série a ser removida
      */
     public void retirarDaListaParaVer(String nomeMidia) {
         Midia[] midias = new Midia[listaParaVer.size()];
@@ -193,7 +193,7 @@ public class Cliente {
      * Contabiliza audiência de uma série. Caso a série selecionada já esteja presente na lista de séries para ver, a
      * operação não é realizada.
      *
-     * @param serie série selecionada
+     * @param midia série selecionada
      */
     public void registrarAudiencia(Midia midia) throws MidiaNaoEncontradaException {
         this.modoAvaliacao = categorizarCliente();

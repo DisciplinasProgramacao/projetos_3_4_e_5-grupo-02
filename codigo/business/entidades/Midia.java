@@ -2,6 +2,7 @@ package business.entidades;
 import business.entidades.fracas.ClienteProfissional;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,9 +14,9 @@ public abstract class Midia {
     public static final String[] IDIOMAS = new String[]{"Português", "Inglês", "Esperanto", "Romeno"};
     private final String id;
     private String nome;
-    private final String genero;
-    private final String idioma;
-    private final Date lancamento;
+    private String genero;
+    private String idioma;
+    private Date lancamento;
     private int audiencia;
     private final List<Avaliacao> avaliacoes;
 
@@ -31,7 +32,7 @@ public abstract class Midia {
     }
 
     // GETTERS E SETTERS
-    public void setNome(String nome) {
+    private void setNome(String nome) {
         if (nome.length() > 0) {
             this.nome = nome;
         }
@@ -58,7 +59,7 @@ public abstract class Midia {
     }
 
     public Date getLancamento() {
-        return this.lancamento;
+        return lancamento;
     }
 
     public List<Avaliacao> getAvaliacoes() {
@@ -123,6 +124,11 @@ public abstract class Midia {
      */
     @Override
     public String toString() {
-        return ("Nome: " + this.nome + "\nId: " + this.id + "\nGênero: " + this.genero + "\nIdioma: " + this.idioma + "\nNota média: " + this.mediaAvaliacoes() + "\nAvaliações: " + this.avaliacoes);
+        return ("Nome: " + this.nome +
+                "\nId: " + this.id +
+                "\nGênero: " + this.genero +
+                "\nIdioma: " + this.idioma +
+                "\nNota média: " + this.mediaAvaliacoes() +
+                "\nAvaliações: " + this.avaliacoes);
     }
 }

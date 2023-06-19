@@ -193,6 +193,7 @@ public class App {
         System.out.print("Idioma: ");
         midiaIdiom = read.nextLine();
 
+        System.out.println("Obs.: caso inserida uma data inválida em relação ao calendário, será atribuída a data mais próxima.");
         System.out.print("Data de lançamento (dd-mm-aaaa): ");
         midiaRelease = read.nextLine();
 
@@ -201,7 +202,7 @@ public class App {
         try {
             midiaReleaseDate = new SimpleDateFormat("dd-MM-yyyy").parse(midiaRelease);
         } catch (ParseException e) {
-            System.out.print("Formato de data invalido! Utilize o formato dd-MM-yyyy\n");
+            System.out.print("Formato de data invalido! Utilize o formato dd-mm-yyyy\n");
         }
 
         System.out.print("""
@@ -242,7 +243,7 @@ public class App {
                 break;
 
             default:
-                System.out.println("Opção invalida");
+                System.out.println("Opção inválida.");
                 break;
         }
     }

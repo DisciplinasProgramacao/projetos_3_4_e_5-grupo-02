@@ -49,7 +49,9 @@ public class App {
                     8. Filtrar minhas midias
                     9. Buscar mídia por nome
                     10. Ver catálogo completo
+                    \n--- Gerenciar avaliações ---
                     11. Avaliar mídia
+                    12. Ver minhas avaliações
                     \n--- Relatórios ---
                     \n--- Outros ---
                     99. Salvar e sair
@@ -93,6 +95,9 @@ public class App {
                     break;
                 case 11:
                     avaliarMidia(ps);
+                    break;
+                case 12:
+                    midiasAvaliadas(ps);
                     break;
                 case 98:
                     System.out.print("Opção 98 selecionada\n");
@@ -272,7 +277,7 @@ public class App {
         Midia[] listaImprimir = new Midia[listaParaVer.size()];
         listaImprimir = listaParaVer.allElements(listaImprimir);
 
-        System.out.println("\n---------- Séries para assistir ----------");
+        System.out.println("\n---------- Mídias para assistir ----------");
         for (Midia midia : listaImprimir) {
             System.out.printf("%s\n", midia.getNome());
         }
@@ -285,7 +290,7 @@ public class App {
         Midia[] listaImprimir = new Midia[listaJaVistas.size()];
         listaImprimir = listaJaVistas.allElements(listaImprimir);
 
-        System.out.println("\n---------- Séries já vistas ----------");
+        System.out.println("\n---------- Mídias já vistas ----------");
         for (Midia midia : listaImprimir) {
             System.out.printf(midia.getId() + " - " + midia.getNome() + "\n");
         }
@@ -399,6 +404,27 @@ public class App {
 
         } else {
             System.out.println("Não foi possível encontrar mídia de id " + idMidia);
+        }
+    }
+
+    /* Método estático para visualizar avaliações do cliente */
+    public static void midiasAvaliadas(PlataformaStreaming plat) {
+        Lista<Midia> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
+
+        Midia[] listaImprimir = new Midia[listaJaVistas.size()];
+        listaImprimir = listaJaVistas.allElements(listaImprimir);
+
+        System.out.println("\n---------- Mídias avaliadas ----------");
+        for (Midia midia : listaImprimir) {
+            if (midia.getAvaliacoes().size() != 0) {
+                midia.getAvaliacoes().forEach(avaliacao -> {
+                    if (avaliacao.getCliente().equals(plat.getClienteAtual())) {
+                        System.out.println(midia.getNome());
+                        System.out.println(avaliacao);
+                        System.out.println("\n");
+                    }
+                });
+            }
         }
     }
 }

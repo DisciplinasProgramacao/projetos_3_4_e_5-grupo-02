@@ -60,7 +60,7 @@ public class Avaliacao {
 
 	@Override
 	public String toString() {
-		return "Avaliador: " + cliente.getNomeUsuario() +
+		return " Avaliador: " + cliente.getNomeUsuario() +
 				"\n Nota: " + nota +
 				"\n Comentário: " + comentario;
 	}

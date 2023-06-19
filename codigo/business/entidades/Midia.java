@@ -19,6 +19,7 @@ public abstract class Midia {
     private Date lancamento;
     private int audiencia;
     private final List<Avaliacao> avaliacoes;
+    private boolean ehLancamento;
 
     // CONSTRUTORES
     public Midia(String id, String nome, String genero, String idioma, Date lancamento) {
@@ -29,6 +30,7 @@ public abstract class Midia {
         this.lancamento = lancamento;
         this.audiencia = 0;
         this.avaliacoes = new ArrayList<>();
+        this.ehLancamento = false;
     }
 
     // GETTERS E SETTERS
@@ -36,6 +38,10 @@ public abstract class Midia {
         if (nome.length() > 0) {
             this.nome = nome;
         }
+    }
+
+    private void setEhLancamento(boolean ehLancamento) {
+    	this.ehLancamento = ehLancamento;
     }
 
     public int getAudiencia() {

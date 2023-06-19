@@ -8,8 +8,13 @@ import business.exceptions.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import utils.Lista;
 
 public class App {
@@ -127,9 +132,21 @@ public class App {
     private static void addSerieListaParaAssistir(PlataformaStreaming ps, Cliente clienteAtual) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Qual serie você deseja assistir?");
-        ps.
+        String nomeSerie = sc.nextLine();
 
-                clienteAtual.adicionarNaListaParaVer((Midia) nomeSerie);
+        Midia serie = null;
+
+        for (Midia m : ps.getSeries()) {
+            if (m.getNome().equals(nomeSerie)) {
+                serie = m;
+            }
+        }
+
+        if (serie != null) {
+            clienteAtual.adicionarNaListaParaVer(serie);
+        } else {
+            System.out.println("Série não encontrada");
+        }
 
     }
 

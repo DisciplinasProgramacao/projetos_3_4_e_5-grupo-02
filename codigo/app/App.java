@@ -1,19 +1,14 @@
 package app;
 
 import business.*;
-import business.entidades.Cliente;
-import business.entidades.Midia;
-import business.entidades.fracas.ClienteEspecialista;
-import business.entidades.fracas.Filme;
-import business.entidades.fracas.Serie;
+import business.entidades.*;
+import business.entidades.fracas.*;
 import business.exceptions.*;
-import utils.Lista;
-
-import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import utils.Lista;
 
 public class App {
     /*
@@ -102,6 +97,12 @@ public class App {
                 default:
                     System.out.printf("A opção %d é inválida\n", option);
                     break;
+            }
+
+            try {
+                Thread.sleep(1500); // Pausa antes de mostrar menu novamente
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
@@ -232,8 +233,8 @@ public class App {
     public static void assistirMidia(PlataformaStreaming plat) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("\n---------- Assistir série ----------");
-        System.out.println("Digite o id da série que deseja assistir: ");
+        System.out.println("\n---------- Assistir mídia ----------");
+        System.out.println("Digite o id da mídia que deseja assistir: ");
         String id = scan.nextLine();
         
         try {
@@ -242,7 +243,7 @@ public class App {
         	System.out.println(e.getMessage());
         }
         
-        System.out.println("A série " + plat.findMidiaById(Integer.parseInt(id)).getNome() + " foi assistida!");
+        System.out.println("A mídia " + plat.findMidiaById(Integer.parseInt(id)).getNome() + " foi assistida!");
     }
 
     /* Método estático para ver audiencia de uma mídia */
@@ -250,7 +251,7 @@ public class App {
     	Scanner scan = new Scanner(System.in);
     	
         System.out.println("\n---------- Ver Audiência ----------");
-        System.out.println("Digite o id da série que deseja ver a audiência: ");
+        System.out.println("Digite o id da mídia que deseja ver a audiência: ");
         String id = scan.nextLine();
         
         Midia midia = plat.findMidiaById(Integer.parseInt(id));
@@ -376,5 +377,4 @@ public class App {
             System.out.println("Não foi possível encontrar mídia de id " + idMidia);
         }
     }
-
 }

@@ -56,8 +56,8 @@ public class App {
                     10. Ver catálogo completo
                     11. Adicionar série na sua lista para assistir
                     \n--- Gerenciar avaliações ---
-                    12. Avaliar mídia
-                    13. Ver minhas avaliações
+                    13. Avaliar mídia
+                    14. Ver minhas avaliações
                     \n--- Relatórios ---
                     \n--- Outros ---
                     99. Salvar e sair
@@ -100,12 +100,15 @@ public class App {
                     imprimirMidias(ps);
                     break;
                 case 11:
-                    addSerieListaParaAssistir(ps, ps.getClienteAtual());
+                    addSerieListaParaAssistir(ps);
                     break;
                 case 12:
-                    avaliarMidia(ps);
+                    addSerieListaAssistidos(ps);
                     break;
                 case 13:
+                    avaliarMidia(ps);
+                    break;
+                case 14:
                     midiasAvaliadas(ps);
                     break;
                 case 98:
@@ -129,7 +132,27 @@ public class App {
         read.close();
     }
 
-    private static void addSerieListaParaAssistir(PlataformaStreaming ps, Cliente clienteAtual) {
+    private static void addSerieListaAssistidos(PlataformaStreaming ps) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Qual serie voce deseja adicionar na sua lista de séries assistidas?");
+        String nomeSerie = sc.nextLine();
+
+        Midia serie = null;
+
+        for (Midia m : ps.getSeries()) {
+            if (m.getNome().equals(nomeSerie)) {
+                serie = m;
+            }
+        }
+        if (serie != null) {
+            ps.getClienteAtual().adicionarNaListaJaVistos(serie);
+        } else {
+            System.out.println("Série não encontrada");
+        }
+
+    }
+
+    private static void addSerieListaParaAssistir(PlataformaStreaming ps) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Qual serie você deseja assistir?");
         String nomeSerie = sc.nextLine();
@@ -143,7 +166,7 @@ public class App {
         }
 
         if (serie != null) {
-            clienteAtual.adicionarNaListaParaVer(serie);
+            ps.getClienteAtual().adicionarNaListaParaVer(serie);
         } else {
             System.out.println("Série não encontrada");
         }

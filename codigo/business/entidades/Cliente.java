@@ -1,4 +1,5 @@
 package business.entidades;
+
 import business.entidades.fracas.ClienteEspecialista;
 import business.entidades.fracas.Serie;
 import business.exceptions.MidiaNaoEncontradaException;
@@ -14,7 +15,6 @@ public class Cliente {
     private Lista<Midia> listaParaVer;
     private Lista<Midia> listaJaVistas;
     public ICliente modoAvaliacao;
-
 
     // CONSTRUTORES
     public Cliente(String nomeDeUsuario, String id, String senha) {
@@ -54,7 +54,8 @@ public class Cliente {
     // MÉTODOS
 
     /**
-     * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada já exista na lista, a operação não é
+     * Adiciona uma série à lista de séries para ver. Caso a serie a ser adicionada
+     * já exista na lista, a operação não é
      * realizada
      *
      * @param nomeSerie Nome da série a ser adicionada
@@ -72,17 +73,31 @@ public class Cliente {
         this.listaParaVer.add(nomeSerie);
     }
 
+    public void adicionarNaListaJaVistos(Midia nomeSerie) {
+        Midia[] listaJaVistasArray = new Midia[listaJaVistas.size()];
+        listaJaVistasArray = this.listaJaVistas.allElements(listaJaVistasArray);
+
+        for (Midia serieDaLista : listaJaVistasArray) {
+            if (serieDaLista.equals(nomeSerie)) {
+                return;
+            }
+        }
+
+        this.listaJaVistas.add(nomeSerie);
+    }
+
     /**
-     * Retira uma série da lista de séries para ver, contanto que a série selecionada esteja presente na lista
+     * Retira uma série da lista de séries para ver, contanto que a série
+     * selecionada esteja presente na lista
      *
      * @param nomeMidia Nome da série a ser removida
      */
-    
+
     // TODO: PRECISA DE CORREÇÃO
     public void retirarDaListaParaVer(Midia midia) {
         Midia[] midias = new Midia[listaParaVer.size()];
         midias = listaParaVer.allElements(midias);
-        
+
         for (int i = 0; i < midias.length; i++) {
             if (midias[i].getNome().equals(midia.getNome()))
                 listaParaVer.remove(i);
@@ -90,7 +105,8 @@ public class Cliente {
     }
 
     /**
-     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que correspondem ao gênero
+     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas
+     * que correspondem ao gênero
      * selecionado
      *
      * @param genero gênero selecionado
@@ -112,7 +128,8 @@ public class Cliente {
     }
 
     /**
-     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que correspondem ao idioma
+     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas
+     * que correspondem ao idioma
      * selecionado
      *
      * @param idioma idioma selecionado.
@@ -134,7 +151,8 @@ public class Cliente {
     }
 
     /**
-     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas que possuem quantidade de episódios
+     * Filtra, dentre as listas de séries para ver e de séries já vistas, aquelas
+     * que possuem quantidade de episódios
      * igual à selecionada
      *
      * @param quantEpisodios quantidade de episódios selecionada
@@ -192,7 +210,8 @@ public class Cliente {
     }
 
     /**
-     * Contabiliza audiência de uma série. Caso a série selecionada já esteja presente na lista de séries para ver, a
+     * Contabiliza audiência de uma série. Caso a série selecionada já esteja
+     * presente na lista de séries para ver, a
      * operação não é realizada.
      *
      * @param midia série selecionada
@@ -207,16 +226,17 @@ public class Cliente {
             throw new MidiaNaoEncontradaException();
         }
 
-        // Se está na lista de "jaVistas" é porque o cliente ja viu e não pode contabilizar mais
+        // Se está na lista de "jaVistas" é porque o cliente ja viu e não pode
+        // contabilizar mais
         // uma audiencia
         if (listaJaVistas.contains(midia)) {
             return;
         }
 
-//        for (Serie buscada : buscaJaVistas) {
-//            if (buscada.equals(serie))
-//                return;
-//        }
+        // for (Serie buscada : buscaJaVistas) {
+        // if (buscada.equals(serie))
+        // return;
+        // }
 
         listaJaVistas.add(midia);
 
@@ -226,8 +246,9 @@ public class Cliente {
     /**
      * Categoriza o cliente com base no número de itens já vistos.
      *
-     * @return Uma instância de ICliente representando a categoria do cliente, ou null se o cliente tiver atingido
-     * critério para receber nova categoria.
+     * @return Uma instância de ICliente representando a categoria do cliente, ou
+     *         null se o cliente tiver atingido
+     *         critério para receber nova categoria.
      */
     private ICliente categorizarCliente() {
         if (listaJaVistas.size() >= 5)
@@ -237,27 +258,33 @@ public class Cliente {
     }
 
     /**
-     * Chama o método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
-     * avaliando a mídia em questão, bem como a nota a ser inserida na avaliação. Como parâmetro de comentário, passa o
+     * Chama o método criarAvaliacao(Cliente, int, String) de Midia, passando-o como
+     * parâmetro o cliente atual que está
+     * avaliando a mídia em questão, bem como a nota a ser inserida na avaliação.
+     * Como parâmetro de comentário, passa o
      * valor null, uma vez que clientes regulares não podem avaliar com comentários.
      *
      * @param midia Mídia a ser avaliada
      * @param nota  Nota a ser atribuída à mídia avaliada
-     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma mídia previamente.
+     * @throws IllegalStateException Caso este cliente já tenha avaliado a mesma
+     *                               mídia previamente.
      */
     public void avaliarMidia(Midia midia, int nota) throws IllegalStateException {
         midia.criarAvaliacao(this, nota, null);
     }
 
     /**
-     * Verifica se o cliente que está avaliando possui modoAvaliador especialista. Se positivo, prossegue em chamar o
-     * método criarAvaliacao(Cliente, int, String) de Midia, passando-o como parâmetro o cliente atual que está
+     * Verifica se o cliente que está avaliando possui modoAvaliador especialista.
+     * Se positivo, prossegue em chamar o
+     * método criarAvaliacao(Cliente, int, String) de Midia, passando-o como
+     * parâmetro o cliente atual que está
      * avaliando a mídia, bem como a nota a ser inserida na avaliação.
      *
      * @param midia      Mídia a ser avaliada
      * @param nota       Nota a ser atribuída à mídia avaliada
      * @param comentario Comentário a ser atribuído na mídia avaliada
-     * @throws IllegalStateException Caso o cliente que está tentando avaliar não seja ClienteEspecialista
+     * @throws IllegalStateException Caso o cliente que está tentando avaliar não
+     *                               seja ClienteEspecialista
      */
     public void avaliarMidia(Midia midia, int nota, String comentario) throws IllegalStateException {
         if (modoAvaliacao instanceof ClienteEspecialista)
@@ -267,10 +294,12 @@ public class Cliente {
     }
 
     /**
-     * Sobrepoe o método toString() da classe Java Object a fim de modificar o resultado da impressão tela ao se passar
+     * Sobrepoe o método toString() da classe Java Object a fim de modificar o
+     * resultado da impressão tela ao se passar
      * um objeto da classe Cliente como parâmetro do método print().
      *
-     * @return string contendo nome de usuário, senha e modo de avaliação do objeto Cliente
+     * @return string contendo nome de usuário, senha e modo de avaliação do objeto
+     *         Cliente
      */
     @Override
     public String toString() {
@@ -288,9 +317,12 @@ public class Cliente {
     }
 
     /**
-     * Sobrepõe o método equals() da classe Java Object a fim de modificar o resultado da comparação entre dois objetos.
-     * Para isso, realiza downcast para Cliente, possibilitando comparar os ids de Cliente de ambos objetos. Caso os ids
-     * sejam iguais, o método assegura que os dois objetos se tratam de um mesmo cliente.
+     * Sobrepõe o método equals() da classe Java Object a fim de modificar o
+     * resultado da comparação entre dois objetos.
+     * Para isso, realiza downcast para Cliente, possibilitando comparar os ids de
+     * Cliente de ambos objetos. Caso os ids
+     * sejam iguais, o método assegura que os dois objetos se tratam de um mesmo
+     * cliente.
      *
      * @param o Objeto a ser comparado com this.
      * @return Se os ids de cliente são iguais.

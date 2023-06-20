@@ -63,6 +63,7 @@ public class App {
                     16. Qual cliente assistiu mais midias e quantas midias
                     17. Qual cliente tem mais avaliações e quantas avaliações
                     18. Qual a porcentagem de clientes com pelo menos 15 avaliações 
+
                     \n--- Outros ---
                     99. Salvar e sair
                     ------------------------------------------------
@@ -128,6 +129,9 @@ public class App {
                 case 18:
                     imprimirPorcentagemClientes(ps);
                     break;
+//                case 19:
+//                    imprimirMidiasMaisVistas(ps);
+//                    break;
                 case 99:
                     ps.salvar();
                     break;
@@ -617,5 +621,14 @@ public class App {
         System.out.println("\n---------- Cliente com pelo menos 15 avaliações ----------");
         System.out.printf("Porcentagem: %d\n", porcentagem);
     }
+
+//    public static void imprimirMidiasMaisVistas(PlataformaStreaming plat) {
+//    	List<Midia> midias = plat.midiasMaisVistas();
+//    	Midia[] top10Midias = null;
+//		for (Midia midia : top10Midias) {
+//            System.out.println(midia);
+//            System.out.println();
+//        }
+//    }
 
 }

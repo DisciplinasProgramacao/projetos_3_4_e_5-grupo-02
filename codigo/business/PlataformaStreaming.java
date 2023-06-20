@@ -603,4 +603,48 @@ public class PlataformaStreaming {
 
         return (clientesQuinze / listaClientes.size()) * 100;
     }
+
+    /**
+     * Cria uma lista com as midias mais vistas.
+     */
+    public List<Midia> midiasMaisVistas() {
+        List<Midia> midias = new ArrayList<>();
+        midias.addAll((Collection<? extends Midia>) this);  
+
+        Collections.sort(midias, Comparator.comparingInt(Midia::getAudiencia).reversed());
+        return midias.subList(0, Math.min(10, midias.size()));
+    }
+    
+    /**
+     * Cria listas separadas por genero e as printa
+     */
+    public void midiasMaisVistasPorGenero() {
+        List<Midia> midias = new ArrayList<>();
+        midias.addAll((Collection<? extends Midia>) this);  
+        
+        Collections.sort(midias, Comparator.comparingInt(Midia::getAudiencia).reversed());
+
+        Map<String, List<Midia>> midiasPorGenero = new HashMap<>();
+        for (Midia midia : midias) {
+            String genre = midia.getGenero();
+            midiasPorGenero.computeIfAbsent(genre, k -> new ArrayList<>()).add(midia);
+        }
+
+        for (Map.Entry<String, List<Midia>> entry : midiasPorGenero.entrySet()) {
+            String generoMidia = entry.getKey();
+            List<Midia> generoMidiaLista = entry.getValue();
+
+            System.out.println("Genero: " + generoMidia);
+            System.out.println("--------------------");
+
+            List<Midia> top10 = generoMidiaLista.subList(0, Math.min(10, generoMidiaLista.size()));
+
+            for (Midia midia : top10) {
+                System.out.println(midia.toString());
+                System.out.println();
+            }
+
+            System.out.println();
+        }
+    }
 }

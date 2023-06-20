@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import java.util.*;
+
 import utils.Lista;
 
 public class App {
@@ -58,6 +60,9 @@ public class App {
                     14. Avaliar mídia
                     15. Ver minhas avaliações
                     \n--- Relatórios ---
+                    16. Qual cliente assistiu mais midias e quantas midias
+                    17. Qual cliente tem mais avaliações e quantas avaliações
+                    18. Qual a porcentagem de clientes com pelo menos 15 avaliações 
                     \n--- Outros ---
                     99. Salvar e sair
                     ------------------------------------------------
@@ -113,6 +118,15 @@ public class App {
                     break;
                 case 15:
                     midiasAvaliadas(ps);
+                    break;
+                case 16:
+                    imprimirClienteComMaisMidias(ps);
+                    break;
+                case 17:
+                    imprimirClienteComMaisAvaliacoes(ps);
+                    break;
+                case 18:
+                    imprimirPorcentagemClientes(ps);
                     break;
                 case 99:
                     ps.salvar();
@@ -567,6 +581,41 @@ public class App {
                 });
             }
         }
+    }
+
+    public static void imprimirClienteComMaisMidias(PlataformaStreaming plat) {
+        Cliente c = plat.qualClienteAssistiuMaisMidias();
+        System.out.println("\n---------- Cliente que assistir mais mídias ----------");
+        System.out.printf("Nome: %s\nQuantidade de mídias: %d\n", c.getNomeUsuario(), c.getListaJaVistas().size());
+    }
+
+    public static void imprimirClienteComMaisAvaliacoes(PlataformaStreaming plat) {
+        int qtd = 0;
+        Cliente c = plat.qualClienteTemMaisAvaliacoes();
+        Lista<Midia> listaJaVista = c.getListaJaVistas();
+
+        Midia[] midiasVistas = new Midia[listaJaVista.size()];
+        midiasVistas = listaJaVista.allElements(midiasVistas);
+
+        for(Midia m : midiasVistas) {
+            List<Avaliacao> avaliacao = m.getAvaliacoes();
+
+            for(Avaliacao a : avaliacao) {
+                if(a.getCliente().equals(c)) {
+                    qtd++;
+                }
+            }
+        }
+        
+
+        System.out.println("n---------- Cliente com mais avaliações ----------");
+        System.out.printf("Nome: %s\nQuantidadeAvaliações: %d\n", c.getNomeUsuario(), qtd);
+    }
+
+    public static void imprimirPorcentagemClientes(PlataformaStreaming plat) {
+        int porcentagem = plat.clientesComQuinzeAvaliacoes();
+        System.out.println("\n---------- Cliente com pelo menos 15 avaliações ----------");
+        System.out.printf("Porcentagem: %d\n", porcentagem);
     }
 
 }

@@ -605,46 +605,71 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Cria uma lista com as midias mais vistas.
+     * Ordena a lista de midias por audiência em ordem decrescente e retorna as 10 primeiras midias.
      */
     public List<Midia> midiasMaisVistas() {
-        List<Midia> midias = new ArrayList<>();
-        midias.addAll((Collection<? extends Midia>) this);  
+    	List<Midia> midiasOrdenadas = new ArrayList<Midia>(midias.values());
+    	Collections.sort(midiasOrdenadas, Comparator.comparingInt(Midia::getAudiencia).reversed());
+    	
+    	return midiasOrdenadas.subList(0, Math.min(10, midiasOrdenadas.size()));
+     }
+    
+    /**
+     * Ordena a lista com as midias mais vistas por genero, sendo 10 a cada genero.
+     */
+    public List<Midia> midiasMaisVistasPorGenero() {
+    	
+    	final String[] GENEROS = new String[]{"Comédia", "Ação", "Terror", "Drama", "Romance", "Aventura", "Animação", "Suspense"};
+    	Collection<Midia> relatorioMidia = midias.values();
 
-        Collections.sort(midias, Comparator.comparingInt(Midia::getAudiencia).reversed());
-        return midias.subList(0, Math.min(10, midias.size()));
+    	List<Midia>appendList;
+    	List<Midia>midiasMaisVistas = new LinkedList<>();
+
+    	for(String s : GENEROS) {
+    		appendList = relatorioMidia.stream()
+    					.filter(m -> m.getGenero().equals(s))
+    					.sorted(Comparator.comparingInt(Midia::getAudiencia).reversed())
+    					.collect(Collectors.toList());
+
+    		midiasMaisVistas.addAll(appendList.subList(0,10));
+    	}
+
+    	return midiasMaisVistas;
     }
     
     /**
-     * Cria listas separadas por genero e as printa
+     * Ordena a lista com as 10 midias mais bem avaliadas, contando apenas as midias com mais de 100 avaliações.
      */
-    public void midiasMaisVistasPorGenero() {
-        List<Midia> midias = new ArrayList<>();
-        midias.addAll((Collection<? extends Midia>) this);  
-        
-        Collections.sort(midias, Comparator.comparingInt(Midia::getAudiencia).reversed());
+    public List<Midia> midiasMaisBemAvaliadas() throws IndexOutOfBoundsException{
+    	Collection<Midia> relatorioMidia = midias.values();
+    	List<Midia> midiasMaisAvaliadas = relatorioMidia.stream()
+    					.filter(m -> m.getAvaliacoes().size() >= 100)
+    					.sorted(Comparator.comparingDouble(Midia::mediaAvaliacoes).reversed())
+    					.collect(Collectors.toList());
+    					
+    	return midiasMaisAvaliadas.subList(0,10);
+    }
+    
+    /**
+     * Ordena a lista com as 10 midias mais bem avaliadas por genero, contando apenas as midias com mais de 100 avaliações.
+     */
+    public List<Midia> midiasMaisBemAvaliadasPorGenero() throws IndexOutOfBoundsException{
+    	final String[] GENEROS = new String[]{"Comédia", "Ação", "Terror", "Drama", "Romance", "Aventura", "Animação", "Suspense"};
+    	Collection<Midia> relatorioMidia = midias.values();
 
-        Map<String, List<Midia>> midiasPorGenero = new HashMap<>();
-        for (Midia midia : midias) {
-            String genre = midia.getGenero();
-            midiasPorGenero.computeIfAbsent(genre, k -> new ArrayList<>()).add(midia);
-        }
+    	List<Midia>appendList;
+    	List<Midia>midiasMaisAvaliadasPorGenero = new LinkedList<>();
 
-        for (Map.Entry<String, List<Midia>> entry : midiasPorGenero.entrySet()) {
-            String generoMidia = entry.getKey();
-            List<Midia> generoMidiaLista = entry.getValue();
+    	for(String s : GENEROS) {
+    		appendList = relatorioMidia.stream()
+    					.filter(m -> m.getGenero().equals(s))
+    					.filter(m -> m.getAvaliacoes().size() >= 100)
+    					.sorted(Comparator.comparingDouble(Midia::mediaAvaliacoes).reversed())
+    					.collect(Collectors.toList());
 
-            System.out.println("Genero: " + generoMidia);
-            System.out.println("--------------------");
-
-            List<Midia> top10 = generoMidiaLista.subList(0, Math.min(10, generoMidiaLista.size()));
-
-            for (Midia midia : top10) {
-                System.out.println(midia.toString());
-                System.out.println();
-            }
-
-            System.out.println();
-        }
+    	midiasMaisAvaliadasPorGenero.addAll(appendList.subList(0,10));
+    	}
+    	
+    	return midiasMaisAvaliadasPorGenero;
     }
 }

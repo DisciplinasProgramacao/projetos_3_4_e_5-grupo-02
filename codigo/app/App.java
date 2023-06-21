@@ -63,10 +63,10 @@ public class App {
                     16. Qual cliente assistiu mais midias e quantas midias
                     17. Qual cliente tem mais avaliações e quantas avaliações
                     18. Qual a porcentagem de clientes com pelo menos 15 avaliações 
-                    19. Qual as 10 midias mais vistas
-                    20. Qual as 10 midias mais vistas por genero
-                    21. Qual as 10 midias com melhor avaliação (minimo 100 avaliações)
-                    22. Qual as 10 midias com melhor avaliação (minimo 100 avaliações) por genero
+                    19. Quais são as 10 midias mais vistas
+                    20. Quais são as 10 midias mais vistas por genero
+                    21. Quais são as 10 midias com melhor avaliação (minimo 100 avaliações)
+                    22. Quais são as 10 midias com melhor avaliação (minimo 100 avaliações) por genero
 
                     \n--- Outros ---
                     99. Salvar e sair

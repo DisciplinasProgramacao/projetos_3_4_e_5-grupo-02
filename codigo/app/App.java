@@ -63,6 +63,10 @@ public class App {
                     16. Qual cliente assistiu mais midias e quantas midias
                     17. Qual cliente tem mais avaliações e quantas avaliações
                     18. Qual a porcentagem de clientes com pelo menos 15 avaliações 
+                    19. Qual as 10 midias mais vistas
+                    20. Qual as 10 midias mais vistas por genero
+                    21. Qual as 10 midias com melhor avaliação (minimo 100 avaliações)
+                    22. Qual as 10 midias com melhor avaliação (minimo 100 avaliações) por genero
 
                     \n--- Outros ---
                     99. Salvar e sair
@@ -129,9 +133,18 @@ public class App {
                 case 18:
                     imprimirPorcentagemClientes(ps);
                     break;
-//                case 19:
-//                    imprimirMidiasMaisVistas(ps);
-//                    break;
+                case 19:
+                    imprimirMidiasMaisVistas(ps);
+                    break;
+                case 20:
+                	imprimirMidiasMaisVistasPorGenero(ps);
+                	break;
+                case 21:
+                	imprimirMidiasMaisBemAvaliadas(ps);
+                	break;
+                case 22:
+                	imprimirMidiasMaisBemAvaliadasPorGenero(ps);
+                	break;
                 case 99:
                     ps.salvar();
                     break;
@@ -622,13 +635,47 @@ public class App {
         System.out.printf("Porcentagem: %d\n", porcentagem);
     }
 
-//    public static void imprimirMidiasMaisVistas(PlataformaStreaming plat) {
-//    	List<Midia> midias = plat.midiasMaisVistas();
-//    	Midia[] top10Midias = null;
-//		for (Midia midia : top10Midias) {
-//            System.out.println(midia);
-//            System.out.println();
-//        }
-//    }
+    public static void imprimirMidiasMaisVistas(PlataformaStreaming plat) {
+    	List<Midia> midiasMaisVistas = plat.midiasMaisVistas();
+    	for(Midia midia : midiasMaisVistas) {
+    		System.out.println(midia.toString());
+    		System.out.println("Audiência " + midia.getAudiencia());
+    		System.out.println("----------------");
+    	}
+    }
+    
+    public static void imprimirMidiasMaisVistasPorGenero(PlataformaStreaming plat){
+    	List<Midia> midiasMaisVistasPorGenero = plat.midiasMaisVistasPorGenero();
+    	for(Midia midia : midiasMaisVistasPorGenero) {
+    		System.out.println(midia.toString());
+    		System.out.println("----------------");
+    	}
+    }
+    
+    public static void imprimirMidiasMaisBemAvaliadas(PlataformaStreaming plat) {
+    	try {
+    			List<Midia> midiasMaisBemAvaliadas = plat.midiasMaisBemAvaliadas();
+	    		for(int i = 0; i < midiasMaisBemAvaliadas.size() || i <= 9; i++) {
+	        		System.out.println(midiasMaisBemAvaliadas.get(i).toString());
+	        		System.out.println("----------------");
+	        	}
+    		}
+    		catch(Exception e) {
+    			System.out.println("Não existe 10 midias com mais de 100 avaliações");
+    		}
+    }
+    
+    public static void imprimirMidiasMaisBemAvaliadasPorGenero(PlataformaStreaming plat) {
+    	try {
+			List<Midia> midiasMaisBemAvaliadasPorGenero = plat.midiasMaisBemAvaliadas();
+    		for(int i = 0; i < midiasMaisBemAvaliadasPorGenero.size() || i <= 9; i++) {
+        		System.out.println(midiasMaisBemAvaliadasPorGenero.get(i).toString());
+        		System.out.println("----------------");
+        	}
+		}
+		catch(Exception e) {
+			System.out.println("Não existe 10 midias com mais de 100 avaliações");
+		}
+    }
 
 }

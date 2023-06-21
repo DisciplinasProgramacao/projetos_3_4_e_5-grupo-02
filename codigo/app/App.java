@@ -648,6 +648,7 @@ public class App {
     	List<Midia> midiasMaisVistasPorGenero = plat.midiasMaisVistasPorGenero();
     	for(Midia midia : midiasMaisVistasPorGenero) {
     		System.out.println(midia.toString());
+		System.out.println("Audiência " + midia.getAudiencia());
     		System.out.println("----------------");
     	}
     }

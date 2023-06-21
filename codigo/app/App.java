@@ -607,26 +607,19 @@ public class App {
     }
 
     public static void imprimirClienteComMaisAvaliacoes(PlataformaStreaming plat) {
-        int qtd = 0;
-        Cliente c = plat.qualClienteTemMaisAvaliacoes();
-        Lista<Midia> listaJaVista = c.getListaJaVistas();
+            Map<Cliente, Integer> clienteMaisAvaliacoes = plat.qualClienteTemMaisAvaliacoes();
+            Cliente clienteAvaliacoes = new Cliente(null, null, null);
+            int qtdAtual = 0;
 
-        Midia[] midiasVistas = new Midia[listaJaVista.size()];
-        midiasVistas = listaJaVista.allElements(midiasVistas);
-
-        for(Midia m : midiasVistas) {
-            List<Avaliacao> avaliacao = m.getAvaliacoes();
-
-            for(Avaliacao a : avaliacao) {
-                if(a.getCliente().equals(c)) {
-                    qtd++;
+            for(Cliente c : clienteMaisAvaliacoes.keySet()) {
+                if(clienteMaisAvaliacoes.get(c) > qtdAtual) {
+                    qtdAtual = clienteMaisAvaliacoes.get(c);
+                    clienteAvaliacoes = c;
                 }
             }
-        }
-        
 
-        System.out.println("n---------- Cliente com mais avaliações ----------");
-        System.out.printf("Nome: %s\nQuantidadeAvaliações: %d\n", c.getNomeUsuario(), qtd);
+            System.out.printf("\n---------- Cliente que mais avaliou ----------");
+            System.out.printf("\nNome: %s\nQuantidade de avaliaçõe: %d\n", clienteAvaliacoes.getNomeUsuario(), qtdAtual);
     }
 
     public static void imprimirPorcentagemClientes(PlataformaStreaming plat) {

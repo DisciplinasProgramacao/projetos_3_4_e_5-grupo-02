@@ -541,36 +541,34 @@ public class PlataformaStreaming {
      */
     public Cliente qualClienteAssistiuMaisMidias() {
 
-        Cliente c = this.clientes.values().stream().max(Comparator.comparing(Cliente::tamanhoListaJaVistos)).get();
+        Collection<Cliente> c = this.clientes.values();
+        List<Cliente> clientesOrdenados = c.stream()
+                        .sorted(Comparator.comparingInt(Cliente::tamanhoListaJaVistos).reversed())
+                        .collect(Collectors.toList());
 
-        return c;
+
+        return clientesOrdenados.get(0);
 
     }
 
-    public Cliente qualClienteTemMaisAvaliacoes() {
+    public Map<Cliente, Integer> qualClienteTemMaisAvaliacoes() {
+        Collection<Midia> midias = this.midias.values();
+        Map<Cliente, Integer> clientesAvaliacoes = new HashMap<>();
 
-        List<Integer> listaDeAvaliacoes = new LinkedList<>();
+        for(Midia m : midias) {
+            List<Avaliacao> avaliacao = m.getAvaliacoes();
 
-        for (Midia m : this.midias.values()) {
-            listaDeAvaliacoes.add(m.qtdAvaliacoes());
-        }
-
-        Integer valorMaximo = Collections.max(listaDeAvaliacoes);
-
-        Cliente clienteQueMaisAvaliou = null;
-
-        for (Midia m : this.midias.values()) {
-            if (m.qtdAvaliacoes() == valorMaximo) {
-                List<Avaliacao> lista = null;
-                lista = m.getAvaliacoes();
-                for (Avaliacao a : lista) {
-                    clienteQueMaisAvaliou = a.getCliente();
+            for(Avaliacao a : avaliacao) {
+                if(clientesAvaliacoes.containsKey(a.getCliente())) {
+                    int qtdAva = clientesAvaliacoes.get(a.getCliente());
+                    clientesAvaliacoes.put(a.getCliente(), qtdAva + 1);
+                } else {
+                    clientesAvaliacoes.put(a.getCliente(), 1);
                 }
-
             }
         }
 
-        return clienteQueMaisAvaliou;
+        return clientesAvaliacoes;
     }
 
     public int clientesComQuinzeAvaliacoes () {

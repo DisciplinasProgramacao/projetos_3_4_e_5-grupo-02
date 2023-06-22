@@ -5,6 +5,7 @@ import business.entidades.*;
 import business.entidades.fracas.*;
 import business.exceptions.*;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,12 +22,19 @@ public class App {
      * Scanner.close
      */
     public static Scanner read = new Scanner(System.in);
+    public static Cliente clientePadrao = new Cliente("Lei108163", "Leia D V Brum", "LAus15911");
+    public static PlataformaStreaming ps = new PlataformaStreaming("Xam OBH");
 
+    public static int readOption() {
+    	try {
+    		return read.nextInt();
+    	} catch (InputMismatchException e) {
+    		return -1;
+    	}
+    }
+    
     public static void main(String[] args) {
-        /* Variáveis */
-        Cliente clientePadrao = new Cliente("Lei108163", "Leia D V Brum", "LAus15911");
-        PlataformaStreaming ps = new PlataformaStreaming("Xam OBH");
-
+    	
         try {
             ps.login(clientePadrao.getNomeUsuario(), clientePadrao.getSenha());
         } catch (LoginInvalidoException e) {
@@ -36,45 +44,11 @@ public class App {
         int option = 0;
 
         while (option != 99) {
-            System.out.print("\n--------------------------------------------------\n");
-            System.out.print("---------------------- MENU ----------------------\n");
-            System.out.printf("Usuário logado: %s\n", ps.getClienteAtual().getNomeUsuario());
-            System.out.print("""
-                    \nEscolha uma operação:
-                    \n--- Gerenciar Clientes ---
-                    1. Fazer login com outro usuário
-                    2. Cadastrar novo cliente
-                    3. Tornar-se cliente profissional
-                    \n--- Gerenciar Mídias ---
-                    4. Cadastrar nova mídia
-                    5. Assistir midia
-                    6. Ver audiência de uma midia
-                    7. Ver minha lista de midias para assistir
-                    8. Ver minha lista de midias já vistas
-                    9. Filtrar minhas midias
-                    10. Buscar mídia por nome
-                    11. Ver catálogo completo
-                    12. Adicionar série na sua lista para assistir
-                    13. Adicionar série na sua lista dos assistidos
-                    \n--- Gerenciar avaliações ---
-                    14. Avaliar mídia
-                    15. Ver minhas avaliações
-                    \n--- Relatórios ---
-                    16. Qual cliente assistiu mais midias e quantas midias
-                    17. Qual cliente tem mais avaliações e quantas avaliações
-                    18. Qual a porcentagem de clientes com pelo menos 15 avaliações 
-                    19. Quais são as 10 midias mais vistas
-                    20. Quais são as 10 midias mais vistas por genero
-                    21. Quais são as 10 midias com melhor avaliação (minimo 100 avaliações)
-                    22. Quais são as 10 midias com melhor avaliação (minimo 100 avaliações) por genero
-
-                    \n--- Outros ---
-                    99. Salvar e sair
-                    ------------------------------------------------
-                    ------------------------------------------------
-                    \n""");
+            
+        	printMenu();
+        	
             System.out.print("Opção: ");
-            option = read.nextInt();
+            option = readOption();
             read.nextLine(); // Lê o \n que o nextInt não lê
 
             // Escolher opção do menu
@@ -148,19 +122,60 @@ public class App {
                 case 99:
                     ps.salvar();
                     break;
+                case -1:
+                	System.out.println("Opção invalida");
+                	break;
                 default:
                     System.out.printf("A opção %d é inválida\n", option);
                     break;
             }
-
-            try {
-                Thread.sleep(1500); // Pausa antes de mostrar menu novamente
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            
+            System.out.println("Pressione a tecla ENTER para continuar");
+            
+            read.nextLine();
         }
 
         read.close();
+    }
+    
+    private static void printMenu() {
+    	System.out.print("\n--------------------------------------------------\n");
+        System.out.print("---------------------- MENU ----------------------\n");
+        System.out.printf("Usuário logado: %s\n", ps.getClienteAtual().getNomeUsuario());
+        System.out.print("""
+                \nEscolha uma operação:
+                \n--- Gerenciar Clientes ---
+                1. Fazer login com outro usuário
+                2. Cadastrar novo cliente
+                3. Tornar-se cliente profissional
+                \n--- Gerenciar Mídias ---
+                4. Cadastrar nova mídia
+                5. Assistir midia
+                6. Ver audiência de uma midia
+                7. Ver minha lista de midias para assistir
+                8. Ver minha lista de midias já vistas
+                9. Filtrar minhas midias
+                10. Buscar mídia por nome
+                11. Ver catálogo completo
+                12. Adicionar série na sua lista para assistir
+                13. Adicionar série na sua lista dos assistidos
+                \n--- Gerenciar avaliações ---
+                14. Avaliar mídia
+                15. Ver minhas avaliações
+                \n--- Relatórios ---
+                16. Qual cliente assistiu mais midias e quantas midias
+                17. Qual cliente tem mais avaliações e quantas avaliações
+                18. Qual a porcentagem de clientes com pelo menos 15 avaliações 
+                19. Quais são as 10 midias mais vistas
+                20. Quais são as 10 midias mais vistas por genero
+                21. Quais são as 10 midias com melhor avaliação (minimo 100 avaliações)
+                22. Quais são as 10 midias com melhor avaliação (minimo 100 avaliações) por genero
+
+                \n--- Outros ---
+                99. Salvar e sair
+                ------------------------------------------------
+                ------------------------------------------------
+                \n""");
     }
 
     private static void addSerieListaAssistidos(PlataformaStreaming ps) {
@@ -411,13 +426,8 @@ public class App {
      * @param plat Plataforma streaming
      */
     public static void midiasParaAssistir(PlataformaStreaming plat) {
-        Lista<Midia> listaParaVer = plat.getClienteAtual().getListaParaVer();
-
-        Midia[] listaImprimir = new Midia[listaParaVer.size()];
-        listaImprimir = listaParaVer.allElements(listaImprimir);
-
         System.out.println("\n---------- Mídias para assistir ----------");
-        for (Midia midia : listaImprimir) {
+        for (Midia midia : plat.getClienteAtual().getListaParaVer().toList()) {
             System.out.printf("%s\n", midia.getNome());
         }
     }
@@ -428,13 +438,10 @@ public class App {
      * @param plat Plataforma streaming
      */
     public static void midiasAssistidas(PlataformaStreaming plat) {
-        Lista<Midia> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
-
-        Midia[] listaImprimir = new Midia[listaJaVistas.size()];
-        listaImprimir = listaJaVistas.allElements(listaImprimir);
+        List<Midia> listaJaVistas = plat.getClienteAtual().getListaJaVistas().toList();
 
         System.out.println("\n---------- Mídias já vistas ----------");
-        for (Midia midia : listaImprimir) {
+        for (Midia midia : listaJaVistas) {
             System.out.printf(midia.getId() + " - " + midia.getNome() + "\n");
         }
     }
@@ -581,13 +588,8 @@ public class App {
      * @param plat Plataforma streaming
      */
     public static void midiasAvaliadas(PlataformaStreaming plat) {
-        Lista<Midia> listaJaVistas = plat.getClienteAtual().getListaJaVistas();
-
-        Midia[] listaImprimir = new Midia[listaJaVistas.size()];
-        listaImprimir = listaJaVistas.allElements(listaImprimir);
-
         System.out.println("\n---------- Mídias avaliadas ----------");
-        for (Midia midia : listaImprimir) {
+        for (Midia midia : plat.getClienteAtual().getListaJaVistas().toList()) {
             if (midia.getAvaliacoes().size() != 0) {
                 midia.getAvaliacoes().forEach(avaliacao -> {
                     if (avaliacao.getCliente().equals(plat.getClienteAtual())) {

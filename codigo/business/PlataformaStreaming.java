@@ -219,6 +219,12 @@ public class PlataformaStreaming {
 
     }
 
+    /**
+     * Lê os arquivos "Filmes.csv" e "Series.csv" ignorando a primeira linha do arquivo, instancia midias a partir das
+     * informações lidas e os adiciona ao mapa de midias.
+     *
+     * @throws FileNotFoundException se o arquivo não for encontrado.
+     */
     public void carregarMidias() throws FileNotFoundException {
 
         for (MidiaType mt : MidiaType.values()) {
@@ -254,14 +260,14 @@ public class PlataformaStreaming {
                         // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero,
                         // idioma, data de lançamento (dados[2]), se é lancamento (dados[3]) e duracao (dados[4])
                         // em segundos. Em seguida, insere-se o novo filme no hashmap
-                        midia = new Filme(dados[0], dados[1], novoGenero, novoIdioma, novaData, Boolean.parseBoolean(dados[3]), Integer.parseInt(dados[4]) * 60);
+                        midia = new Filme(dados[0], dados[1], novoGenero, novoIdioma, novaData, BooleanParser.parseBooleanValue(dados[3]), Integer.parseInt(dados[4]) * 60);
                         break;
 
                     case SERIES:
                         // Passa-se como parâmetros o nome conforme lido no arquivo (dados[1]), gênero e
                         // idioma gerados aleatóriamente, novaData e qtd de episódios. Em seguida, insere-se a nova
                         // série no hashmap
-                        midia = new Serie(dados[0], dados[1], novoGenero, novoIdioma, novaData, Boolean.parseBoolean(dados[3]), Integer.parseInt(dados[4]));
+                        midia = new Serie(dados[0], dados[1], novoGenero, novoIdioma, novaData, BooleanParser.parseBooleanValue(dados[3]), Integer.parseInt(dados[4]));
                         break;
                 }
 
@@ -396,8 +402,8 @@ public class PlataformaStreaming {
                                 writer.append(filme.getId()).append(";")
                                         .append(filme.getNome()).append(";")
                                         .append(lancamentoFormatted).append(";")
-                                        .append(String.valueOf(filme.isLancamento())).append(";")
-                                        .append(String.valueOf(((Filme) filme).getDuracao() / 3600));
+                                        .append(String.valueOf(BooleanParser.stringify(filme.isLancamento()))).append(";")
+                                        .append(String.valueOf(((Filme) filme).getDuracao() / 60));
                             } catch (IOException e) {
                                 System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");
                             }
@@ -416,7 +422,7 @@ public class PlataformaStreaming {
                                 writer.append(serie.getId()).append(";")
                                         .append(serie.getNome()).append(";")
                                         .append(lancamentoFormatted).append(";")
-                                        .append(String.valueOf(serie.isLancamento())).append(";")
+                                        .append(String.valueOf(BooleanParser.stringify(serie.isLancamento()))).append(";")
                                         .append(String.valueOf(((Serie) serie).getQuantidadeEpisodios()));
                             } catch (IOException e) {
                                 System.out.println("Erro: não foi possivel escrever no arquivo para salvar dados do filme.");
@@ -447,12 +453,7 @@ public class PlataformaStreaming {
             this.getClientes().forEach((key, value) -> {
 
                 // Séries assistidas
-                Lista<Midia> listaJaVistas = value.getListaJaVistas();
-
-                Midia[] arrayAssistidas = new Midia[listaJaVistas.size()];
-                arrayAssistidas = listaJaVistas.allElements(arrayAssistidas);
-
-                for (Midia serieAssistida : arrayAssistidas) {
+                for (Midia serieAssistida : value.getListaJaVistas().toList()) {
                     try {
                         writer.append(value.getId());
                         writer.append(";");
@@ -465,11 +466,7 @@ public class PlataformaStreaming {
                     }
                 }
 
-                // Séries para ver
-                Midia[] listaParaVer = new Midia[value.getListaParaVer().size()];
-                listaParaVer = value.getListaParaVer().allElements(listaParaVer);
-
-                for (Midia serie : listaParaVer) {
+                for (Midia serie : value.getListaParaVer().toList()) {
                     try {
                         writer.append(value.getId());
                         writer.append(";");
@@ -579,12 +576,7 @@ public class PlataformaStreaming {
 
         for(Cliente cliente : listaClientes) {
             qtdAvaliacoes = 0;
-            Lista<Midia> listaJaVistas = cliente.getListaJaVistas();
-
-            Midia[] midiasVistas = new Midia[listaJaVistas.size()];
-            midiasVistas = listaJaVistas.allElements(midiasVistas);
-
-            for(Midia midia : midiasVistas) {
+            for(Midia midia : cliente.getListaJaVistas().toList()) {
                 List<Avaliacao> avaliacoes = midia.getAvaliacoes();
 
                 for(Avaliacao avaliacao : avaliacoes) {

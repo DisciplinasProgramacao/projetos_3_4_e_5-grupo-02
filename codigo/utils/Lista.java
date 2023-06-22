@@ -1,4 +1,6 @@
 package utils;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 /** 
  * MIT License
@@ -23,6 +25,9 @@ import java.util.LinkedList;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import java.util.List;
+
+import business.entidades.Midia;
 
  /** Classe para encapsular uma lista duplamente encadeada */
 public class Lista<T> {
@@ -84,5 +89,9 @@ public class Lista<T> {
     public int size(){
         return this.data.size();
     }
-
+    
+	public List<T> toList() {
+		List<T> a = new ArrayList<>(this.data);
+		return a;
+	}
 }

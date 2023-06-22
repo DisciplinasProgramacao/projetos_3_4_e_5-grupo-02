@@ -1,5 +1,7 @@
 package business.entidades;
 
+import java.util.List;
+
 import business.entidades.fracas.ClienteEspecialista;
 import business.entidades.fracas.ClienteProfissional;
 import business.entidades.fracas.Serie;
@@ -75,7 +77,7 @@ public class Cliente {
                 return;
             }
         }
-
+        
         this.listaParaVer.add(nomeSerie);
     }
 
